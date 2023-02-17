@@ -1,0 +1,32 @@
+Database Design:
+    Appliction_info
+    Images
+    Admin
+
+###########
+    Application_info:
+        id: integer
+        app_name: string
+        token: string
+        timestamps: date
+
+##########
+    Images:
+        id: integer
+        name: string
+        user_id: integer
+        image: longtext / blob
+        timestamps: date
+
+##########
+    User:
+        id: integer
+        username: string
+        password: string
+        first_name: string
+        last_name: string
+        email: string|email
+        user_role: [application, admin]
+        application_info_id: integer|nullable
+        timestamps: date
+    Query: CREATE TABLE `epiz_28612709_media`.`users` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `first_name` VARCHAR(255) NOT NULL , `last_name` VARCHAR(255) NOT NULL , `username` VARCHAR(255) NOT NULL , `password` VARCHAR(255) NOT NULL , `email` VARCHAR(255) NOT NULL , `user_role` ENUM('admin','app') NOT NULL , `application_info_id` INT(11) NOT NULL , `created_at` DATE NOT NULL , `updated_at` DATE NOT NULL , `deleted_at` DATE NULL DEFAULT NULL , PRIMARY KEY (`id`), UNIQUE `username` (`username`)) ENGINE = MyISAM;
