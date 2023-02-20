@@ -1,18 +1,25 @@
 <?php
     class Database {
 
-        private $server_name   =  "localhost"; //for now since it is in local
-        private $username      =  "root";      //for now since it is in local
-        private $password      =  "";          //for now since it is in local
-        private $dbname        =  "p_tracker_db";
-        private $conn_name     = "mysql"; 
+        private $server_name;
+        private $username;
+        private $password;
+        private $dbname;
+        private $conn_name;
         private $connection;
-        private $conn_stt      =  [];
+        private $conn_stt = [];
 
         /**
          *  Initialize new connection to the database
          */
         function __construct() {
+            // initialized
+            $this->server_name   =  $_ENV["DB_HOST"];
+            $this->username      =  $_ENV['DB_USERNAME'];
+            $this->password      =  $_ENV['DB_PASSWORD'];
+            $this->dbname        =  $_ENV['DB_DATABASE'];
+            $this->conn_name     =  $_ENV['DB_CONNECTION'];
+
             try {
                 $connection_string = $this->conn_name.":host=".$this->server_name.";dbname=".$this->dbname;
                 $this->connection = new PDO($connection_string, $this->username, $this->password);

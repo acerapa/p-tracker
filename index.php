@@ -1,8 +1,11 @@
 <?php
     
     // Initailized connection to database
-    include_once('./config/Database.php');
+    include_once('./config/Connection.php');
     
+    // load .env files
+    include('./helpers/EnvironmentVariable.php');
+
     // initialize connection
     $db = new Database();
     if (!$db->getConnectionStatus()['success']) {
@@ -12,3 +15,4 @@
 
     // Import the router file
     include('./router/router.php');
+    
