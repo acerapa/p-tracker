@@ -2,6 +2,9 @@
     $request = $_SERVER['REQUEST_URI'];
     $BASE_PATH = dirname(__DIR__);
 
+    // Controllers
+    include("$BASE_PATH/controllers/AuthController.php");    
+
     // Testing only
     // include("$BASE_PATH/api/user/add.php");
     
@@ -12,7 +15,7 @@
             include("$BASE_PATH/views/welcome.php");
             break;
         case '/login':
-            echo "Login Page";
+            (new AuthController())->loginPage();
             break;
         case '/register':
             echo "Register Page test";

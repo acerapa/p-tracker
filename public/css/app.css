@@ -1,0 +1,11 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: #4E5262;
+    font-family: 'Roboto';
+}
+
+.p-logo {
+    width: 70px;
+    height: 70px;
+}

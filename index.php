@@ -1,7 +1,7 @@
 <?php
     
     // Initailized connection to database
-    include_once('./config/Connection.php');
+    include_once('./config/Database.php');
     
     // load .env files
     include('./helpers/EnvironmentVariable.php');
