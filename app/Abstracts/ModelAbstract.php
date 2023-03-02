@@ -1,5 +1,5 @@
 <?php
-namespace App\Abstracs;
+namespace App\Abstracts;
 
 abstract class ModelAbstract {
     

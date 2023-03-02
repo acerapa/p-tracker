@@ -8,8 +8,9 @@
     
     // Import the class
     $BASE_PATH = dirname(dirname(__DIR__)); 
-    include("$BASE_PATH/model/User.php");
     include("$BASE_PATH/helpers/Response.php");
+
+    use App\Model\User;
 
     // Initialized response wrapper
     $response = Response::response();

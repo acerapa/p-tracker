@@ -1,15 +1,12 @@
 <?php
-    namespace App\Router;
-
     $request = $_SERVER['REQUEST_URI'];
     $BASE_PATH = dirname(__DIR__);
 
     // Controllers
-    include("$BASE_PATH/controllers/AuthController.php");
-    // use App\Controllers\AuthController;
+    use App\Controllers\AuthController;
 
     // Testing only
-    include("$BASE_PATH/api/user/add.php");
+    // include("$BASE_PATH/api/user/add.php");
     
     // Simple router with switch case
     switch ($request) {

@@ -1,10 +1,14 @@
 <?php
     
     // Initailized connection to database
-    include_once('./config/Database.php');
+    include_once('./app/Config/Database.php');
     
-    // load .env files
-    include('./helpers/EnvironmentVariable.php');
+    // imports
+    require_once __DIR__.'/vendor/autoload.php';
+
+    // load env
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
 
     // initialize connection
     $db = new Database();
@@ -14,5 +18,5 @@
     }
 
     // Import the router file
-    include('./router/router.php');
+    include('./app/Router/router.php');
     

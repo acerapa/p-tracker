@@ -1,4 +1,6 @@
 <?php
+namespace App\Traits;
+
 trait Crud {
     /**
      * Insert a new element in the database
@@ -27,6 +29,7 @@ trait Crud {
             case 'SELECT':
                 break;
         }
+        return $queryString;
     }
     
     private function formatInsertQueryString()

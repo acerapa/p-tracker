@@ -3,14 +3,14 @@
 <?php 
     $title = 'Login';
     $imports = [
-        'css' => '../../public/css/login.css'
+        'css' => '../../../app/Public/css/login.css'
     ];
     include(dirname(__DIR__)."/component/header.php")
 ?>
 <body>
     <div class="login-container">
         <div>
-            <img class="p-logo" src="../../public/icons/logo.png" alt="logo">
+            <img class="p-logo" src="../../../app/Public/icons/logo.png" alt="logo">
             <span class="sign-in-text">Sign in to <b>P-tracker</b></span>
             <form action="" method="post">
                 <input class="input email-input" type="email" placeholder="Email" name="email" id="" autocomplete="off">
@@ -20,11 +20,11 @@
             <p>or</p>
 
             <div class="social-media google-sign">
-                <img class="social-icons google-icon" src="../../public/icons/google-icon.png" alt="google">
+                <img class="social-icons google-icon" src="../../../app/Public/icons/google-icon.png" alt="google">
                 <span><b>&nbsp;&nbsp;continue with google</b></span>
             </div>
             <div class="social-media facebook-sign">
-                <img class="social-icons facebook-icon" src="../../public/icons/facebook-icon.png" alt="facebook">
+                <img class="social-icons facebook-icon" src="../../../app/Public/icons/facebook-icon.png" alt="facebook">
                 <span><b>&nbsp;&nbsp;continue with facebook</b></span>
             </div>
             <div class="forgot-cont">

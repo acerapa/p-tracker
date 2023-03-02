@@ -1,5 +1,7 @@
 <?php
-require('Model.php');
+namespace App\Models;
+
+use App\Model\Model;
 
 class User extends Model {
         protected static $fields = [
