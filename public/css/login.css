@@ -11,6 +11,12 @@
     text-align: center;
 }
 
+.login-container p {
+    font-size: 10.5px;
+    font-style: normal;
+    margin-top: 12px;
+}
+
 .p-logo {
     display: block;
     margin-top: 142px;
@@ -58,4 +64,46 @@
     margin-top: 12px;
     border-radius: 5px;
     background: rgba(111, 200, 251, 0.81);
+}
+
+.social-media {
+    width: 241px;
+    display: flex;
+    padding: 0px 15px;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    height: 35px !important;
+    background-color: white;
+}
+
+.social-media span {
+    font-size: 10.5px;
+}
+
+.google-sign {
+    margin-top: 10px;
+}
+
+.facebook-sign {
+    margin-top: 8px;
+}
+
+.forgot-pass {
+    font-size: 10.5px;
+}
+
+.forgot-cont {
+    text-align: start !important;
+    height: auto !important;
+}
+
+.google-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.social-icons {
+    display: inline;
+    vertical-align: middle;
 }
