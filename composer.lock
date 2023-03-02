@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f523db843ec0288de1511bd97f1b26d",
+    "content-hash": "cdd1154200fdfd6602f7237ef3a1e9f9",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -142,6 +142,56 @@
                 }
             ],
             "time": "2022-07-30T15:51:26+00:00"
+        },
+        {
+            "name": "plejus/pluralize",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/plejus/pluralize.git",
+                "reference": "cc8602ad2e07e930aff04688b8db2bab2e78005e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/plejus/pluralize/zipball/cc8602ad2e07e930aff04688b8db2bab2e78005e",
+                "reference": "cc8602ad2e07e930aff04688b8db2bab2e78005e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "plejus\\PhpPluralize\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Artur Rychcik",
+                    "email": "artur.rychcik@gmail.com",
+                    "homepage": "https://github.com/plejus"
+                }
+            ],
+            "description": "Pluralize any English word. You can also check if word is in plural or singular form.",
+            "keywords": [
+                "inflection",
+                "inflector",
+                "plural",
+                "pluralize",
+                "singular",
+                "singularize",
+                "words"
+            ],
+            "support": {
+                "issues": "https://github.com/plejus/pluralize/issues",
+                "source": "https://github.com/plejus/pluralize/tree/master"
+            },
+            "time": "2019-08-07T00:00:00+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",

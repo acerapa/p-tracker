@@ -20,14 +20,16 @@
     // Get the inputed data
     $data = (Array) json_decode(file_get_contents("php://input"));
 
-    $result = User::create($conn, $data);
+    User::create();
 
-    if (!$result['error']) {
-        $response['data'] = $result['last_inserted'];
-    } else {
-        $response['message'] = $result['message'];
-        $response['status'] = 400;
-        $response['is_error'] = $result['error'];
-    }
+    // $result = User::create($conn, $data);
 
-    echo json_encode($response);
+    // if (!$result['error']) {
+    //     $response['data'] = $result['last_inserted'];
+    // } else {
+    //     $response['message'] = $result['message'];
+    //     $response['status'] = 400;
+    //     $response['is_error'] = $result['error'];
+    // }
+
+    // echo json_encode($response);

@@ -1,4 +1,5 @@
 <?php
+namespace App\Controllers;
 
 class AuthController {
     protected $BASE_PATH;
@@ -14,5 +15,15 @@ class AuthController {
     public function loginPage()
     {
         return include($this->BASE_PATH.'/views/auth/login.php');
+    }
+
+    /**
+     * Return register page
+     * 
+     * @return ViewFile 
+     */
+    public function registerPage()
+    {
+        return include($this->BASE_PATH.'/views/auth/register.php');
     }
 }

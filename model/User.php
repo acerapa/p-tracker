@@ -1,6 +1,16 @@
 <?php
-    class User
-    {
+require('Model.php');
+
+class User extends Model {
+        protected static $fields = [
+            'email',
+            'password',
+            'username',
+            'user_role',
+            'last_name',
+            'first_name',
+        ];
+
         private $conn;
         public static $table = 'users';
 
@@ -9,7 +19,6 @@
         public $username;
         public $email;
         public $password;
-        public $application_info_id;
         public $user_role;
 
         public function __construct($connection)
@@ -72,34 +81,34 @@
         }
 
         // Create using the static method
-        public static function create($conn, $data)
-        {
-            $data['created_at'] = date("Y-m-d H:i:s");
-            $data['updated_at'] = date("Y-m-d H:i:s");
+        // public static function create($conn, $data)
+        // {
+        //     $data['created_at'] = date("Y-m-d H:i:s");
+        //     $data['updated_at'] = date("Y-m-d H:i:s");
 
-            $query = "INSERT INTO users (first_name, last_name, username, email, password,
-                  application_info_id, user_role, created_at, updated_at) 
-                  VALUES(:first_name, :last_name, :username, :email, :password,
-                  :application_info_id, :user_role, :created_at, :updated_at);";
+        //     $query = "INSERT INTO users (first_name, last_name, username, email, password,
+        //           application_info_id, user_role, created_at, updated_at) 
+        //           VALUES(:first_name, :last_name, :username, :email, :password,
+        //           :application_info_id, :user_role, :created_at, :updated_at);";
       
-            $stmt = $conn->prepare($query);
+        //     $stmt = $conn->prepare($query);
 
-            $responseWrapper = [];
+        //     $responseWrapper = [];
 
-            $data = self::formatUserData($data);
-            try {
-                $stmt->execute(self::santizedData($data));
-                $responseWrapper['message'] = 'Executed';
-                $responseWrapper['error'] = false;
-                $responseWrapper['last_inserted'] = self::getLastInserted($conn);
-            } catch (PDOException $e) {
-                $responseWrapper['message'] = $e->getMessage();
-                $responseWrapper['error'] = true;
-                $responseWrapper['last_inserted'] = null;
-            }
+        //     $data = self::formatUserData($data);
+        //     try {
+        //         $stmt->execute(self::santizedData($data));
+        //         $responseWrapper['message'] = 'Executed';
+        //         $responseWrapper['error'] = false;
+        //         $responseWrapper['last_inserted'] = self::getLastInserted($conn);
+        //     } catch (PDOException $e) {
+        //         $responseWrapper['message'] = $e->getMessage();
+        //         $responseWrapper['error'] = true;
+        //         $responseWrapper['last_inserted'] = null;
+        //     }
 
-            return $responseWrapper;
-        }
+        //     return $responseWrapper;
+        // }
         #end add new data methods
 
 
