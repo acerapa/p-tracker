@@ -4,24 +4,27 @@ namespace App\Models;
 use App\Models\Model;
 
 class User extends Model {
-        protected static $fields = [
+        public static $fields = [
             'email',
             'password',
             'username',
             'user_role',
             'last_name',
             'first_name',
+            'created_at',
+            'updated_at',
+            'deleted_at'
         ];
 
         private $conn;
         public static $table = 'users';
 
-        public $first_name;
-        public $last_name;
-        public $username;
-        public $email;
-        public $password;
-        public $user_role;
+        // public $first_name;
+        // public $last_name;
+        // public $username;
+        // public $email;
+        // public $password;
+        // public $user_role;
 
         public function __construct($connection)
         {
@@ -50,37 +53,37 @@ class User extends Model {
 
         # start add new data methods
         // Create using the save method
-        public function save()
-        {
-            $user_data = [
-            'first_name' => $this->first_name,
-            'last_name' =>  $this->last_name,
-            'username' =>   $this->username,
-            'email' =>      $this->email,
-            'password' =>   $this->password,
-            'application_info_id' => $this->application_info_id,
-            'user_role' =>  $this->user_role,
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s"),
-         ];
-            $query = "INSERT INTO ". $this->table . " (first_name, last_name, username, email, password,
-                  application_info_id, user_role, created_at, updated_at) 
-                  VALUES(:first_name, :last_name, :username, :email, :password,
-                  :application_info_id, :user_role, :created_at, :updated_at);";
-            try {
-                $stmt = $this->conn->prepare($query);
-                $stmt->execute(self::santizedData($user_data));
-                $responseWrapper['message'] = 'Executed';
-                $responseWrapper['error'] = false;
-                $responseWrapper['last_inserted'] = self::getLastInserted($conn);
-            } catch (PDOException $e) {
-                $responseWrapper['message'] = $e->getMessage();
-                $responseWrapper['error'] = true;
-                $responseWrapper['last_inserted'] = null;
-            }
+        // public function save()
+        // {
+        //     $user_data = [
+        //     'first_name' => $this->first_name,
+        //     'last_name' =>  $this->last_name,
+        //     'username' =>   $this->username,
+        //     'email' =>      $this->email,
+        //     'password' =>   $this->password,
+        //     'application_info_id' => $this->application_info_id,
+        //     'user_role' =>  $this->user_role,
+        //     'created_at' => date("Y-m-d H:i:s"),
+        //     'updated_at' => date("Y-m-d H:i:s"),
+        //  ];
+        //     $query = "INSERT INTO ". $this->table . " (first_name, last_name, username, email, password,
+        //           application_info_id, user_role, created_at, updated_at) 
+        //           VALUES(:first_name, :last_name, :username, :email, :password,
+        //           :application_info_id, :user_role, :created_at, :updated_at);";
+        //     try {
+        //         $stmt = $this->conn->prepare($query);
+        //         $stmt->execute(self::santizedData($user_data));
+        //         $responseWrapper['message'] = 'Executed';
+        //         $responseWrapper['error'] = false;
+        //         $responseWrapper['last_inserted'] = self::getLastInserted($conn);
+        //     } catch (PDOException $e) {
+        //         $responseWrapper['message'] = $e->getMessage();
+        //         $responseWrapper['error'] = true;
+        //         $responseWrapper['last_inserted'] = null;
+        //     }
 
-            return $responseWrapper;
-        }
+        //     return $responseWrapper;
+        // }
 
         // Create using the static method
         // public static function create($conn, $data)

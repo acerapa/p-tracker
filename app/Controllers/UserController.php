@@ -6,6 +6,13 @@ use App\Models\User;
 class UserController {
     public function store()
     {
-        User::create();
+        $data = [
+            'username' => 'harapa12',
+            'email' => 'harapa@email.com',
+            'password' => 'password',
+            'user_role' => 1
+        ];
+
+        User::create($data);
     }
 }

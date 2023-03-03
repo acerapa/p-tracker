@@ -2,10 +2,11 @@
 namespace App\Models;
 
 use App\Traits\Crud;
+use App\Interfaces\Crud as CrudInterface;
 use App\Abstracts\ModelAbstract;
 use Doctrine\Inflector\InflectorFactory;
 
-class Model extends ModelAbstract {
+class Model extends ModelAbstract implements CrudInterface {
     use Crud;
 
     /**
@@ -16,6 +17,11 @@ class Model extends ModelAbstract {
         # code ...
     }
 
+    /**
+     * Get table name by basing in the model class name
+     * 
+     * @return String
+     */
     public static function getTableNameFromClassName()
     {
         $inflector = InflectorFactory::create()->build();
@@ -23,5 +29,20 @@ class Model extends ModelAbstract {
         $className = explode('\\', $namespace);
 
         return end($className);
+    }
+
+    /**
+     * Sanitize data from html special characters
+     * 
+     * @param Array $data
+     * 
+     * @return Array
+     */
+    private static function santizedData($data)
+    {
+        foreach ($data as $key => $value) {
+            $data[$key] = htmlspecialchars(strip_tags($value));
+        }
+        return $data;
     }
 }

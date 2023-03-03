@@ -1,10 +1,9 @@
 <?php
-    
-    // Initailized connection to database
-    include_once('./app/Config/Database.php');
-    
     // imports
     require_once __DIR__.'/vendor/autoload.php';
+    
+    // Initailized connection to database
+    use App\Config\Database;
 
     // load env
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -12,7 +11,7 @@
 
     // initialize connection
     $db = new Database();
-    if (!$db->getConnectionStatus()['success']) {
+    if (!$db->isConnected()) {
         // Redirect to the error page
         $_SERVER['REQUEST_URI'] = '/error/sql';
     }
