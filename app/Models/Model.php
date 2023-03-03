@@ -20,7 +20,8 @@ class Model extends ModelAbstract {
     {
         $inflector = InflectorFactory::create()->build();
         $namespace = $inflector->pluralize(strtolower(get_called_class())); 
+        $className = explode('\\', $namespace);
 
-        return end(explode('\\', $namespace));
+        return end($className);
     }
 }

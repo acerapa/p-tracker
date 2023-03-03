@@ -7,7 +7,7 @@ trait Crud {
      */
     public static function create()
     {
-        var_dump(self::getTableNameFromClassName());
+        self::createQueryString('INSERT');
     }
 
     /**
@@ -17,10 +17,11 @@ trait Crud {
      * 
      * @return String 
      */
-    private function createQueryString(String $type) {
+    private static function createQueryString(String $type) {
         $queryString = "";
         switch (strtoupper($type)) {
             case 'INSERT':
+                self::formatInsertQueryString([]);
                 break;
             case 'UPDATE':
                 break;
@@ -32,8 +33,18 @@ trait Crud {
         return $queryString;
     }
     
-    private function formatInsertQueryString()
+    /**
+     * Format insert query strings
+     * 
+     * @param Array $values
+     * 
+     * @return String
+     */
+    private static function formatInsertQueryString($values = [])
     {
-        # code...
+        $table = self::$table || self::getTableNameFromClassName();   
+        $queryString = "INSERT INTO `".self::$table."`";
+
+        echo $queryString;
     }
 }

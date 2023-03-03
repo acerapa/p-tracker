@@ -1,9 +1,12 @@
 <?php
     $request = $_SERVER['REQUEST_URI'];
+    $requestMethod = $_SERVER['REQUEST_METHOD'];
+    
     $BASE_PATH = dirname(__DIR__);
 
     // Controllers
     use App\Controllers\AuthController;
+    use App\Controllers\UserController;
 
     // Testing only
     // include("$BASE_PATH/api/user/add.php");
@@ -31,9 +34,12 @@
             include("$BASE_PATH/api/user/read.php");
             break;
 
-        case '/imgcont/user/add':
-            $_SERVER['REQUEST_METHOD'] = 'POST';
-            include("$BASE_PATH/api/user/add.php");
+        case '/user/add':
+            if ($requestMethod == 'POST') {
+                // include("$BASE_PATH/api/user/add.php");
+                (new UserController())->store();
+            }
+            echo "<p>GET is not supported in this route!</p>";
             break;
         case '/user/rem':
             $_SERVER['REQUEST_METHOD'] = 'DELETE';

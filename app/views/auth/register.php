@@ -12,7 +12,7 @@
         <div>
             <img class="p-logo" src="../../../app/Public/icons/logo.png" alt="logo">
             <span class="sign-in-text">Sign in to <b>P-tracker</b></span>
-            <form action="" method="post">
+            <form action="/user/add" method="post">
                 <input class="input username-input" type="text" placeholder="Username" name="username" id="">
                 <input class="input" type="email" placeholder="Email" name="email" id="">
                 <input class="input" type="password" placeholder="Password" name="password" id="">
