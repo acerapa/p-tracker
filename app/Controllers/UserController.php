@@ -13,6 +13,7 @@ class UserController {
             'user_role' => 1
         ];
 
-        User::create($data);
+        $user = User::create($data);
+        var_dump($user->attributes);
     }
 }

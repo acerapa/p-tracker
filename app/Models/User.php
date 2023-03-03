@@ -19,16 +19,16 @@ class User extends Model {
         private $conn;
         public static $table = 'users';
 
-        // public $first_name;
-        // public $last_name;
-        // public $username;
         // public $email;
+        // public $username;
         // public $password;
+        // public $last_name;
         // public $user_role;
+        // public $first_name;
 
-        public function __construct($connection)
+        public function __construct()
         {
-            $this->conn = $connection;
+            # code ...
         }
 
         # select queries start

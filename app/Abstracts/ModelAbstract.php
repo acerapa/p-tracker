@@ -8,4 +8,14 @@ abstract class ModelAbstract {
     
     // table name
     protected static $table = "";
-}   
+
+    // attributes
+    protected static $attributes = [];
+
+    // set attributes
+    abstract public function setAttributes($fields, $data);
+
+    // get attributes
+    // set attributes
+    abstract public function getAttributes();
+}

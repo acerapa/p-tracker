@@ -18,7 +18,13 @@ trait Crud {
         $query = self::createQueryString('INSERT', $data);
         $stmt = Database::$conn->prepare($query);
         $stmt->execute($data);
-        return true;
+
+        // create model called instance
+        $class = get_called_class();
+        $model = new $class();
+        $model->setAttributes(self::getFields(), $data);
+        
+        return $model;
     }
 
     public static function select()
@@ -36,8 +42,22 @@ trait Crud {
         # code...
     }
 
+    /**
+     * Set model attributes
+     */
+    public function setAttributes($fields, $data) {
+
+    }
+
+    /**
+     * Get model attributes
+     */
+    public function getAttributes() {
+
+    }
+
     /**===========================================
-     * IMPLEMENTS
+     * HELPERS
      ============================================*/
 
     /**
