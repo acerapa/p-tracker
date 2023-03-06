@@ -46,7 +46,7 @@ trait Crud {
      * Set model attributes
      */
     public function setAttributes($fields, $data) {
-
+        
     }
 
     /**
