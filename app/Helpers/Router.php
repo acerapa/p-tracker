@@ -1,6 +1,8 @@
 <?php
 namespace Helpers;
 
-class Router {
+use App\Interfaces\Route;
+
+class Router implements Route {
     
 }
