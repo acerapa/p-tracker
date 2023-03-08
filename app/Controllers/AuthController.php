@@ -1,10 +1,12 @@
 <?php
 namespace App\Controllers;
 
-class AuthController {
-    protected $BASE_PATH;
+use App\Controllers\Controller;
+
+class AuthController extends Controller
+{
     function __construct() {
-        $this->BASE_PATH = dirname(__DIR__);
+        parent::__construct();
     }
 
     /**

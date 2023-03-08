@@ -1,12 +1,13 @@
 <?php
 namespace App\Helpers;
 
-class Router {
+use Exception;
 
+class Router {
     /**
-     * @var Array array of registered routes
+     * @var String exception route
      */
-    private static $routes = [];
+    private static $route404 = '/error/404';
 
     /**
      * @var Array array of allowed http methods
@@ -18,18 +19,40 @@ class Router {
      */
     public static function __callStatic($method, $args)
     {
-        // testing route class
-        $instance = new $args[1][0]();
-        $func = $args[1][1];
-        $instance->{$func}();
-        // call_user_func([new $args[1][0]()], $args[1][1]);
+        if (in_array(strtoupper($method), self::$methods)) {
+            $formattedRoute = [
+                'method'   => strtoupper($method),
+                'route'    => $args[0],
+                'class'    => $args[1][0],
+                'callback' => $args[1][1]
+            ];
+
+            // resolve routes
+            self::resolve($formattedRoute);
+        } else {
+            throw new Exception("Method not supported: ".strtoupper($method));
+        }
     }
 
     /**
-     * Resolves route   
+     * Resolves route
      */
-    public function run()
+    private static function resolve($formattedRoute)
     {
-        # code...
+        $route  = $_SERVER['REQUEST_URI'];
+        $method = $_SERVER['REQUEST_METHOD'];
+
+        if ($formattedRoute['method'] === $method && $formattedRoute['route'] === $route) {
+            $instance = new $formattedRoute['class']();
+            $instance->{$formattedRoute['callback']}();
+            return;
+        }
+
+        // resolve not found route
+        if ($formattedRoute['route'] === self::$route404) {
+            $instance = new $formattedRoute['class']();
+            $instance->{$formattedRoute['callback']}();
+            return;
+        }
     }
 }

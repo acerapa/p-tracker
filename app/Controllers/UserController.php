@@ -2,8 +2,14 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Controllers\Controller;
 
-class UserController {
+class UserController extends Controller
+{
+    function __construct() {
+        parent::__construct();
+    }
+
     public function store()
     {
         $data = [
