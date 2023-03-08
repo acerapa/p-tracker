@@ -16,3 +16,6 @@ Router::get('/register', [AuthController::class, 'registerPage']);
 
 // boot exception routes
 ExceptionController::bootExceptionRoute();
+
+// resolve routes
+Router::run();
