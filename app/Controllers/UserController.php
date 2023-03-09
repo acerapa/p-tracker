@@ -20,6 +20,5 @@ class UserController extends Controller
         ];
 
         $user = User::create($data);
-        var_dump($user->attributes);
     }
 }
