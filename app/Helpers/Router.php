@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use Exception;
+use App\Helpers\Request;
 
 class Router {
     /**
@@ -49,6 +50,9 @@ class Router {
         $is_route_matched = false;
         $route  = $_SERVER['REQUEST_URI'];
         $method = $_SERVER['REQUEST_METHOD'];
+
+        // set attributes
+        Request::setAttributes();
 
         foreach (self::$routes as $formattedRoute) {
             if ($formattedRoute['method'] === $method && $formattedRoute['route'] === $route) {
