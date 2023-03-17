@@ -53,9 +53,10 @@ class Router {
 
         // set attributes
         Request::setAttributes();
+        var_dump(Request::getData());
 
         foreach (self::$routes as $formattedRoute) {
-            if ($formattedRoute['method'] === $method && $formattedRoute['route'] === $route) {
+            if ($formattedRoute['method'] === $method && $formattedRoute['route'] === self::extractRoute($route)) {
                 $is_route_matched = true;
                 $instance = new $formattedRoute['class']();
                 $instance->{$formattedRoute['callback']}();
