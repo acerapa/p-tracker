@@ -16,7 +16,6 @@ class User extends Model {
             'deleted_at'
         ];
 
-        private $conn;
         public static $table = 'users';
 
         // public $email;

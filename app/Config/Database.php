@@ -2,6 +2,7 @@
 namespace App\Config;
 
 use PDO;
+use PDOException;
 class Database {
 
     private $server_name;
@@ -11,9 +12,6 @@ class Database {
     private $conn_name;
     private $connection;
     private $conn_stt = [];
-
-    public static $conn;
-    public static $test = "";
 
     /**
      *  Initialize new connection to the database
@@ -30,13 +28,10 @@ class Database {
             $connection_string = $this->conn_name.":host=".$this->server_name.";dbname=".$this->dbname;
             $this->connection = new PDO($connection_string, $this->username, $this->password);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->conn_stt['success'] = true;
-            $this->conn_stt['message'] = "Connected";
-            
-            self::$conn = $this->connection;
         } catch (PDOException $e) {
-            $this->conn_stt['success'] = false;
-            $this->conn_stt['message'] = $e->getMessage();
+            // redirect to sql error with message
+            $route = '/error/sql?msg='.$e->getMessage();
+            echo "<script>window.location.href='$route'</script>";
         }
     } 
 

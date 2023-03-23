@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Traits\Crud;
+use App\Config\Database;
 use App\Interfaces\Crud as CrudInterface;
 use App\Abstracts\ModelAbstract;
 use Doctrine\Inflector\InflectorFactory;
@@ -15,6 +16,12 @@ class Model extends ModelAbstract implements CrudInterface {
     public function __construct()
     {
         # code ...
+    }
+
+    public static function getConnection()
+    {
+        $db = new Database();
+        return $db->getConnection();
     }
 
     /**

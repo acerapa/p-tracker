@@ -53,7 +53,6 @@ class Router {
 
         // set attributes
         Request::setAttributes();
-        var_dump(Request::getData());
 
         foreach (self::$routes as $formattedRoute) {
             if ($formattedRoute['method'] === $method && $formattedRoute['route'] === self::extractRoute($route)) {

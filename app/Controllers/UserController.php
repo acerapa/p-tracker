@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Helpers\Request;
 use App\Controllers\Controller;
 
 class UserController extends Controller
@@ -12,13 +13,7 @@ class UserController extends Controller
 
     public function store()
     {
-        $data = [
-            'username' => 'harapa12',
-            'email' => 'harapa@email.com',
-            'password' => 'password',
-            'user_role' => 1
-        ];
-
+        $data = Request::getData();
         $user = User::create($data);
     }
 }

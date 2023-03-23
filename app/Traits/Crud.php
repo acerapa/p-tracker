@@ -1,8 +1,6 @@
 <?php
 namespace App\Traits;
 
-use App\Config\Database;
-
 trait Crud {
     /**===========================================
      * IMPLEMENTS
@@ -15,8 +13,9 @@ trait Crud {
      */
     public static function create($data)
     {
+        $data = self::cleanFields($data);
         $query = self::createQueryString('INSERT', $data);
-        $stmt = Database::$conn->prepare($query);
+        $stmt = self::getConnection()->prepare($query);
         $stmt->execute($data);
 
         // create model called instance
@@ -111,5 +110,23 @@ trait Crud {
     public static function getFields()
     {
         return get_called_class()::$fields;
+    }
+
+    /**
+     * Clean fields
+     * 
+     * @param Array $data 
+     * 
+     * @return Array
+     */
+    public static function cleanFields($data)
+    {
+        return array_filter(
+            $data,
+            function ($key) use ($data) {
+                return in_array($key, self::getFields());
+            },
+            ARRAY_FILTER_USE_KEY
+        );
     }
 }

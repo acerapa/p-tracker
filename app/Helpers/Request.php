@@ -49,12 +49,19 @@ class Request {
      */
     public static function getData()
     {
-        return array_filter(
+        $data = array_filter(
             self::$attributes, function ($key)
             {
                 return str_contains($key, self::$DATA_VARS);
             },
             ARRAY_FILTER_USE_KEY
         );
+
+        $res = [];
+        foreach ($data as $key => $value) {
+            $res[substr($key, strlen(self::$DATA_VARS))] = $value;
+        }
+
+        return $res;
     }
 }
