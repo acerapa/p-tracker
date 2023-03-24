@@ -16,12 +16,12 @@ class UserController extends Controller
     {
         $data = Request::getData();
         $user = User::create($data);
-        
         Router::redirect('auth.loginpage');
     }
 
     public function list()
     {
-        # code ...
+        $users = User::all();
+        return include($this->BASE_PATH."/views/user/list.php");
     }
 }

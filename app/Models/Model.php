@@ -52,4 +52,12 @@ class Model extends ModelAbstract implements CrudInterface {
         }
         return $data;
     }
+
+    /**
+     * Set property
+     */
+    public function __set($property, $value)
+    {
+        $this->$property = $value;
+    }
 }

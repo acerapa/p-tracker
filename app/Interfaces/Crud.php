@@ -16,8 +16,15 @@ interface Crud {
 
     /**
      * Select
+     * 
+     * @param Array $fields
      */
-    public static function select();
+    public static function select($fields = []);
+
+    /**
+     * All
+     */
+    public static function all();
 
     /**
      * Destroy

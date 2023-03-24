@@ -21,14 +21,32 @@ trait Crud {
         // create model called instance
         $class = get_called_class();
         $model = new $class();
-        $model->setAttributes(self::getFields(), $data);
+        $model->setAttributes($data);
         
         return $model;
     }
 
-    public static function select()
+    public static function select($fields = [])
     {
         # code ...
+    }
+
+    public static function all()
+    {
+        $query   = self::createQueryString('SELECT');
+        $stmt    = self::getConnection()->query($query);
+        $results = $stmt->fetchAll();
+        
+        $data = [];
+        foreach ($results as $user) {
+            // create model called instance
+            $class = get_called_class();
+            $model = new $class();
+            $model->setAttributes($user);
+            array_push($data, $model);
+        }
+
+        return $data;
     }
 
     public function update()
@@ -44,15 +62,19 @@ trait Crud {
     /**
      * Set model attributes
      */
-    public function setAttributes($fields, $data) {
-        
+    public function setAttributes($data) {
+        $dataSyncFields = self::cleanFields($data);
+        $this->attributes = $dataSyncFields;
+        foreach ($dataSyncFields as $key => $value) {
+            $this->{$key} = $value;
+        }
     }
 
     /**
      * Get model attributes
      */
     public function getAttributes() {
-
+        return $this->attributes;
     }
 
     /**===========================================
@@ -78,6 +100,7 @@ trait Crud {
             case 'DELETE':
                 break;
             case 'SELECT':
+                $queryString = self::formatSelectQuerystring();
                 break;
         }
         return $queryString;
@@ -98,6 +121,17 @@ trait Crud {
 
         // build query string
         $queryString = $queryString."(`".implode("`,`", $fields)."`) VALUES (:".implode(", :", $fields).");";
+
+        return $queryString;
+    }
+
+    public static function formatSelectQuerystring($fields = [])
+    {
+        $table = self::$table ? self::$table : self::getTableNameFromClassName(); 
+        $queryString = "SELECT ";
+        if (!count($fields)) {
+            $queryString .= "* FROM $table;";
+        }
 
         return $queryString;
     }

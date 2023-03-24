@@ -10,12 +10,11 @@ abstract class ModelAbstract {
     protected static $table = "";
 
     // attributes
-    protected static $attributes = [];
+    protected $attributes = [];
 
     // set attributes
-    abstract public function setAttributes($fields, $data);
+    abstract public function setAttributes($data);
 
     // get attributes
-    // set attributes
     abstract public function getAttributes();
 }

@@ -18,26 +18,9 @@ class User extends Model {
 
         public static $table = 'users';
 
-        // public $email;
-        // public $username;
-        // public $password;
-        // public $last_name;
-        // public $user_role;
-        // public $first_name;
-
         public function __construct()
         {
             # code ...
-        }
-
-        # select queries start
-        // Get all data
-        public static function all($conn)
-        {
-            $query = "SELECT * FROM ".self::$table.";";
-            $stmt = $conn->prepare($query);
-            $stmt->execute();
-            return $stmt;
         }
 
         // Get the last inserted data
