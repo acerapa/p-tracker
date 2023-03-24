@@ -29,11 +29,13 @@ class Router {
     public static function __callStatic($method, $args)
     {
         if (in_array(strtoupper($method), self::$methods)) {
+            $routeNameInitial = explode('\\', $args[1][0]);
             $formattedRoute = [
                 'method'   => strtoupper($method),
                 'route'    => self::extractRoute($args[0]),
                 'class'    => $args[1][0],
-                'callback' => $args[1][1]
+                'callback' => $args[1][1],
+                'name'     => str_replace('controller', '', strtolower(end($routeNameInitial).'.'.$args[1][1]))
             ];
 
             array_push(self::$routes, $formattedRoute);
@@ -98,5 +100,36 @@ class Router {
         }
 
         return $path;
+    }
+
+    /**
+     * redirect route using path or route name
+     * 
+     * @param $route | path or route
+     */
+    public static function redirect($route) {
+        $is_route_matched = false;
+        foreach(self::$routes as $rt) {
+            if (str_contains($route, '/')) {
+                if ($rt['method'] === 'GET' && $rt['route'] === $route) {
+                    $is_route_matched = true;
+                    $instance = new $rt['class']();
+                    $instance->{$rt['callback']}();
+                    return;
+                }
+            } else {
+                if ($rt['name'] === $route) {
+                    $is_route_matched = true;
+                    $instance = new $rt['class']();
+                    $instance->{$rt['callback']}();
+                    return;
+                }
+            }
+        }
+
+        if (!$is_route_matched) {
+            self::resolve404Page();
+            return;
+        }
     }
 }
