@@ -19,4 +19,9 @@ class UserController extends Controller
         
         Router::redirect('auth.loginpage');
     }
+
+    public function list()
+    {
+        # code ...
+    }
 }
