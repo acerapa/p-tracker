@@ -143,7 +143,9 @@ trait Crud {
      */
     public static function getFields()
     {
-        return get_called_class()::$fields;
+        $fields = get_called_class()::$fields;
+        array_push($fields, 'id');
+        return $fields;
     }
 
     /**

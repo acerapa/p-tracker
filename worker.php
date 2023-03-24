@@ -1,8 +1,6 @@
 #!/usr/bin/php php
 <?php
 $args = getopt(null,['serve', 'port::', 'p::', 'exportdb']);
-// var_dump($args);
-
 
 startServer($args);
 /**
