@@ -12,7 +12,7 @@ interface Crud {
     /**
      * Update
      */
-    public function update();
+    public function update($data);
 
     /**
      * Select

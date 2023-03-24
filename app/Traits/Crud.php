@@ -49,10 +49,20 @@ trait Crud {
         return $data;
     }
 
-    public function update()
+    public function update($data)
     {
-        # code...
-    }
+        $data  = self::cleanFields($data);
+        $query = self::createQueryString($data);
+        $stmt  = self::getConnection()->prepare($query);
+        $stmt->execute($data);
+
+        // create model called instance
+        $class = get_called_class();
+        $model = new $class();
+        $model->setAttributes($data);
+        
+        return $model;
+}
 
     public function destroy()
     {
@@ -96,6 +106,7 @@ trait Crud {
                 $queryString = self::formatInsertQueryString($data);
                 break;
             case 'UPDATE':
+                $queryString = self::formatUpdateQueryString($data);
                 break;
             case 'DELETE':
                 break;
@@ -125,6 +136,13 @@ trait Crud {
         return $queryString;
     }
 
+    /**
+     * Format select query string
+     * 
+     * @param Array $fields
+     * 
+     * @return String
+     */
     public static function formatSelectQuerystring($fields = [])
     {
         $table = self::$table ? self::$table : self::getTableNameFromClassName(); 
@@ -134,6 +152,26 @@ trait Crud {
         }
 
         return $queryString;
+    }
+
+    /**
+     * Format update query string
+     * 
+     * @param Array $data
+     * 
+     * @return String
+     */
+    public function formatUpdateQueryString($data)
+    {
+        $table = self::$table ? self::$table : self::getTableNameFromClassName();
+        $queryString = "UPDATE `$table` SET ";
+
+        // build query string
+        foreach ($data as $key => $value) {
+            $queryString .= "$key = :$key";
+        }
+
+        return $queryString.";";
     }
 
     /**

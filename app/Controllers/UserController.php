@@ -24,4 +24,17 @@ class UserController extends Controller
         $users = User::all();
         return include($this->BASE_PATH."/views/user/list.php");
     }
+
+    public function edit()
+    {
+        # code ...
+    }
+
+    public function update(User $user)
+    {
+        $data = [
+            'first_name' => 'Harvey',
+            'last_name'  => 'Aparece'
+        ];
+    }
 }

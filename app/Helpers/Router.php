@@ -35,8 +35,20 @@ class Router {
                 'route'    => self::extractRoute($args[0]),
                 'class'    => $args[1][0],
                 'callback' => $args[1][1],
-                'name'     => str_replace('controller', '', strtolower(end($routeNameInitial).'.'.$args[1][1]))
+                'name'     => str_replace('controller', '', strtolower(end($routeNameInitial).'.'.$args[1][1])),
+                'params'   => [],
             ];
+
+            if (self::hasParams($formattedRoute['route'])) {
+                $explodedRoute = explode(':', $formattedRoute['route']);
+                $formattedRoute['route'] = substr($explodedRoute[0], 0, -1);
+                
+                foreach ($explodedRoute as $key => $value) {
+                    if ($key) {
+                        array_push($formattedRoute['params'], str_replace('/', '', $value));
+                    }
+                }
+            }
 
             array_push(self::$routes, $formattedRoute);
         } else {
@@ -62,6 +74,11 @@ class Router {
                 $instance = new $formattedRoute['class']();
                 $instance->{$formattedRoute['callback']}();
                 return;
+            } else if (count($formattedRoute['params'])) {
+                if (true) { // temporary
+                    $instance = new $formattedRoute['class']();
+                    $instance->{$formattedRoute['callback']}();
+                }
             }
         }
 
@@ -69,6 +86,18 @@ class Router {
             self::resolve404Page();
             return;
         }
+    }
+
+    /**
+     * Check route has params
+     * 
+     * @param $route
+     * 
+     * @return bool
+     */
+    private static function hasParams($route)
+    {
+        return str_contains($route, ":");
     }
 
     /**
@@ -131,5 +160,23 @@ class Router {
             self::resolve404Page();
             return;
         }
+    }
+
+    /**
+     * extract route path
+     * 
+     * @param $name Route name
+     * 
+     * @return String Route path
+     */
+    public function extract($name)
+    {
+        foreach (self::$routes as $route) {
+            if ($route['name'] === $name) {
+                return $route['route'];
+            }
+        }
+
+        return "";
     }
 }
