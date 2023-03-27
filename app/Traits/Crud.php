@@ -1,6 +1,8 @@
 <?php
 namespace App\Traits;
 
+use PDO;
+
 trait Crud {
     /**===========================================
      * IMPLEMENTS
@@ -31,6 +33,36 @@ trait Crud {
         # code ...
     }
 
+    /**
+     * Get row by the given ID
+     * 
+     * @param mixed $id
+     * 
+     * @return Model
+     */
+    public static function find($id) {
+        
+        $query = self::createQueryString('WHERE', ['id']);
+        $stmt  = self::getConnection()->prepare($query);
+        $stmt->execute([$id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // create model called instance
+        $class = get_called_class();
+        $model = new $class();
+        
+        if ($result) {
+            $model->setAttributes($result);
+        }
+
+        return $model;
+    }
+
+    /**
+     * Get all data
+     * 
+     * @return Model[]
+     */
     public static function all()
     {
         $query   = self::createQueryString('SELECT');
@@ -49,10 +81,17 @@ trait Crud {
         return $data;
     }
 
+    /**
+     * Update data by ID
+     * 
+     * @param Array $data
+     * 
+     * @return Model
+     */
     public function update($data)
     {
         $data  = self::cleanFields($data);
-        $query = self::createQueryString($data);
+        $query = self::createQueryString('UPDATE', $data)." WHERE id = " . $this->id . ";";
         $stmt  = self::getConnection()->prepare($query);
         $stmt->execute($data);
 
@@ -111,11 +150,34 @@ trait Crud {
             case 'DELETE':
                 break;
             case 'SELECT':
-                $queryString = self::formatSelectQuerystring();
+                $queryString = self::formatSelectQuerystring($data);
+                break;
+            case 'WHERE':
+                $queryString = self::formatWhereQueryString($data);
                 break;
         }
         return $queryString;
     }
+
+    /**
+     * Format where clause query string for fields only
+     * 
+     * @param Array $fields
+     * 
+     * @return String
+     */
+    public static function formatWhereQueryString($fields)
+    {
+        // temporary for now
+        $table = self::$table ? self::$table : self::getTableNameFromClassName();
+        $queryString = "SELECT * FROM `$table` WHERE ";
+        foreach ($fields as $field) {
+            $queryString.="$field = ?,";
+        }
+
+        return substr($queryString, 0, -1).";";
+    }
+
     
     /**
      * Format insert query strings
@@ -161,17 +223,17 @@ trait Crud {
      * 
      * @return String
      */
-    public function formatUpdateQueryString($data)
+    public static function formatUpdateQueryString($data)
     {
         $table = self::$table ? self::$table : self::getTableNameFromClassName();
         $queryString = "UPDATE `$table` SET ";
 
         // build query string
         foreach ($data as $key => $value) {
-            $queryString .= "$key = :$key";
+            $queryString .= "$key = :$key,";
         }
 
-        return $queryString.";";
+        return substr($queryString, 0, -1);
     }
 
     /**

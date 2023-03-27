@@ -33,8 +33,10 @@ class UserController extends Controller
     public function update(User $user)
     {
         $data = [
-            'first_name' => 'Harvey',
-            'last_name'  => 'Aparece'
+            'first_name' => 'Harvey (updated)',
+            'last_name'  => 'Aparece (updated)'
         ];
+
+        $user->update($data);
     }
 }

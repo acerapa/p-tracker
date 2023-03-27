@@ -2,6 +2,8 @@
 namespace App\Helpers;
 
 use Exception;
+use ReflectionMethod;
+use App\Models\Model;
 use App\Helpers\Request;
 
 class Router {
@@ -75,9 +77,10 @@ class Router {
                 $instance->{$formattedRoute['callback']}();
                 return;
             } else if (count($formattedRoute['params'])) {
-                if (true) { // temporary
-                    $instance = new $formattedRoute['class']();
-                    $instance->{$formattedRoute['callback']}();
+                if (str_contains($route, $formattedRoute['route'])) {
+                    if (self::resolveRouteWithParams($route, $formattedRoute)) {
+                        return;
+                    }
                 }
             }
         }
@@ -98,6 +101,43 @@ class Router {
     private static function hasParams($route)
     {
         return str_contains($route, ":");
+    }
+
+    /**
+     * Resolve routes with parameters
+     * 
+     * @param string $route
+     * @param string $routeToCompare
+     * 
+     * @return void
+     */
+    private static function resolveRouteWithParams($route, $formattedRoute)
+    {
+        // get route params
+        $routeParams = explode('/', str_replace($formattedRoute['route'], '', $route));
+        $routeParams = array_filter($routeParams, function ($item) { return $item; });
+        
+        if (count($routeParams) !== count($formattedRoute['params'])) {
+            return false;
+        }
+        
+        // get function params
+        $params = new ReflectionMethod($formattedRoute['class'], $formattedRoute['callback']);
+        $params = $params->getParameters();
+
+        $parameters = [];
+        foreach ($params as $key => $param) {
+            $instance = new ((string) $param->getType())();
+            if ($instance instanceof Model) {
+                $p = array_values($routeParams);
+                $instanceObject = ((string) $param->getType())::find($p[$key]);
+                $parameters[$param->name] = $instanceObject;
+            }
+        }
+
+        $instance = new $formattedRoute['class']();
+        $instance->{$formattedRoute['callback']}(...$parameters);
+        return true;
     }
 
     /**

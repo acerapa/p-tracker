@@ -27,6 +27,13 @@ interface Crud {
     public static function all();
 
     /**
+     * Find By id
+     * 
+     * @param $id
+     */
+    public static function find($id);
+
+    /**
      * Destroy
      */
     public function destroy();
