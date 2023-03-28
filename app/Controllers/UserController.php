@@ -16,7 +16,9 @@ class UserController extends Controller
     {
         $data = Request::getData();
         $user = User::create($data);
-        Router::redirect('auth.loginpage'); // temporary
+        $route = '/user/list';
+        echo "<script>window.location.href='$route'</script>";
+        // Router::redirect('auth.loginpage'); // temporary
     }
 
     public function list()
