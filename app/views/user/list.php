@@ -5,7 +5,7 @@
             <td>#</td>
             <td>Username</td>
             <td>Full Name</td>
-            <td>Regsitered date</td>
+            <td>Registered date</td>
             <td>Action</td>
         </tr>
     </thead>
@@ -17,7 +17,7 @@
                 <td><?php echo $user->getFullName(); ?></td>
                 <td><?php echo $user->created_at; ?></td>
                 <td>
-                    <button>edit</button>
+                    <a href="<?php echo "/user/edit/".$user->id; ?>"><button>edit</button></a>
                     <button>delete</button>
                 </td>
             </tr>

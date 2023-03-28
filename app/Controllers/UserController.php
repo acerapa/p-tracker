@@ -16,7 +16,7 @@ class UserController extends Controller
     {
         $data = Request::getData();
         $user = User::create($data);
-        Router::redirect('auth.loginpage');
+        Router::redirect('auth.loginpage'); // temporary
     }
 
     public function list()
@@ -25,18 +25,17 @@ class UserController extends Controller
         return include($this->BASE_PATH."/views/user/list.php");
     }
 
-    public function edit()
+    public function edit(User $user)
     {
-        # code ...
+        return include($this->BASE_PATH."/views/user/edit.php");
     }
 
     public function update(User $user)
-    {
-        $data = [
-            'first_name' => 'Harvey (updated)',
-            'last_name'  => 'Aparece (updated)'
-        ];
-
+    {   
+        $data = Request::getData();
         $user->update($data);
+        $route = '/user/list';
+        echo "<script>window.location.href='$route'</script>";
+        // Router::redirect('user.list'); // temporary
     }
 }
