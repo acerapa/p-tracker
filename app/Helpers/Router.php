@@ -128,7 +128,7 @@ class Router {
         $parameters = [];
         foreach ($params as $key => $param) {
             $instance = new ((string) $param->getType())();
-            if ($instance instanceof Model) {
+            if (is_a($instance, Model::class)) {
                 $p = array_values($routeParams);
                 $instanceObject = ((string) $param->getType())::find($p[$key]);
                 $parameters[$param->name] = $instanceObject;
