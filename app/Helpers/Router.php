@@ -124,14 +124,17 @@ class Router {
         // get function params
         $params = new ReflectionMethod($formattedRoute['class'], $formattedRoute['callback']);
         $params = $params->getParameters();
-
+        
         $parameters = [];
         foreach ($params as $key => $param) {
-            $instance = new ((string) $param->getType())();
+            $class = (string) $param->getType();
+            $instance = $class ? new $class() : null;
+            $p = array_values($routeParams);
             if (is_a($instance, Model::class)) {
-                $p = array_values($routeParams);
-                $instanceObject = ((string) $param->getType())::find($p[$key]);
-                $parameters[$param->name] = $instanceObject;
+                $instanceObject = $class::find($p[$key]);
+                array_push($parameters, $instanceObject);
+            } else {
+                array_push($parameters, $p[$key]);
             }
         }
 

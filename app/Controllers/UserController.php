@@ -40,4 +40,11 @@ class UserController extends Controller
         echo "<script>window.location.href='$route'</script>";
         // Router::redirect('user.list'); // temporary
     }
+
+    public function destroy(User $user)
+    {
+        $user->destroy();
+        $route = '/user/list';
+        echo "<script>window.location.href='$route'</script>";
+    }
 }

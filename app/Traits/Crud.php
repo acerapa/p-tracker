@@ -101,11 +101,26 @@ trait Crud {
         $model->setAttributes($data);
         
         return $model;
-}
+    }
 
+    /**
+     * Delete an element
+     * 
+     * @return boolean
+     */
     public function destroy()
     {
-        # code...
+        try {
+            $table = self::$table ? self::$table : self::getTableNameFromClassName();
+            $id    = $this->id;
+            $query = "DELETE from $table WHERE id = $id;";
+            $stmt  = self::getConnection()->prepare($query);
+            $stmt->execute();
+
+            return true; 
+        } catch ( Exception $e ) {
+            return false;
+        }
     }
 
     /**

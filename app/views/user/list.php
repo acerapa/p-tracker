@@ -18,7 +18,7 @@
                 <td><?php echo $user->created_at; ?></td>
                 <td>
                     <a href="<?php echo "/user/edit/".$user->id; ?>"><button>edit</button></a>
-                    <button>delete</button>
+                    <a href="<?php echo "/user/delete/".$user->id; ?>"><button>delete</button></a>
                 </td>
             </tr>
         <?php endforeach;?>
