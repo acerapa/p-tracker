@@ -179,21 +179,19 @@ class Router {
      * 
      * @param $route | path or route
      */
-    public static function redirect($route) {
+    public static function redirect($route, $params = []) {
         $is_route_matched = false;
         foreach(self::$routes as $rt) {
             if (str_contains($route, '/')) {
                 if ($rt['method'] === 'GET' && $rt['route'] === $route) {
                     $is_route_matched = true;
-                    $instance = new $rt['class']();
-                    $instance->{$rt['callback']}();
+                    header('Location: ' . self::generateRouteParams($route, $params));
                     return;
                 }
             } else {
                 if ($rt['name'] === $route) {
                     $is_route_matched = true;
-                    $instance = new $rt['class']();
-                    $instance->{$rt['callback']}();
+                    header('Location: ' . self::generateRouteParams($rt['route'], $params));
                     return;
                 }
             }
@@ -221,5 +219,23 @@ class Router {
         }
 
         return "";
+    }
+
+    /**
+     * Generate route params
+     * 
+     * @param String $route
+     * @param Array  $parameter
+     * 
+     * @return String
+     */
+    public static function generateRouteParams($route, $params)
+    {
+        $route = $route."?";
+        foreach ($params as $key => $value) {
+            $route.= "$key=$value&";
+        }
+
+        return substr($route, 0, -1);
     }
 }

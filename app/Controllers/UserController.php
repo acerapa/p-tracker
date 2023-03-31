@@ -16,9 +16,7 @@ class UserController extends Controller
     {
         $data = Request::getData();
         $user = User::create($data);
-        $route = '/user/list';
-        echo "<script>window.location.href='$route'</script>";
-        // Router::redirect('auth.loginpage'); // temporary
+        Router::redirect('user.list');
     }
 
     public function list()
@@ -36,15 +34,12 @@ class UserController extends Controller
     {   
         $data = Request::getData();
         $user->update($data);
-        $route = '/user/list';
-        echo "<script>window.location.href='$route'</script>";
-        // Router::redirect('user.list'); // temporary
+        Router::redirect('user.list');
     }
 
     public function destroy(User $user)
     {
         $user->destroy();
-        $route = '/user/list';
-        echo "<script>window.location.href='$route'</script>";
+        Router::redirect('user.list');
     }
 }

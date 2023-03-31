@@ -3,6 +3,8 @@ namespace App\Config;
 
 use PDO;
 use PDOException;
+
+use App\Helpers\Router;
 class Database {
 
     private $server_name;
@@ -30,10 +32,9 @@ class Database {
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             // redirect to sql error with message
-            $route = '/error/sql?msg='.$e->getMessage();
-            echo "<script>window.location.href='$route'</script>";
+            Router::redirect('exception.sqlerrorpage', ['msg' => $e->getMessage()]);
         }
-    } 
+    }
 
     /**
      * Get the connection after initialization
