@@ -8,7 +8,7 @@ use App\Controllers\UserController;
 use App\Controllers\ExceptionController;
 
 
-// routes web routes
+// web routes
 Router::get('/', [AppController::class, 'index']);
 Router::get('/?i=1', [AppController::class, 'index']);
 Router::get('/user/list', [UserController::class, 'list']);
@@ -18,6 +18,10 @@ Router::get('/register', [AuthController::class, 'registerPage']);
 Router::post('/user/edit/:user', [UserController::class, 'edit']);
 Router::post('/user/update/:user', [UserController::class, 'update']);
 Router::post('/user/delete/:user', [UserController::class, 'destroy']);
+
+// api routes
+Router::get('/api/user/list', [UserController::class, 'userList']);
+
 
 // boot exception routes
 ExceptionController::bootExceptionRoute();

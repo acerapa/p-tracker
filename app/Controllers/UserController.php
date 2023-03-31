@@ -42,4 +42,14 @@ class UserController extends Controller
         $user->destroy();
         Router::redirect('user.list');
     }
+
+    /**=================================
+     * APIs
+     ===================================*/
+    public function userList()
+    {
+        header('Content-Type: application/json');
+        $users = User::all();
+        echo json_encode($users);
+    }
 }
