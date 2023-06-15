@@ -2,6 +2,9 @@
 namespace App\Traits;
 
 use App\Helpers\Sanitizer;
+use App\Constant\SqlOperatorConst;
+use Exception;
+use PDO;
 
 trait HasBuilder {
     /**
@@ -38,10 +41,13 @@ trait HasBuilder {
     public function __call($method, $args)
     {
         global $table;
+        global $class;
+
+        $class = $this;
 
         $m = strtolower($method);
         $table = self::getTableNameFromClassName();
-
+        
         $builder = null;
 
         switch ($m) {
@@ -50,6 +56,9 @@ trait HasBuilder {
                 break;
             case 'get':
                 $builder = $this->get($args);
+                break;
+            case 'first':
+                $builder = $this->first();
                 break;
         }
 
@@ -61,12 +70,38 @@ trait HasBuilder {
      */
     private function where($args)
     {
+        $opt = SqlOperatorConst::$OPT_EQUALS;
+        $field = '';
+        $value = '';
+
+        // validate args
+        if (!count($args) || count($args) < 2) {
+            throw new Exception('Invalid arguments! Please state this arguments ($field, $operator, $value)');
+        } elseif (count($args) == 2) {
+            $field = $args[0];
+            $value = $args[1];
+        } else {
+            $field = $args[0];
+            $opt = $args[1];
+            $value = $args[2];
+        }
+
         global $table;
+        global $class;
+        $query = $class->query;
+        if (!strstr($this->query, $table)) {
+            $query = $query . $table;
+        }
+        
+        if (!strstr(strtoupper($query), 'WHERE')) {
+            $query = $query . " WHERE $field $opt '$value'";
+        } else {
+            $query = $query . " AND $field $opt '$value'";
+        }
 
-        $query = $this->query . $table;
-        $this->query = $query;
+        $class->query = $query;
 
-        return $this;
+        return $class;
     }
 
     /**
@@ -92,7 +127,25 @@ trait HasBuilder {
             $class->setAttributes($dt);
             array_push($data, $class);
         }
-
+        
         return $data;
+    }
+
+    function first() {
+        global $table;
+        global $class;
+
+        if (!strstr($class->query, $table)) {
+            $class->query = $class->query . $table;
+        }
+
+        $stmt   = self::getConnection()->query($class->query);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            $class->setAttributes($result);
+        }
+        
+        return $result ? $class : false;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Helpers\Request;
 use App\Controllers\Controller;
 
 class AuthController extends Controller
@@ -24,7 +25,7 @@ class AuthController extends Controller
      */
 
     public function authenticateLogin() {
-        
+        var_dump(Request::getData());
     }
 
     /**

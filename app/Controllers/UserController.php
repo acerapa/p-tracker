@@ -6,6 +6,7 @@ use App\Helpers\Router;
 use App\Helpers\Request;
 use App\Helpers\Sanitizer;
 use App\Controllers\Controller;
+use App\Constant\SqlOperatorConst;
 
 class UserController extends Controller
 {
@@ -16,7 +17,6 @@ class UserController extends Controller
     public function store()
     {
         $data = Sanitizer::sanitize(Request::getData());
-        // $data = Request::getData();
 
         // hash password
         if (isset($data['password'])) {
