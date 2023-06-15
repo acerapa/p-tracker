@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\User;
 use App\Helpers\Router;
 use App\Helpers\Request;
+use App\Helpers\Sanitizer;
 use App\Controllers\Controller;
 
 class UserController extends Controller
@@ -14,7 +15,14 @@ class UserController extends Controller
 
     public function store()
     {
-        $data = Request::getData();
+        $data = Sanitizer::sanitize(Request::getData());
+        // $data = Request::getData();
+
+        // hash password
+        if (isset($data['password'])) {
+            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        }
+
         $user = User::create($data);
         Router::redirect('user.list');
     }
@@ -32,7 +40,7 @@ class UserController extends Controller
 
     public function update(User $user)
     {   
-        $data = Request::getData();
+        $data = Sanitizer::sanitize(Request::getData());
         $user->update($data);
         Router::redirect('user.list');
     }

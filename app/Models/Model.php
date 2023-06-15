@@ -1,14 +1,15 @@
 <?php
 namespace App\Models;
 
-use App\Traits\Crud;
+use App\Traits\HasCrud;
+use App\Traits\HasBuilder;
 use App\Config\Database;
-use App\Interfaces\Crud as CrudInterface;
+use App\Interfaces\Crud;
 use App\Abstracts\ModelAbstract;
 use Doctrine\Inflector\InflectorFactory;
 
-class Model extends ModelAbstract implements CrudInterface {
-    use Crud;
+class Model extends ModelAbstract implements Crud {
+    use HasCrud, HasBuilder;
 
     /**
      * Constructor
@@ -36,21 +37,6 @@ class Model extends ModelAbstract implements CrudInterface {
         $className = explode('\\', $namespace);
 
         return end($className);
-    }
-
-    /**
-     * Sanitize data from html special characters
-     * 
-     * @param Array $data
-     * 
-     * @return Array
-     */
-    private static function santizedData($data)
-    {
-        foreach ($data as $key => $value) {
-            $data[$key] = htmlspecialchars(strip_tags($value));
-        }
-        return $data;
     }
 
     /**

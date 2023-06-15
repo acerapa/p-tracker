@@ -13,8 +13,8 @@
             <img class="p-logo" src="../../../app/Public/icons/logo.png" alt="logo">
             <span class="sign-in-text">Sign in to <b>P-tracker</b></span>
             <form action="/register" method="post">
-                <input class="input username-input" type="text" placeholder="Username" name="username" autocomplete="off">
-                <input class="input" type="email" placeholder="Email" name="email" autocomplete="off">
+                <input class="input username-input" type="text" placeholder="Username" name="username">
+                <input class="input" type="email" placeholder="Email" name="email">
                 <input class="input" type="password" placeholder="Password" name="password">
                 <input class="input" type="password" placeholder="Confirm password" name="confirm-password">
                 <input class="button" type="submit" value="Sign up">

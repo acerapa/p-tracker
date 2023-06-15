@@ -2,8 +2,9 @@
 namespace App\Traits;
 
 use PDO;
+use App\Helpers\Sanitizer;
 
-trait Crud {
+trait HasCrud {
     /**===========================================
      * IMPLEMENTS
      ============================================*/
@@ -26,11 +27,6 @@ trait Crud {
         $model->setAttributes($data);
         
         return $model;
-    }
-
-    public static function select($fields = [])
-    {
-        # code ...
     }
 
     /**
@@ -70,11 +66,13 @@ trait Crud {
         $results = $stmt->fetchAll();
         
         $data = [];
-        foreach ($results as $user) {
+        foreach ($results as $dt) {
+            // revert charactes
+            $dt = Sanitizer::revertChars($dt);
             // create model called instance
             $class = get_called_class();
             $model = new $class();
-            $model->setAttributes($user);
+            $model->setAttributes($dt);
             array_push($data, $model);
         }
 

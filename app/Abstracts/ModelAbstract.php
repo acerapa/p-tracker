@@ -3,6 +3,9 @@ namespace App\Abstracts;
 
 abstract class ModelAbstract {
     
+    // query
+    protected $query = 'SELECT * FROM ';
+    
     // fillables
     protected static $fields = [];
     

@@ -8,7 +8,6 @@ class User extends Model {
         'email',
         'password',
         'username',
-        'user_role',
         'last_name',
         'first_name',
         'created_at',

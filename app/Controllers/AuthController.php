@@ -20,6 +20,14 @@ class AuthController extends Controller
     }
 
     /**
+     * Authenticate
+     */
+
+    public function authenticateLogin() {
+        
+    }
+
+    /**
      * Return register page
      * 
      * @return ViewFile 
