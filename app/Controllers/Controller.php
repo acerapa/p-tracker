@@ -7,5 +7,8 @@ class Controller
     
     function __construct() {
         $this->BASE_PATH = dirname(__DIR__);
+        
+        // start session
+        session_start();
     }
 }

@@ -1,13 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<?php 
+<?php
+    $BASE_PATH = dirname(__DIR__);
+    ob_start();
     $title = 'Register';
     $imports = [
         'css' => '../../../app/Public/css/register.css'
     ];
-    include(dirname(__DIR__)."/component/header.php")
+    include($BASE_PATH."/layout/parts/header.php");
+    $header = ob_get_contents();
+    ob_end_clean();
 ?>
-<body>
+<?php ob_start(); ?>
     <div class="register-container">
         <div>
             <img class="p-logo" src="../../../app/Public/icons/logo.png" alt="logo">
@@ -32,5 +34,10 @@
             <p style="margin-top: 22px;">Already had an account? <b><a href="/login">Sign in</a></b></p>
         </div>
     </div>
-</body>
-</html>
+<?php
+    $body = ob_get_contents();
+    ob_end_clean();
+?>
+<?php
+    include($BASE_PATH.'/layout/app.php');
+?>

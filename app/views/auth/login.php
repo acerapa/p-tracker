@@ -1,13 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php 
+    $BASE_PATH = dirname(__DIR__);
+    ob_start();
     $title = 'Login';
     $imports = [
         'css' => '../../../app/Public/css/login.css'
     ];
-    include(dirname(__DIR__)."/component/header.php")
+    include($BASE_PATH."/layout/parts/header.php");
+    $header = ob_get_contents();
+    ob_end_clean();
 ?>
-<body>
+
+<?php 
+    ob_start();
+?>
     <div class="login-container">
         <div>
             <img class="p-logo" src="../../../app/Public/icons/logo.png" alt="logo">
@@ -33,5 +38,10 @@
             <p style="margin-top: 22px;">Don't have account yet? <b><a href="/register">Sign up</a></b></p>
         </div>
     </div>
-</body>
-</html>
+<?php 
+    $body = ob_get_contents();
+    ob_end_clean();
+?>
+<?php
+    include($BASE_PATH.'/layout/app.php');
+?>

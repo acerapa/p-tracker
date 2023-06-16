@@ -35,13 +35,18 @@ class AuthController extends Controller
 
         if ($user) {
             if (password_verify($credentials['password'], $user->password)) {
-                // set pass session here
+                // set session to authenticated 
+                $_SESSION['auth'] = $user;
                 Router::redirect('app.index');
                 return;
             }
         }
 
-        // set error session here
+        // set error to a session
+        $_SESSION['error'] = [
+            'message' => 'Credential doesn\'t match',
+        ];
+        
         Router::redirect('auth.loginpage');
         return;
     }
