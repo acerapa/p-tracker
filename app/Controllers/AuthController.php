@@ -1,8 +1,12 @@
 <?php
 namespace App\Controllers;
 
+use App\Constant\SqlOperatorConst;
 use App\Helpers\Request;
 use App\Controllers\Controller;
+use App\Helpers\Router;
+use App\Helpers\Sanitizer;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -25,7 +29,21 @@ class AuthController extends Controller
      */
 
     public function authenticateLogin() {
-        var_dump(Request::getData());
+        $credentials = Sanitizer::sanitize(Request::getData());
+
+        $user = User::where('email', SqlOperatorConst::$OPT_EQUALS, $credentials['email'])->first();
+
+        if ($user) {
+            if (password_verify($credentials['password'], $user->password)) {
+                // set pass session here
+                Router::redirect('app.index');
+                return;
+            }
+        }
+
+        // set error session here
+        Router::redirect('auth.loginpage');
+        return;
     }
 
     /**
