@@ -12,13 +12,13 @@ class ExceptionController extends Controller
     }
 
     /**
-     * Retrun 404 page
+     * Return error pages
      * 
      * @return ViewFile
      */
-    public function error404Page()
+    public function errorPage($code)
     {
-        return include($this->BASE_PATH.'/views/errors/404.php');
+        return include($this->BASE_PATH."/views/errors/$code.php");
     }
 
     /**
@@ -36,7 +36,7 @@ class ExceptionController extends Controller
     public static function bootExceptionRoute()
     {
         // not found
-        Router::get('/error/404', [self::class, 'error404Page']);
+        Router::get('/error/:code', [self::class, 'errorPage']);
 
         // sql error route
         Router::get('/error/sql', [self::class, 'sqlErrorPage']);

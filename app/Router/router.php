@@ -8,8 +8,14 @@ use App\Controllers\UserController;
 use App\Controllers\ExceptionController;
 
 
+
 // web routes
-Router::get('/', [AppController::class, 'index']);
+
+// testing middleware
+Router::middleware('auth', function () {
+    Router::get('/', [AppController::class, 'index']);
+});
+
 Router::get('/?i=1', [AppController::class, 'index']);
 Router::get('/user/list', [UserController::class, 'list']);
 Router::post('/register', [UserController::class, 'store']);

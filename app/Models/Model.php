@@ -4,11 +4,11 @@ namespace App\Models;
 use App\Traits\HasCrud;
 use App\Traits\HasBuilder;
 use App\Config\Database;
-use App\Interfaces\Crud;
+use App\Interfaces\ICrud;
 use App\Abstracts\ModelAbstract;
 use Doctrine\Inflector\InflectorFactory;
 
-class Model extends ModelAbstract implements Crud {
+class Model extends ModelAbstract implements ICrud {
     use HasCrud, HasBuilder;
 
     /**

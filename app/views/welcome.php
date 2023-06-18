@@ -1,6 +1,6 @@
 <?php
     $BASE_PATH = __DIR__;
-    $user = $_SESSION['auth'];
+    $user = isset($_SESSION['auth']) ? $_SESSION['auth'] : null;
 ?>
 
 <!-- header content -->

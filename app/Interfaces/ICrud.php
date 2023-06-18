@@ -1,7 +1,7 @@
 <?php
 namespace App\Interfaces;
 
-interface Crud {
+interface ICrud {
     /**
      * Create
      * 

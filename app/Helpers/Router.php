@@ -5,6 +5,7 @@ use Exception;
 use ReflectionMethod;
 use App\Models\Model;
 use App\Helpers\Request;
+use App\Middleware\RegisteredMiddlewares;
 
 class Router {
     /**
@@ -13,9 +14,9 @@ class Router {
     private static $routes = [];
 
     /**
-     * @var String exception route
+     * @var String exception routes
      */
-    private static $route404 = '/error/404';
+    private static $routeErrorPage = '/error';
 
     /**
      * @var Array array of allowed http methods
@@ -25,20 +26,21 @@ class Router {
     /**
      * Calls this method when nothing is specified function name
      * 
-     * @param String $method static function name
+     * @param String $method static function name (http method)
      * @param Array  $args arguments 
      */
     public static function __callStatic($method, $args)
     {
         if (in_array(strtoupper($method), self::$methods)) {
             $routeNameInitial = explode('\\', $args[1][0]);
-            $formattedRoute = [
-                'method'   => strtoupper($method),
-                'route'    => self::extractRoute($args[0]),
-                'class'    => $args[1][0],
-                'callback' => $args[1][1],
-                'name'     => str_replace('controller', '', strtolower(end($routeNameInitial).'.'.$args[1][1])),
-                'params'   => [],
+            $formattedRoute  = [
+                'method'     => strtoupper($method),
+                'route'      => self::extractRoute($args[0]),
+                'class'      => $args[1][0],
+                'callback'   => $args[1][1],
+                'name'       => str_replace('controller', '', strtolower(end($routeNameInitial).'.'.$args[1][1])),
+                'params'     => [],
+                'middleware' => [],
             ];
 
             if (self::hasParams($formattedRoute['route'])) {
@@ -73,6 +75,13 @@ class Router {
         foreach (self::$routes as $formattedRoute) {
             if ($formattedRoute['method'] === $method && $formattedRoute['route'] === self::extractRoute($route)) {
                 $is_route_matched = true;
+
+                // run middleware
+                $middlewareRes = self::resolveMiddleware($formattedRoute);
+                if (!$middlewareRes) {
+                    return;
+                }
+
                 $instance = new $formattedRoute['class']();
                 $instance->{$formattedRoute['callback']}();
                 return;
@@ -86,7 +95,7 @@ class Router {
         }
 
         if (!$is_route_matched) {
-            self::resolve404Page();
+            self::resolveErrorPage(404);
             return;
         }
     }
@@ -144,15 +153,16 @@ class Router {
     }
 
     /**
-     * Resolves route not found 404
+     * Resolves exception routes
      */
-    private static function resolve404Page()
+    private static function resolveErrorPage($code)
     {
         $routes = array_column(self::$routes, 'route');
-        $routeIndex = array_search(self::$route404, $routes);
+        $routeIndex = array_search(self::$routeErrorPage, $routes);
         $formattedRoute = self::$routes[$routeIndex];
-        $instance = new $formattedRoute['class']();
-        $instance->{$formattedRoute['callback']}();
+
+        $route = self::$routeErrorPage.'/'.$code;
+        self::resolveRouteWithParams($route, $formattedRoute);
     }
 
     /**
@@ -198,7 +208,7 @@ class Router {
         }
 
         if (!$is_route_matched) {
-            self::resolve404Page();
+            self::resolveErrorPage(404);
             return;
         }
     }
@@ -237,5 +247,61 @@ class Router {
         }
 
         return substr($route, 0, -1);
+    }
+
+    /**
+     * Set middleware
+     * 
+     * @param String   $name middleware name
+     * @param callback $callback function
+     * 
+     * @return void
+     */
+    public static function middleware($name, $callback) {
+        $routes = Router::$routes;
+
+        Router::$routes = [];
+
+        $callback();
+        
+        for ($ndx = 0;$ndx < count(Router::$routes);$ndx++) {
+            array_push(Router::$routes[$ndx]['middleware'], $name);
+        }
+
+        Router::$routes = array_merge($routes, Router::$routes);
+    }
+
+    /**
+     * Resolve middleware
+     * 
+     * @param String $name middleware name
+     */
+
+    private static function resolveMiddleware($route) {
+        $middlewares = RegisteredMiddlewares::MIDDLEWARES;
+
+        $is_not_auth = false;
+
+        foreach ($route['middleware'] as $name) {
+
+            // throw exception
+            if (!in_array($name, array_keys($middlewares))) throw new Exception("Can't resolve middleware '$name'");
+
+            $instance = new $middlewares[$name]();
+
+            if (!$instance::authorized()) {
+                $is_not_auth = true;
+                break;
+            }
+
+            $instance::handle();
+        }
+
+        if ($is_not_auth) {
+            self::resolveErrorPage(401);
+            return false;
+        }
+
+        return true;
     }
 }
