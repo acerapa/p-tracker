@@ -39,6 +39,6 @@ class ExceptionController extends Controller
         Router::get('/error/:code', [self::class, 'errorPage']);
 
         // sql error route
-        Router::get('/error/sql', [self::class, 'sqlErrorPage']);
+        Router::get('/sql/error', [self::class, 'sqlErrorPage']);
     }
 }

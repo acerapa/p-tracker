@@ -1,5 +1,6 @@
 <h1 style="text-align:center;">SQL Error</h1>
 <hr>
+
 <?php if (isset($data)):?>
     <h1 style="text-align:center"><?php echo $data['msg'] ?></h1>
 <?php else:?>

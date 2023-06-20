@@ -23,6 +23,11 @@ class Router {
      */
     private static $methods = ['GET', 'POST', 'PUT', 'DELETE']; 
 
+
+    /** =====================================
+     *  MAIN METHODS
+     *  =====================================*/
+
     /**
      * Calls this method when nothing is specified function name
      * 
@@ -41,6 +46,7 @@ class Router {
                 'name'       => str_replace('controller', '', strtolower(end($routeNameInitial).'.'.$args[1][1])),
                 'params'     => [],
                 'middleware' => [],
+                'query'      => [],
             ];
 
             if (self::hasParams($formattedRoute['route'])) {
@@ -75,7 +81,7 @@ class Router {
         foreach (self::$routes as $formattedRoute) {
             if ($formattedRoute['method'] === $method && $formattedRoute['route'] === self::extractRoute($route)) {
                 $is_route_matched = true;
-
+                
                 // run middleware
                 $middlewareRes = self::resolveMiddleware($formattedRoute);
                 if (!$middlewareRes) {
@@ -86,7 +92,8 @@ class Router {
                 $instance->{$formattedRoute['callback']}();
                 return;
             } else if (count($formattedRoute['params'])) {
-                if (str_contains($route, $formattedRoute['route'])) {
+                self::compareRoute(self::extractRoute($route), $formattedRoute['route']);
+                if (str_contains($formattedRoute['route'], self::extractRoute($route))) {
                     if (self::resolveRouteWithParams($route, $formattedRoute)) {
                         return;
                     }
@@ -98,18 +105,6 @@ class Router {
             self::resolveErrorPage(404);
             return;
         }
-    }
-
-    /**
-     * Check route has params
-     * 
-     * @param $route
-     * 
-     * @return bool
-     */
-    private static function hasParams($route)
-    {
-        return str_contains($route, ":");
     }
 
     /**
@@ -166,25 +161,6 @@ class Router {
     }
 
     /**
-     * Extract route path and route params
-     * 
-     * @param String  $route path router
-     * 
-     * @return String $path route path
-     */
-    private static function extractRoute($route)
-    {
-        $path = [];
-        if (strpos($route, '?')) {
-            $path = explode('?', $route)[0];
-        } else {
-            $path = $route;
-        }
-
-        return $path;
-    }
-
-    /**
      * redirect route using path or route name
      * 
      * @param $route | path or route
@@ -214,39 +190,30 @@ class Router {
     }
 
     /**
-     * extract route path
-     * 
-     * @param $name Route name
-     * 
-     * @return String Route path
-     */
-    public function extract($name)
-    {
-        foreach (self::$routes as $route) {
-            if ($route['name'] === $name) {
-                return $route['route'];
-            }
-        }
-
-        return "";
-    }
-
-    /**
      * Generate route params
      * 
      * @param String $route
-     * @param Array  $parameter
+     * @param Array  $params
      * 
      * @return String
      */
-    public static function generateRouteParams($route, $params)
+    private static function generateRouteParams($route, $params)
     {
-        $route = $route."?";
+        $queryParams = '?';
+
         foreach ($params as $key => $value) {
-            $route.= "$key=$value&";
+            if (!is_string($key)) {
+                $route.="/$value";
+            } else {
+                $queryParams.= "$key=$value&";
+            }
         }
 
-        return substr($route, 0, -1);
+        if (self::is_associative_array($params)) {
+            $route = substr("$route$queryParams", 0, -1);
+        }
+
+        return $route;
     }
 
     /**
@@ -281,6 +248,7 @@ class Router {
         $middlewares = RegisteredMiddlewares::MIDDLEWARES;
 
         $is_not_auth = false;
+        $is_handle_fail = false;
 
         foreach ($route['middleware'] as $name) {
 
@@ -294,7 +262,10 @@ class Router {
                 break;
             }
 
-            $instance::handle();
+            if (!$instance::handle()) {
+                $is_handle_fail = true;
+                break;
+            }
         }
 
         if ($is_not_auth) {
@@ -302,6 +273,126 @@ class Router {
             return false;
         }
 
+        if ($is_handle_fail) {
+            return false;
+        }
+
         return true;
+    }
+
+
+    /**========================================
+     * HELPER FUNCTIONS
+     ==========================================*/
+
+    /**
+     * Valdidate array if it contains elemets with associations
+     * 
+     * @param array $array Array to be validated
+     * 
+     * @return bool
+     */
+    private static function is_associative_array($array)
+    {
+        $is_assoc = false;
+        $keys = array_keys($array);
+        foreach ($keys as $key) {
+            if (is_string($key)) {
+                $is_assoc = true;
+            }
+        }
+        return $is_assoc;
+    }
+
+    /**
+     * extract route path
+     * 
+     * @param $name Route name
+     * 
+     * @return String Route path
+     */
+    public function extract($name)
+    {
+        foreach (self::$routes as $route) {
+            if ($route['name'] === $name) {
+                return $route['route'];
+            }
+        }
+
+        return "";
+    }
+
+    /**
+     * Check route has params
+     * 
+     * @param $route
+     * 
+     * @return bool
+     */
+    private static function hasParams($route)
+    {
+        return str_contains($route, ":");
+    }
+
+    /**
+     * Extract route path and route params
+     * 
+     * @param String  $route path router
+     * 
+     * @return String $path route path
+     */
+    private static function extractRoute($route)
+    {
+        $path = [];
+        if (strpos($route, '?')) {
+            $path = explode('?', $route)[0];
+        } else {
+            $path = $route;
+        }
+
+        return $path;
+    }
+
+    /**
+     * Compare route string
+     * 
+     * @param string $passed_route      passed route from browsers
+     * @param string $registered_route  registered route
+     * 
+     * @return bool
+     */
+
+    private static function compareRoute($passed_route, $registered_route) : bool
+    {
+        $is_matched = false;
+        $arr_passed = explode('/', $passed_route);
+        $arr_registered = explode('/', $registered_route);
+        
+        print_r($arr_passed);
+        print_r($arr_registered);
+
+        return $is_matched;
+    }
+
+    /**
+     * Extract query parameters from routes
+     * 
+     * @param string $route Provided route
+     * 
+     * @return array query params
+     */
+    private static function resolveQueryParams($route) {
+        $params = [];
+        
+        if (strpos($route, '?')) {
+            $stringParams = explode('?', $route)[1];
+            
+            foreach (explode('&', $stringParams) as $pr) {
+                $arr_pr = explode('=', $pr);
+                $params[$arr_pr[0]] = isset($arr_pr[1]) && $arr_pr[1] ? $arr_pr[1] : null;
+            }
+        }
+
+        return $params;
     }
 }
