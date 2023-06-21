@@ -2,7 +2,7 @@
 <html lang="en">
 <?php 
     $title = 'Edit User';
-    include(dirname(__DIR__)."/component/header.php")
+    include(dirname(__DIR__)."/layout/parts/header.php")
 ?>
 <body>
     <form action="<?php echo "/user/update/".$user->id; ?>" method="post">

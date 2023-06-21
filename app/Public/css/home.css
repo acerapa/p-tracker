@@ -1,0 +1,27 @@
+body {
+    background-color: #BFDDFF;
+}
+
+.app-container {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+.header {
+    height: 75px;
+    position: relative;
+}
+
+.header-icon {
+    width: 35px;
+    height: 35px;
+    margin: 10px 0px;
+    position: absolute;
+}
+
+.user-icon {
+    right: 0;
+    display: block;
+}

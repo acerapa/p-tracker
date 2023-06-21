@@ -3,6 +3,7 @@ namespace App\Middleware;
 
 class RegisteredMiddlewares {
     const MIDDLEWARES = [
-        'auth' => \App\Middleware\Define\AuthMiddleware::class
+        'auth' => \App\Middleware\Define\AuthMiddleware::class,
+        'page' => \App\Middleware\Define\PageMiddleware::class,
     ];
 }

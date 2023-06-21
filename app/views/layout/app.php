@@ -10,15 +10,17 @@
     ?>
 </head>
 <body>
-    <?php
-        if (isset($body) && $body) {
-            echo $body;
-        }
-    ?>
-    <?php
-        if (isset($footer) && $footer) {
-            echo $footer;
-        }
-    ?>
+    <div class="container">
+        <?php
+            if (isset($body) && $body) {
+                echo $body;
+            }
+        ?>
+        <?php
+            if (isset($footer) && $footer) {
+                echo $footer;
+            }
+        ?>
+    </div>
 </body>
 </html>

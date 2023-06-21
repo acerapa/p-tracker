@@ -71,6 +71,11 @@ class Router {
      */
     public static function run()
     {
+        // start session
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        
         $is_route_matched = false;
         $route  = $_SERVER['REQUEST_URI'];
         $method = $_SERVER['REQUEST_METHOD'];
@@ -91,9 +96,9 @@ class Router {
                 $instance = new $formattedRoute['class']();
                 $instance->{$formattedRoute['callback']}();
                 return;
-            } else if (count($formattedRoute['params'])) {
-                self::compareRoute(self::extractRoute($route), $formattedRoute['route']);
-                if (str_contains($formattedRoute['route'], self::extractRoute($route))) {
+            } else if (count($formattedRoute['params'])) {;
+                // if (str_contains($formattedRoute['route'], self::extractRoute($route))) {
+                if (self::compareRoute(self::extractRoute($route), $formattedRoute['route'])) {
                     if (self::resolveRouteWithParams($route, $formattedRoute)) {
                         return;
                     }
@@ -364,12 +369,29 @@ class Router {
 
     private static function compareRoute($passed_route, $registered_route) : bool
     {
-        $is_matched = false;
-        $arr_passed = explode('/', $passed_route);
-        $arr_registered = explode('/', $registered_route);
+        $is_matched = true;
+        $arr_passed = array_values(array_filter(explode('/', $passed_route)));
+        $arr_registered = array_values(array_filter(explode('/', $registered_route)));
+
+        $arr_to_comp = [];
+
+        foreach ($arr_registered as $url_part) {
+            if (!strpos($url_part, ':')) {
+                array_push($arr_to_comp, $url_part);
+            }
+        }
         
-        print_r($arr_passed);
-        print_r($arr_registered);
+        if (count($arr_to_comp) <= count($arr_passed)) {
+            for ($ndx = 0;$ndx < count($arr_to_comp); $ndx++) {
+                $passed_part = isset($arr_passed[$ndx]) ? $arr_passed[$ndx] : null;
+                if ($passed_part != $arr_to_comp[$ndx]) {
+                    $is_matched = false;
+                    break;
+                }
+            }
+        } else {
+            $is_matched = false;
+        }
 
         return $is_matched;
     }

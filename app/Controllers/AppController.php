@@ -16,6 +16,6 @@ class AppController extends Controller
      */
     public function index()
     {
-        return include($this->BASE_PATH."/views/welcome.php");
+        return include($this->BASE_PATH."/views/index.php");
     }
 }

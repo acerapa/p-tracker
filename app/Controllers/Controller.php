@@ -7,10 +7,5 @@ class Controller
     
     function __construct() {
         $this->BASE_PATH = dirname(__DIR__);
-        
-        // start session
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
     }
 }
