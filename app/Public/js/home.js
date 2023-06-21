@@ -5,6 +5,12 @@ window.onload = function () {
     
     // event listeners
     userIcon.addEventListener('click', function () {
-        // code ...
+        rightSideBar.classList.remove('slideOutRight');
+        rightSideBar.classList.add('slideInRight');
+    });
+
+    dropdownClose.addEventListener('click', function () {
+        rightSideBar.classList.remove('slideInRight');
+        rightSideBar.classList.add('slideOutRight');
     });
 }

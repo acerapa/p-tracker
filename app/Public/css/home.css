@@ -98,10 +98,10 @@ body {
 
 .header-dropdown {
     top: 0px;
-    right: 0;
     height: 100%;
     width: 185px;
     padding: 15px;
+    right: -222px;
     position: fixed;
     background-color: #9fb4cd;
     border-radius: 5px 0px 0px 5px;
@@ -147,4 +147,31 @@ body {
     cursor: pointer;
     position: absolute;
     filter: brightness(0) invert(1);
+}
+
+
+.slideInRight {
+    animation: slideInRight 0.5s ease-in-out forwards;
+}
+
+.slideOutRight {
+    animation: slideOutRight 0.5s ease-in-out forwards;
+}
+
+@keyframes slideInRight {
+    from {
+        right: -222px;
+    }
+    to {
+        right: 0px;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        right: 0px;
+    }
+    to {
+        right: -222px;
+    }
 }

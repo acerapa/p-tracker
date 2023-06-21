@@ -5,7 +5,6 @@
 ?>
 
 
-
 <!-- header content -->
 <?php ob_start()?>
     <?php include($BASE_PATH.'/layout/parts/header.php')?>
