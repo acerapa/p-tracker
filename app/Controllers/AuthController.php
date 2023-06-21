@@ -60,4 +60,15 @@ class AuthController extends Controller
     {
         return include($this->BASE_PATH.'/views/auth/register.php');
     }
+
+    /**
+     * Logout function
+     * 
+     * @return ViewFile
+     */
+    public function logout() {
+        unset($_SESSION['auth']);
+
+        Router::redirect('auth.loginpage');
+    }
 }

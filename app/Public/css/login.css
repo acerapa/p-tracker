@@ -1,9 +1,13 @@
+.container {
+    background-color: #a8c6f0;
+}
+
 .login-container {
     height: 100vh;
     display: grid;
     align-items: center;
     justify-content: center;
-    background-color: #BFDDFF;
+    background-color: #a8c6f0;
 }
 
 .login-container div {

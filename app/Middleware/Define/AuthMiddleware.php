@@ -19,4 +19,4 @@ class AuthMiddleware implements IMiddleware {
         Router::redirect('auth.loginpage');
         return false;
     }   
-}    
+}

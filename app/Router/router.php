@@ -19,12 +19,14 @@ Router::middleware('auth', function () {
     Router::post('/user/edit/:user', [UserController::class, 'edit']);
     Router::post('/user/update/:user', [UserController::class, 'update']);
     Router::post('/user/delete/:user', [UserController::class, 'destroy']);
+    Router::get('/logout', [AuthController::class, 'logout']);
 });
 
 Router::middleware('page', function () {
     Router::get('/login', [AuthController::class, 'loginPage']);
     Router::post('/login', [AuthController::class, 'authenticateLogin']);
     Router::get('/register', [AuthController::class, 'registerPage']);
+    Router::post('/register', [UserController::class, 'store']);
 });
 
 // api routes
