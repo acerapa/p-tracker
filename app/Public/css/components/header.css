@@ -1,0 +1,128 @@
+.header {
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 60px;
+    display: grid;
+    position: fixed;
+    background-color: #a8c6f0;
+    grid-template-columns: 1fr 1fr;
+    box-shadow: 0px 0px 15px #80808047;
+}
+
+.header-wrapper-icon {
+    gap: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.header-wrapper-icon, .header-wrapper-user {
+    padding: 0px 15px;
+}
+
+.app-name {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    color: #4E5262;
+}
+
+.header-dropdown {
+    top: 0px;
+    height: 100%;
+    width: 185px;
+    padding: 15px;
+    right: -222px;
+    position: fixed;
+    background-color: #9fb4cd;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.header-icon {
+    width: 40px;
+    height: 40px;
+    margin: 10px 0px;
+}
+
+.header-wrapper-user {
+    display: grid;
+    justify-content: end;
+}
+
+.user-icon {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    border-radius: 25px;
+    background-color: white;
+}
+
+.user-profile {
+    gap: 15px;
+    display: flex;
+    text-align: start;
+    position: relative;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-profile small {
+    color: white;
+}
+
+.header-dropdown-close {
+    right: 0;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    position: absolute;
+    filter: brightness(0) invert(1);
+}
+
+.header-dropdown-item {
+    text-align: start;
+}
+
+.header-dropdown-link {
+    gap: 10px;
+    color: white;
+    cursor: pointer;
+    padding: 10px 0px;
+    align-items: center;
+    display: inline-flex;
+    text-decoration: none;
+}
+
+.header-dropdown-link img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.slideInRight {
+    animation: slideInRight 0.5s ease-in-out forwards;
+}
+
+.slideOutRight {
+    animation: slideOutRight 0.5s ease-in-out forwards;
+}
+
+@keyframes slideInRight {
+    from {
+        right: -222px;
+    }
+    to {
+        right: 0px;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        right: 0px;
+    }
+    to {
+        right: -222px;
+    }
+}

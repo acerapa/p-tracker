@@ -51,6 +51,14 @@ class UserController extends Controller
         Router::redirect('user.list');
     }
 
+    public function updateProfile()
+    {
+        $user = $_SESSION['auth'];
+        $data = Sanitizer::sanitize(Request::getData());
+        $user->update($data);
+        Router::redirect('user.edit', [$user->id]);
+    }
+
     /**=================================
      * APIs
      ===================================*/

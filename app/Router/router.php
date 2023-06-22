@@ -19,6 +19,7 @@ Router::middleware('auth', function () {
     Router::post('/user/edit/:user', [UserController::class, 'edit']);
     Router::post('/user/update/:user', [UserController::class, 'update']);
     Router::post('/user/delete/:user', [UserController::class, 'destroy']);
+    Router::post('/profile/update', [UserController::class, 'updateProfile']);
     Router::get('/logout', [AuthController::class, 'logout']);
 });
 
