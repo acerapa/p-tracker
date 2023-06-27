@@ -18,6 +18,7 @@
             <img class="p-logo" src="../../../app/Public/icons/logo.png" alt="logo">
             <span class="sign-in-text">Sign in to <b>P-tracker</b></span>
             <form action="/login" method="post">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?>">
                 <input class="input email-input" type="email" placeholder="Email" name="email">
                 <input class="input" type="password" placeholder="Password" name="password">
                 <input class="button" type="submit" value="Sign in">

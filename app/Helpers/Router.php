@@ -36,6 +36,18 @@ class Router {
      */
     public static function __callStatic($method, $args)
     {
+        // check arguments
+        if (count($args) < 2) {
+            throw new Exception("Invalid number of arguments: parameters must be (route: required, callback: required, middleware: optional (array))");
+            return;
+        }
+
+        // check middleware argument
+        $middlewares = [];
+        if (isset($args[2]) && is_array($args[2])) {
+            $middlewares = $args[2];
+        }   
+
         if (in_array(strtoupper($method), self::$methods)) {
             $routeNameInitial = explode('\\', $args[1][0]);
             $formattedRoute  = [
@@ -45,7 +57,7 @@ class Router {
                 'callback'   => $args[1][1],
                 'name'       => str_replace('controller', '', strtolower(end($routeNameInitial).'.'.$args[1][1])),
                 'params'     => [],
-                'middleware' => [],
+                'middleware' => $middlewares,
                 'query'      => [],
             ];
 
@@ -74,6 +86,11 @@ class Router {
         // start session
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
+        }
+
+        // generate csrf token
+        if (!isset($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }
         
         $is_route_matched = false;
@@ -237,7 +254,7 @@ class Router {
         $callback();
         
         for ($ndx = 0;$ndx < count(Router::$routes);$ndx++) {
-            array_push(Router::$routes[$ndx]['middleware'], $name);
+            array_unshift(Router::$routes[$ndx]['middleware'], $name);
         }
 
         Router::$routes = array_merge($routes, Router::$routes);

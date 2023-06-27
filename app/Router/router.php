@@ -6,8 +6,7 @@ use App\Controllers\AppController;
 use App\Controllers\AuthController;
 use App\Controllers\UserController;
 use App\Controllers\ExceptionController;
-
-
+use App\Controllers\TodoController;
 
 // web routes
 
@@ -19,13 +18,18 @@ Router::middleware('auth', function () {
     Router::post('/user/edit/:user', [UserController::class, 'edit']);
     Router::post('/user/update/:user', [UserController::class, 'update']);
     Router::post('/user/delete/:user', [UserController::class, 'destroy']);
-    Router::post('/profile/update', [UserController::class, 'updateProfile']);
+    Router::post('/profile/update', [UserController::class, 'updateProfile'], ['csrf']);
+
+    // todos
+    Router::get('/todo', [TodoController::class, 'index']);
+
+    // logout
     Router::get('/logout', [AuthController::class, 'logout']);
 });
 
 Router::middleware('page', function () {
     Router::get('/login', [AuthController::class, 'loginPage']);
-    Router::post('/login', [AuthController::class, 'authenticateLogin']);
+    Router::post('/login', [AuthController::class, 'authenticateLogin'], ['csrf']);
     Router::get('/register', [AuthController::class, 'registerPage']);
     Router::post('/register', [UserController::class, 'store']);
 });

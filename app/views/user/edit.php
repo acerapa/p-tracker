@@ -30,6 +30,7 @@
         </div>
         <br>
         <form action="/profile/update" method="post">
+            <input type="hidden" value="<?php echo $_SESSION['csrf_token']?>" name="csrf_token">
             <div class="form-group">
                 <img src="../../../app/Public/icons/user-circle.png" class="edit-form-icons" alt="">
                 <input type="text" class="input" name="username" placeholder="Username" value="<?php echo $user->username ?>">
