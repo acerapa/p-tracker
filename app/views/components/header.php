@@ -18,6 +18,9 @@
                 <a href="user/edit/<?php echo $user->id?>" class="header-dropdown-link"><img src="../../app/Public/icons/user-circle.png" alt="">Profile</a>
             </div>
             <div class="header-dropdown-item">
+                <a href="#" class="header-dropdown-link"><img src="../../app/Public/icons/activity.png" alt="">Activities</a>
+            </div>
+            <div class="header-dropdown-item">
                 <a href="#" class="header-dropdown-link"><img src="../../app/Public/icons/settings.png" alt="">Settings</a>
             </div>
             <div class="header-dropdown-item">

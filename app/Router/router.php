@@ -14,16 +14,21 @@ use App\Controllers\TodoController;
 Router::middleware('auth', function () {
     Router::get('/', [AppController::class, 'index']);
     Router::get('/?i=1', [AppController::class, 'index']);
+
+    // activity routes
+    Router::get('/activity', [AppController::class, 'activity']);
+
+    // user routes
     Router::get('/user/list', [UserController::class, 'list']);
     Router::post('/user/edit/:user', [UserController::class, 'edit']);
     Router::post('/user/update/:user', [UserController::class, 'update']);
     Router::post('/user/delete/:user', [UserController::class, 'destroy']);
     Router::post('/profile/update', [UserController::class, 'updateProfile'], ['csrf']);
 
-    // todos
+    // todos routes
     Router::get('/todo', [TodoController::class, 'index']);
 
-    // logout
+    // logout route
     Router::get('/logout', [AuthController::class, 'logout']);
 });
 
