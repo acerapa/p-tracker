@@ -9,6 +9,11 @@ use App\Middleware\RegisteredMiddlewares;
 
 class Router {
     /**
+     * @var Array current route
+     */
+    private static $currentRoute = [];
+
+    /**
      * @var array holds all routes
      */
     private static $routes = [];
@@ -61,15 +66,9 @@ class Router {
                 'query'      => [],
             ];
 
+            // extract route params
             if (self::hasParams($formattedRoute['route'])) {
-                $explodedRoute = explode(':', $formattedRoute['route']);
-                $formattedRoute['route'] = substr($explodedRoute[0], 0, -1);
-                
-                foreach ($explodedRoute as $key => $value) {
-                    if ($key) {
-                        array_push($formattedRoute['params'], str_replace('/', '', $value));
-                    }
-                }
+                $formattedRoute['params'] = self::getParamsFromRoute($formattedRoute['route']);
             }
 
             array_push(self::$routes, $formattedRoute);
@@ -101,7 +100,7 @@ class Router {
         Request::setAttributes();
 
         foreach (self::$routes as $formattedRoute) {
-            if ($formattedRoute['method'] === $method && $formattedRoute['route'] === self::extractRoute($route)) {
+            if (self::compareRoute(self::extractRoute($route), $formattedRoute, $method)) {
                 $is_route_matched = true;
                 
                 // run middleware
@@ -110,16 +109,19 @@ class Router {
                     return;
                 }
 
-                $instance = new $formattedRoute['class']();
-                $instance->{$formattedRoute['callback']}();
-                return;
-            } else if (count($formattedRoute['params'])) {;
-                // if (str_contains($formattedRoute['route'], self::extractRoute($route))) {
-                if (self::compareRoute(self::extractRoute($route), $formattedRoute['route'])) {
+                // check if route has parameters
+                if (count($formattedRoute['params'])) {
                     if (self::resolveRouteWithParams($route, $formattedRoute)) {
                         return;
                     }
                 }
+
+                Request::$route = $formattedRoute;
+                self::$currentRoute = $formattedRoute;
+
+                $instance = new $formattedRoute['class']();
+                $instance->{$formattedRoute['callback']}();
+                return;
             }
         }
 
@@ -139,18 +141,22 @@ class Router {
      */
     private static function resolveRouteWithParams($route, $formattedRoute)
     {
-        // get route params
-        $routeParams = explode('/', str_replace($formattedRoute['route'], '', $route));
-        $routeParams = array_filter($routeParams, function ($item) { return $item; });
+        // get route param values
         
-        if (count($routeParams) !== count($formattedRoute['params'])) {
-            return false;
+        $arr_passed = array_filter(explode('/',$route));
+        $arr_registered = array_filter(explode('/',$formattedRoute['route']));
+
+        $routeParams = [];
+        foreach ($arr_registered as $ndx => $param) {
+            if (strstr($param, ':')) {
+                $routeParams[$param] = $arr_passed[$ndx];
+            }
         }
-        
+
         // get function params
         $params = new ReflectionMethod($formattedRoute['class'], $formattedRoute['callback']);
         $params = $params->getParameters();
-        
+     
         $parameters = [];
         foreach ($params as $key => $param) {
             $class = (string) $param->getType();
@@ -163,6 +169,9 @@ class Router {
                 array_push($parameters, $p[$key]);
             }
         }
+
+        Request::$route = $formattedRoute;
+        self::$currentRoute = $formattedRoute;
 
         $instance = new $formattedRoute['class']();
         $instance->{$formattedRoute['callback']}(...$parameters);
@@ -302,6 +311,30 @@ class Router {
         return true;
     }
 
+    /**========================================
+     * GETTER FUNCTIONS
+     ==========================================*/
+
+    /**
+     * Get current route
+     * 
+     * @return Array
+    */
+    public static function getCurrentRoute() : Array
+    {
+        return self::$currentRoute;
+    }
+
+
+    /**
+     * Get all routes
+     * 
+     * @return Array
+     */
+    public static function getRoutes() : Array
+    {
+        return self::$routes;
+    }
 
     /**========================================
      * HELPER FUNCTIONS
@@ -357,6 +390,29 @@ class Router {
     }
 
     /**
+     * Get route params
+     * 
+     * @param  string $route Route passed from browsers
+     * 
+     * @return Array  $params array of route parameters
+     */
+
+    private static function getParamsFromRoute($route)
+    {
+        $params = [];
+        $route = explode('/', $route);
+        $route = array_values(array_filter($route));
+
+        foreach ($route as $key => $value) {
+            if (str_contains($value, ':')) {
+                $params[] = str_replace(':', '', $value);
+            }
+        }
+
+        return $params;
+    }
+
+    /**
      * Extract route path and route params
      * 
      * @param String  $route path router
@@ -380,37 +436,32 @@ class Router {
      * 
      * @param string $passed_route      passed route from browsers
      * @param string $registered_route  registered route
+     * @param string $passed_method     passed method from browsers
      * 
      * @return bool
      */
 
-    private static function compareRoute($passed_route, $registered_route) : bool
+    private static function compareRoute($passed_route, $registered_route, $passed_method) : bool
     {
-        $is_matched = true;
         $arr_passed = array_values(array_filter(explode('/', $passed_route)));
-        $arr_registered = array_values(array_filter(explode('/', $registered_route)));
+        $arr_registered = array_values(array_filter(explode('/', $registered_route['route'])));
 
-        $arr_to_comp = [];
+        if (count($arr_passed) != count($arr_registered) || $passed_method != $registered_route['method']) {
+            return false;
+        }
+        
+        $is_uri_matched = true;
+        for ($ndx = 0;$ndx < count($arr_passed); $ndx++) {
+            if (strstr($arr_registered[$ndx], ':')) {
+                continue;
+            }
 
-        foreach ($arr_registered as $url_part) {
-            if (!strpos($url_part, ':')) {
-                array_push($arr_to_comp, $url_part);
+            if ($arr_passed[$ndx] != $arr_registered[$ndx]) {
+                $is_uri_matched = false;
             }
         }
         
-        if (count($arr_to_comp) <= count($arr_passed)) {
-            for ($ndx = 0;$ndx < count($arr_to_comp); $ndx++) {
-                $passed_part = isset($arr_passed[$ndx]) ? $arr_passed[$ndx] : null;
-                if ($passed_part != $arr_to_comp[$ndx]) {
-                    $is_matched = false;
-                    break;
-                }
-            }
-        } else {
-            $is_matched = false;
-        }
-
-        return $is_matched;
+        return $is_uri_matched;
     }
 
     /**

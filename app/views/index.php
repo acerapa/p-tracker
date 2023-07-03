@@ -52,7 +52,6 @@
     ob_end_clean();
 ?>
 
-
 <!-- inclulde layout -->
 <?php
     include($BASE_PATH.'/layout/app.php');

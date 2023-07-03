@@ -3,6 +3,11 @@ namespace App\Helpers;
 
 class Request {
     /**
+     * @var $route the route of the request
+     */
+    public static $route = null;
+
+    /**
      * @var $attributes based from the $_SERVER varaible of php
      */
     protected static $attributes = [];

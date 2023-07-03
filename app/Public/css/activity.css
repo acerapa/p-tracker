@@ -1,0 +1,29 @@
+.pending-todos {
+    gap: 15px;
+    height: auto;
+    padding: 15px;
+    display: grid;
+    margin: 15px 0px;
+    border-radius: 5px;
+    justify-content: center;
+    background-color: #B6D4E9;
+    grid-template-columns: repeat(4, 1fr);
+    box-shadow: -1px 2px 15px #80808040;
+}
+
+.pending-todos div {
+    height: auto;
+    font-size: small;
+    text-align: center;
+    color: white !important;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.pending-todos div a {
+    color: #4e5262;
+    text-decoration: none;
+}

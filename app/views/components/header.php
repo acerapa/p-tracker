@@ -14,11 +14,14 @@
             <img class="header-dropdown-close" id="dropdown-close" src="../../app/Public/icons/close.png" alt="">
         </div>
         <div class="header-dropdown-wrapper">
-            <div class="header-dropdown-item">
-                <a href="user/edit/<?php echo $user->id?>" class="header-dropdown-link"><img src="../../app/Public/icons/user-circle.png" alt="">Profile</a>
+            <div class="header-dropdown-item <?php echo isset($route) && $route['name'] == 'app.index' ? 'active' : '' ?>">
+                <a href="<?php echo route('app.index'); ?>" class="header-dropdown-link"><img src="../../app/Public/icons/home.png" alt="">Home</a>
             </div>
-            <div class="header-dropdown-item">
-                <a href="#" class="header-dropdown-link"><img src="../../app/Public/icons/activity.png" alt="">Activities</a>
+            <div class="header-dropdown-item <?php echo isset($route) && $route['name'] == 'user.edit' ? 'active' : '' ?>">
+                <a href="<?php echo route('user.edit', [$user->id]); ?>" class="header-dropdown-link"><img src="../../app/Public/icons/user-circle.png" alt="">Profile</a>
+            </div>
+            <div class="header-dropdown-item <?php echo isset($route) && $route['name'] == 'app.activity' ? 'active' : '' ?>">
+                <a href="<?php echo route('app.activity'); ?>" class="header-dropdown-link"><img src="../../app/Public/icons/activity.png" alt="">Activities</a>
             </div>
             <div class="header-dropdown-item">
                 <a href="#" class="header-dropdown-link"><img src="../../app/Public/icons/settings.png" alt="">Settings</a>

@@ -82,6 +82,7 @@
 }
 
 .header-dropdown-item {
+    padding: 0px 5px;
     text-align: start;
 }
 
@@ -99,6 +100,11 @@
     width: 20px;
     height: 20px;
     filter: brightness(0) invert(1);
+}
+
+.active {
+    color: #a8c6f0;
+    background-color: #526273;
 }
 
 .slideInRight {

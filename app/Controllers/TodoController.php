@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Controllers\Controller;
+use App\Helpers\View;
 
 class TodoController extends Controller {
     function __construct() {
@@ -15,6 +16,6 @@ class TodoController extends Controller {
      */
     public function index()
     {
-        return include($this->BASE_PATH."/views/todo/index.php");
+        return new View($this->BASE_PATH."/views/todo/index.php");
     }
 }

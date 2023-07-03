@@ -21,7 +21,7 @@
         <?php include($BASE_PATH.'/components/header.php')?>
         <!-- bread crumbs -->
         <?php include($BASE_PATH.'/components/breadcrumbs.php')?>
-        Test
+        <?php echo route('app.index'); ?>
     </div>
 
 <?php 

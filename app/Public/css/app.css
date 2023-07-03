@@ -96,3 +96,7 @@ body {
     border-radius: 5px;
     background: rgba(111, 200, 251, 0.81);
 }
+
+.invert-color {
+    filter: brightness(0) invert(1);
+}

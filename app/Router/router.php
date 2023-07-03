@@ -17,16 +17,16 @@ Router::middleware('auth', function () {
 
     // activity routes
     Router::get('/activity', [AppController::class, 'activity']);
+    
+    // todos routes
+    Router::get('/activity/todo', [TodoController::class, 'index']);
 
     // user routes
     Router::get('/user/list', [UserController::class, 'list']);
-    Router::post('/user/edit/:user', [UserController::class, 'edit']);
+    Router::get('/user/edit/:user', [UserController::class, 'edit']);
     Router::post('/user/update/:user', [UserController::class, 'update']);
     Router::post('/user/delete/:user', [UserController::class, 'destroy']);
     Router::post('/profile/update', [UserController::class, 'updateProfile'], ['csrf']);
-
-    // todos routes
-    Router::get('/todo', [TodoController::class, 'index']);
 
     // logout route
     Router::get('/logout', [AuthController::class, 'logout']);

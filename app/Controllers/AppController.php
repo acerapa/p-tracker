@@ -2,6 +2,8 @@
 namespace App\Controllers;
 
 use App\Controllers\Controller;
+use App\Helpers\Request;
+use App\Helpers\View;
 
 class AppController extends Controller
 {
@@ -21,7 +23,8 @@ class AppController extends Controller
      */
     public function index()
     {
-        return include($this->BASE_PATH."/views/index.php");
+        $route = Request::$route;
+        return new View($this->BASE_PATH."/views/index.php", compact('route'));
     }
 
     /**
@@ -31,6 +34,6 @@ class AppController extends Controller
      */
     public function activity()
     {
-        return include($this->BASE_PATH."/views/pages/activity.php");
+        return new View($this->BASE_PATH."/views/pages/activity.php");
     }
 }

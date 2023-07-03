@@ -7,6 +7,7 @@ use App\Helpers\Request;
 use App\Helpers\Sanitizer;
 use App\Controllers\Controller;
 use App\Constant\SqlOperatorConst;
+use App\Helpers\View;
 
 class UserController extends Controller
 {
@@ -30,12 +31,12 @@ class UserController extends Controller
     public function list()
     {
         $users = User::all();
-        return include($this->BASE_PATH."/views/user/list.php");
+        return new View($this->BASE_PATH."/views/user/list.php", compact('users'));
     }
 
     public function edit(User $user)
     {
-        return include($this->BASE_PATH."/views/user/edit.php");
+        return new View($this->BASE_PATH."/views/user/edit.php", compact('user'));
     }
 
     public function update(User $user)

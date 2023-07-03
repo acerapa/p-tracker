@@ -6,6 +6,7 @@ use App\Helpers\Request;
 use App\Controllers\Controller;
 use App\Helpers\Router;
 use App\Helpers\Sanitizer;
+use App\Helpers\View;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -21,7 +22,8 @@ class AuthController extends Controller
      */
     public function loginPage()
     {
-        return include($this->BASE_PATH.'/views/auth/login.php');
+        
+        return new View($this->BASE_PATH.'/views/auth/login.php');
     }
 
     /**
@@ -58,7 +60,7 @@ class AuthController extends Controller
      */
     public function registerPage()
     {
-        return include($this->BASE_PATH.'/views/auth/register.php');
+        return new View($this->BASE_PATH.'/views/auth/register.php');
     }
 
     /**
