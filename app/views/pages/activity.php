@@ -26,7 +26,7 @@
     <!-- avtivities -->
     <div class="pending-todos">
         <div>
-            <a href="#" rel="noopener noreferrer">
+            <a href="<?php echo route('todo.index'); ?>" rel="noopener noreferrer">
                 <img class="invert-color activity-icon" src="../../../app/Public/icons/task-list.png" alt="Verfied">
                 <br>
                 Todos

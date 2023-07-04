@@ -21,9 +21,8 @@
         <?php include($BASE_PATH.'/components/header.php')?>
         <!-- bread crumbs -->
         <?php include($BASE_PATH.'/components/breadcrumbs.php')?>
-        <?php echo route('app.index'); ?>
+        <?php echo route('todo.index'); ?>
     </div>
-
 <?php 
     $body = ob_get_contents();
     ob_end_clean();
