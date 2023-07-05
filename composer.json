@@ -1,4 +1,6 @@
 {
+    "name": "p-tracker/p-tracker",
+    "description": "A simple PHP application to track your activity",
     "require": {
         "vlucas/phpdotenv": "^5.5",
         "doctrine/inflector": "^2.0"
