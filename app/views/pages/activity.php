@@ -6,7 +6,6 @@
 
 <!-- header content -->
 <?php ob_start()?>
-    <?php include($BASE_PATH.'/layout/parts/header.php')?>
     <link rel="stylesheet" href="../../../app/Public/css/activity.css">
     <link rel="stylesheet" href="../../app/Public/css/components/header.css">
     <script src="../../app/Public/js/components/header.js"></script>

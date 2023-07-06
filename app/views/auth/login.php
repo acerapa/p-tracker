@@ -5,7 +5,6 @@
     $imports = [
         'css' => '../../../app/Public/css/login.css'
     ];
-    include($BASE_PATH."/layout/parts/header.php");
     $header = ob_get_contents();
     ob_end_clean();
 ?>

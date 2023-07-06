@@ -1,12 +1,10 @@
 <?php 
     $title = 'Edit User';
     $BASE_PATH = dirname(__DIR__);
-    // $user = isset($_SESSION['auth']) ? $_SESSION['auth'] : null;
 ?>
 
 <!-- header content -->
 <?php ob_start()?>
-    <?php include($BASE_PATH.'/layout/parts/header.php')?>
     <link rel="stylesheet" href="../../../app/Public/css/components/header.css">
     <link rel="stylesheet" href="../../../app/Public/css/user.css">
     <script src="../../../app/Public/js/components/header.js"></script>
