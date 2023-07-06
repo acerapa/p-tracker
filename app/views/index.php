@@ -7,10 +7,9 @@
 
 <!-- header content -->
 <?php ob_start()?>
-    <?php include($BASE_PATH.'/layout/parts/header.php')?>
-    <link rel="stylesheet" href="../../../app/Public/css/home.css">
-    <link rel="stylesheet" href="../../app/Public/css/components/header.css">
-    <script src="../../app/Public/js/components/header.js"></script>
+    <link rel="stylesheet" href="<?php echo asset('css/','home.css') ?>">
+    <link rel="stylesheet" href="<?php echo asset('css/components/','header.css'); ?>">
+    <script src="<?php echo asset('js/components/','header.js'); ?>"></script>
 <?php
     $header = ob_get_contents();
     ob_end_clean();
@@ -35,6 +34,7 @@
 
         <div class="pending-todos">
             <span class="pending-title">Pending Todos</span>
+            <?php echo asset('icons/','cloud-sun.png') ?>
         </div>
     </div>
 <?php

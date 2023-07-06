@@ -46,3 +46,69 @@ function route($name, $args = []) {
 
     return $url;
 }
+
+/**
+ * Get the path to the Public folder
+ * 
+ * @param string $path
+ * 
+ * @return string
+ */
+function public_path($path = '') {
+    return dirname(dirname(__DIR__)).'/Public/'.$path;
+}
+
+/**
+ * Get assests path
+ * 
+ * @param string $path
+ */
+function asset($directory, $file) {
+    $directory = encrypt($directory);
+    return route('static.getfile', [$directory, $file]);
+}
+
+/**
+ * Function that encrypts a string in a two way use case
+ * 
+ * @param string $string
+ * 
+ * @return string
+ */
+function encrypt($string) {
+    $key = $_ENV['APP_KEY'];
+    $iv = $_ENV['APP_IV'];
+    $cipher = $_ENV['APP_CIPHER'];
+
+    # code to replace all / to .
+    $string = str_replace('/', '.', $string);
+
+    $encrypted = openssl_encrypt($string, $cipher, $key, 0, $iv);
+
+    # code to replace all / to - in encrypted string
+    $encrypted = str_replace('/', '-', $encrypted);
+
+    return $encrypted;
+}
+
+/**
+ * Function that decrypts a string result from the encrypt function
+ * 
+ * @param string $string
+ * 
+ * @return string
+*/
+function decrypt($string) {
+    $key = $_ENV['APP_KEY'];
+    $iv = $_ENV['APP_IV'];
+    $cipher = $_ENV['APP_CIPHER'];
+    
+    # code to replace all - to / in encrypted string
+    $string = str_replace('-', '/', $string);
+
+    $decrypted = openssl_decrypt($string, $cipher, $key, 0, $iv);
+
+    $decrypted = str_replace('.', '/', $decrypted);
+
+    return $decrypted;
+}

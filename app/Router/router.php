@@ -6,6 +6,7 @@ use App\Controllers\AppController;
 use App\Controllers\AuthController;
 use App\Controllers\UserController;
 use App\Controllers\ExceptionController;
+use App\Controllers\StaticController;
 use App\Controllers\TodoController;
 
 // web routes
@@ -42,6 +43,8 @@ Router::middleware('page', function () {
 // api routes
 Router::get('/api/user/list', [UserController::class, 'userList']);
 
+// serve static files
+Router::get('/public/:directory/:file', [StaticController::class, 'getFile']);
 
 // boot exception routes
 ExceptionController::bootExceptionRoute();
