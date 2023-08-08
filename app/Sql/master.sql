@@ -21,6 +21,9 @@ CREATE TABLE users (
     PRIMARY KEY (id)
 )
 
+/* insert default user */
+INSERT INTO users (username, first_name, last_name, email, password) VALUES ('admin', 'admin', 'admin', 'admin@email.com', '$2y$10$BaXOoYLVA3sRYStnhMAKr.Q1soQBSmC4J.LOzRHsxf2IdBKBUo14K');
+
 
 /* drop table todos if exist */
 DROP TABLE IF EXISTS todos;

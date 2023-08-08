@@ -18,9 +18,10 @@ class StaticController extends Controller {
     public function getFile($directory, $file) {
         $path = public_path();
         $directory = decrypt($directory);
+        $file = decrypt($file);
 
         $file = "$path"."$directory"."$file";
-        
+
         if (!file_exists($file)) {
             throw new Exception("File not found");
             return;

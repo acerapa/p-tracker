@@ -6,9 +6,9 @@
 
 <!-- header content -->
 <?php ob_start()?>
-    <link rel="stylesheet" href="../../../app/Public/css/activity.css">
-    <link rel="stylesheet" href="../../app/Public/css/components/header.css">
-    <script src="../../app/Public/js/components/header.js"></script>
+    <link rel="stylesheet" href="<?php echo asset('css/', 'activity.css')?>">
+    <link rel="stylesheet" href="<?php echo asset('css/components/','header.css') ?>">
+    <script src="<?php echo asset('js/components/','header.js'); ?>"></script>
 <?php 
     $header = ob_get_contents();
     ob_end_clean();
@@ -26,28 +26,28 @@
     <div class="pending-todos">
         <div>
             <a href="<?php echo route('todo.index'); ?>" rel="noopener noreferrer">
-                <img class="invert-color activity-icon" src="../../../app/Public/icons/task-list.png" alt="Verfied">
+                <img class="invert-color activity-icon" src="<?php echo asset('icons/', 'task-list.png'); ?>" alt="Verfied">
                 <br>
                 Todos
             </a>
         </div>
         <div>
             <a href="#" rel="noopener noreferrer">
-                <img class="invert-color activity-icon" src="../../../app/Public/icons/budget.png" alt="Target">
+                <img class="invert-color activity-icon" src="<?php echo asset('icons/', 'budget.png'); ?>" alt="Target">
                 <br>
                 Expense Tracker
             </a>
         </div>
         <div>
             <a href="#" rel="noopener noreferrer">
-                <img class="invert-color activity-icon" src="../../../app/Public/icons/coming-soon.png" alt="Coming Soon">
+                <img class="invert-color activity-icon" src="<?php echo asset('icons/', 'coming-soon.png'); ?>" alt="Coming Soon">
                 <br>
                 Coming Soon
             </a>
         </div>
         <div>
             <a href="#" rel="noopener noreferrer">
-                <img class="invert-color activity-icon" src="../../../app/Public/icons/coming-soon.png" alt="Coming Soon">
+                <img class="invert-color activity-icon" src="<?php echo asset('icons/', 'coming-soon.png'); ?>" alt="Coming Soon">
                 <br>
                 Coming Soon
             </a>

@@ -16,11 +16,23 @@
 <!-- body content -->
 <?php ob_start() ?>
     <div class="app-container">
-        <!-- nav header -->
-        <?php include($BASE_PATH.'/components/header.php')?>
         <!-- bread crumbs -->
         <?php include($BASE_PATH.'/components/breadcrumbs.php')?>
-        <?php echo route('todo.index'); ?>
+        <!-- main content -->
+        <div class="welcome">
+            Test
+        </div>
+        <div class="main-content">
+           <h1>Todo List</h1>
+           <ul>
+            <li>Test</li>
+            <li>Test</li>
+            <li>Test</li>
+            <li>Test</li>
+            <li>Test</li>
+            <li>Test</li>
+           </ul>
+        </div>
     </div>
 <?php 
     $body = ob_get_contents();

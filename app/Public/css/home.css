@@ -34,3 +34,8 @@
     font-size: 10px;
     font-weight: 500;
 }
+
+.no-activity {
+    text-align: center;
+    padding: 20px;
+}

@@ -9,7 +9,7 @@
 <?php ob_start()?>
     <link rel="stylesheet" href="<?php echo asset('css/','home.css') ?>">
     <link rel="stylesheet" href="<?php echo asset('css/components/','header.css'); ?>">
-    <script src="<?php echo asset('js/components/','header.js'); ?>"></script>
+    <script defer src="<?php echo asset('js/components/','header.js'); ?>"></script>
 <?php
     $header = ob_get_contents();
     ob_end_clean();
@@ -29,12 +29,11 @@
             <span class="welcome-text">Welcome <?php echo $user->username; ?></span><br>
             <small>Good Morning!</small>
 
-            <img class="header-cloud-sun" src="../../app/Public/icons/cloud-sun.png" alt="">
+            <img class="header-cloud-sun" src="<?php echo asset('icons/', 'cloud-sun.png')?>" alt="">
         </div>
 
-        <div class="pending-todos">
-            <span class="pending-title">Pending Todos</span>
-            <?php echo asset('icons/','cloud-sun.png') ?>
+        <div class="no-activity">
+            No activity recently!
         </div>
     </div>
 <?php

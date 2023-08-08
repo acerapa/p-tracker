@@ -65,6 +65,7 @@ function public_path($path = '') {
  */
 function asset($directory, $file) {
     $directory = encrypt($directory);
+    $file = encrypt($file);
     return route('static.getfile', [$directory, $file]);
 }
 
@@ -81,7 +82,7 @@ function encrypt($string) {
     $cipher = $_ENV['APP_CIPHER'];
 
     # code to replace all / to .
-    $string = str_replace('/', '.', $string);
+    $string = str_replace('/', '=slash=', $string);
 
     $encrypted = openssl_encrypt($string, $cipher, $key, 0, $iv);
 
@@ -108,7 +109,7 @@ function decrypt($string) {
 
     $decrypted = openssl_decrypt($string, $cipher, $key, 0, $iv);
 
-    $decrypted = str_replace('.', '/', $decrypted);
+    $decrypted = str_replace('=slash=', '/', $decrypted);
 
     return $decrypted;
 }
