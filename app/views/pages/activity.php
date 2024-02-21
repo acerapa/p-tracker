@@ -8,7 +8,6 @@
 <?php ob_start()?>
     <link rel="stylesheet" href="<?php echo asset('css/', 'activity.css')?>">
     <link rel="stylesheet" href="<?php echo asset('css/components/','header.css') ?>">
-    <script src="<?php echo asset('js/components/','header.js'); ?>"></script>
 <?php 
     $header = ob_get_contents();
     ob_end_clean();
@@ -17,8 +16,6 @@
 <!-- body content -->
 <?php ob_start()?>
 <div class="app-container">
-    <!-- nav header -->
-    <?php include($BASE_PATH.'/components/header.php')?>
     <!-- bread crumbs -->
     <?php include($BASE_PATH.'/components/breadcrumbs.php')?>
 
