@@ -15,8 +15,12 @@
     </head>
     <body>
         <div class="container">
-            <!-- nav header -->
-            <?php include($BASE_PATH.'/components/header.php')?>
+            <?php 
+                // check is the page is not register or login
+                if ($title != 'Register' && $title != 'Login') {
+                    include($BASE_PATH.'/components/header.php');
+                }
+            ?>
             <?php
                 if (isset($body) && $body) {
                     echo $body;
@@ -27,8 +31,8 @@
                     echo $footer;
                 }
             ?>
+            <script src="<?php echo asset('js/components/','header.js'); ?>"></script>
         </div>
-        <script src="<?php echo asset('js/components/','header.js'); ?>"></script>
     </body>
     </html>
 <?php 

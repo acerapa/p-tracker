@@ -17,8 +17,6 @@
 <!-- body content -->
 <?php ob_start();?>
     <div class="app-container">
-        <!-- nav header -->
-        <?php include($BASE_PATH.'/components/header.php')?>
         <!-- breadcrumbs -->
         <?php include($BASE_PATH.'/components/breadcrumbs.php')?>
 
