@@ -36,4 +36,13 @@ class AppController extends Controller
     {
         return new View($this->BASE_PATH."/views/pages/activity.php");
     }
+
+    /**
+     * Return dashboard page
+     * 
+     * @return ViewFile
+     */
+    public function dashboard() {
+        return new View($this->BASE_PATH."/views/pages/dashboard.php");
+    }
 }

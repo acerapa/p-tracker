@@ -21,7 +21,7 @@ class Router {
     /**
      * @var String exception routes
      */
-    private static $routeErrorPage = '/error';
+    private static $routeErrorPage = '/error/:code';
 
     /**
      * @var Array array of allowed http methods
@@ -100,6 +100,7 @@ class Router {
         Request::setAttributes();
 
         foreach (self::$routes as $formattedRoute) {
+            
             if (self::compareRoute(self::extractRoute($route), $formattedRoute, $method)) {
                 $is_route_matched = true;
                 
@@ -187,7 +188,7 @@ class Router {
         $routeIndex = array_search(self::$routeErrorPage, $routes);
         $formattedRoute = self::$routes[$routeIndex];
 
-        $route = self::$routeErrorPage.'/'.$code;
+        $route = str_replace('/:code', '', self::$routeErrorPage).'/'.$code;
         self::resolveRouteWithParams($route, $formattedRoute);
     }
 
@@ -413,7 +414,7 @@ class Router {
     }
 
     /**
-     * Extract route path and route params
+     * Extract route path and route params queries
      * 
      * @param String  $route path router
      * 
