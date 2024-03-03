@@ -16,6 +16,9 @@ Router::middleware('auth', function () {
     Router::get('/', [AppController::class, 'index']);
     Router::get('/?i=1', [AppController::class, 'index']);
 
+    // dashboard
+    Router::get('/dashboard', [AppController::class, 'dashboard']);
+
     // activity routes
     Router::get('/activity', [AppController::class, 'activity']);
     

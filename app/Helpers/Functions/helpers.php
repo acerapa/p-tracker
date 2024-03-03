@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\Router;
+use App\Helpers\View;
 
 /**
  * Extract route from a name
@@ -58,6 +59,16 @@ function public_path($path = '') {
     return dirname(dirname(__DIR__)).'/Public/'.$path;
 }
 
+
+/**
+ * Get the base path of the application
+ * 
+ * @return string
+ */
+function base_path() {
+    return $_SERVER['DOCUMENT_ROOT'].'/app';
+}
+
 /**
  * Get assests path
  * 
@@ -112,4 +123,18 @@ function decrypt($string) {
     $decrypted = str_replace('=slash=', '/', $decrypted);
 
     return $decrypted;
+}
+
+
+/**
+ * Function that use a layout from the layouts folder
+ * 
+ * @param string $name Name of the layout
+ * @param array  $defined_vars Array of variables to be passed to the layout
+ * @param string $layout_path Path to the layouts folder
+ * 
+ * @return ViewFile $layout
+ */
+function use_layout($name, $defined_vars, $layout_path = 'layouts') {
+    return View::use_layout($name, $defined_vars, $layout_path);
 }

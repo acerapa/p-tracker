@@ -1,0 +1,210 @@
+:root {
+    --white: #ffff;
+    --gray: #EEEEEE;
+    --dark-blue: #717F9B;
+    --blue: #47709F;
+    --light-blue: #47709f94;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--gray);
+    height: 100vh;
+}
+
+p {
+    margin: 0;
+}
+
+.main-container {
+    padding: 24px 70px;
+}
+
+.bg-white {
+    background-color: var(--white);
+}
+
+.mt-1 {
+    margin-top: 4px;
+}
+
+.grid {
+    display: grid;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.gap-10 {
+    gap: 40px;
+}
+
+.gap-2 {
+    gap: 8px;
+}
+
+.gap-4 {
+    gap: 16px;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.w-5 {
+    width: 20px;
+}
+
+.h-5 {
+    height: 20px;
+}
+
+.rounded-full {
+    border-radius: 100%;
+}
+
+.object-fit-cover {
+    object-fit: cover;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.font-normal {
+    font-weight: 400;
+}
+
+.text-sm {
+    font-size: 14px;
+}
+
+.rounded-l-4 {
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+.pl-5 {
+    padding-left: 20px;
+}
+
+.py-3 {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.px-2 {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+
+/* CUSTOM VALUES */
+
+.py-\[15px\] {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.py-\[11px\] {
+    padding-top: 11px;
+    padding-bottom: 11px;
+}
+
+.py-\[10px\] {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.py-\[14_5px\] {
+    padding-top: 14.5px;
+    padding-bottom: 14.5px;
+}
+
+.py-\[14px\] {
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+
+.w-\[30px\] {
+    width: 30px;
+}
+
+.h-\[30px\] {
+    height: 30px;
+}
+
+.gap-\[10px\] {
+    gap: 10px;
+}
+
+.grid-\[auto_1fr\] {
+    grid-template-columns: auto 1fr;
+}
+
+.mt-\[25px\] {
+    margin-top: 25px;
+}
+
+.w-\[27px\] {
+    width: 27px;
+}
+
+.h-\[28px\] {
+    height: 28px;
+}
+
+.w-\[21px\] {
+    width: 21px;
+}
+
+.h-\[21px\] {
+    height: 21px;
+}
+
+.w-\[26px\] {
+    width: 26px;
+}
+
+.h-\[26px\] {
+    height: 26px;
+}
+
+.w-\[25px\] {
+    width: 25px;
+}
+
+.h-\[25px\] {
+    height: 25px;
+}
+
+.w-\[23px\] {
+    width: 23px;
+}
+
+.h-\[22px\] {
+    height: 22px;
+}
+
+.w-\[228px\] {
+    width: 228px;
+}
