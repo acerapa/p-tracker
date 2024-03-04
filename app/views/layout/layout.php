@@ -4,13 +4,8 @@
 
 <head>
     <?php
-    $BASE_PATH = dirname(__DIR__);
-    include($BASE_PATH . '/layout/parts/header.php');
-    ?>
-    <?php
-    if (isset($header) && $header) {
-        echo $header;
-    }
+        $BASE_PATH = dirname(__DIR__);
+        include(base_path()."/views/layout/parts/new-meta-head.php");
     ?>
     <style>
         @font-face {
@@ -24,6 +19,11 @@
         }
     </style>
     <link rel="stylesheet" href="<?php echo asset('css/', 'global.css'); ?>">
+    <?php
+    if (isset($header) && $header) {
+        echo $header;
+    }
+    ?>
 </head>
 
 <body>

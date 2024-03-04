@@ -8,6 +8,9 @@ use App\Controllers\UserController;
 use App\Controllers\ExceptionController;
 use App\Controllers\StaticController;
 use App\Controllers\TodoController;
+use App\Controllers\IncomeController;
+use App\Controllers\ExpenseController;
+use App\Controllers\BudgetingController;
 
 // web routes
 
@@ -18,6 +21,18 @@ Router::middleware('auth', function () {
 
     // dashboard
     Router::get('/dashboard', [AppController::class, 'dashboard']);
+    Router::get('/my-calendar', [AppController::class, 'myCalendar']);
+    Router::get('/todolist', [AppController::class, 'todoList']);
+    Router::get('/notes', [AppController::class, 'notes']);
+
+    // income
+    Router::get('/income', [IncomeController::class, 'index']);
+
+    // expense
+    Router::get('/expense', [ExpenseController::class, 'index']);
+
+    // budgeting
+    Router::get('/budgeting', [BudgetingController::class, 'index']);
 
     // activity routes
     Router::get('/activity', [AppController::class, 'activity']);

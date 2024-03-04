@@ -1,5 +1,5 @@
 <?php
-$title = 'Dashboard';
+$title = 'Budgeting';
 $BASE_PATH = base_path();
 $user = isset($_SESSION['auth']) ? $_SESSION['auth'] : null;
 ?>
@@ -8,11 +8,11 @@ $user = isset($_SESSION['auth']) ? $_SESSION['auth'] : null;
 <?php ob_start() ?>
 <div class="main-container">
     <div class="w-full grid grid-[auto_1fr] h-full">
-        <?php include($BASE_PATH."/views/components/side-nav.php"); ?>
+        <?php include($BASE_PATH . "/views/components/side-nav.php"); ?>
         <div class="main-content">
             <p class="title"><?php echo $title; ?></p>
 
-            <div class="content p-6 mt-[25px] rounded-r-t-[10px] h-full">
+            <div class="content p-6 mt-[25px] rounded-t-[10px] h-full">
                 <h1><?php echo $route['name'];  ?></h1>
             </div>
         </div>

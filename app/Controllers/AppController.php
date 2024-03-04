@@ -42,7 +42,38 @@ class AppController extends Controller
      * 
      * @return ViewFile
      */
-    public function dashboard() {
+    public function dashboard()
+    {
         return new View($this->BASE_PATH."/views/pages/dashboard.php");
+    }
+
+    /**
+     * Return my calendar page
+     * 
+     * @return ViewFile
+     */
+    public function myCalendar()
+    {
+        return new View($this->BASE_PATH."/views/pages/my-calendar.php");
+    }
+
+    /**
+     * Return todolist page
+     * 
+     * @return ViewFile
+     */
+    public function todoList()
+    {
+        return new View($this->BASE_PATH."/views/pages/todolist.php");
+    }
+
+    /**
+     * Return notes page
+     * 
+     * @return ViewFile
+     */
+    public function notes()
+    {
+        return new View($this->BASE_PATH."/views/pages/notes.php");
     }
 }

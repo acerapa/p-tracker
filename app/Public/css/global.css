@@ -4,6 +4,7 @@
     --dark-blue: #717F9B;
     --blue: #47709F;
     --light-blue: #47709f94;
+    --black: #000;
 }
 
 body {
@@ -15,6 +16,11 @@ body {
 
 p {
     margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: var(--black)
 }
 
 .main-container {
@@ -61,8 +67,24 @@ p {
     flex-direction: column;
 }
 
+.w-full {
+    width: 100%;
+}
+
+.w-screen {
+    width: 100vw;
+}
+
 .w-5 {
     width: 20px;
+}
+
+.h-full {
+    height: 100%;
+}
+
+.h-screen {
+    height: 100vh;
 }
 
 .h-5 {
@@ -114,6 +136,10 @@ p {
 .px-2 {
     padding-left: 8px;
     padding-right: 8px;
+}
+
+.p-6 {
+    padding: 24px;
 }
 
 
@@ -207,4 +233,29 @@ p {
 
 .w-\[228px\] {
     width: 228px;
+}
+
+.rounded-r-t-\[10px\] {
+    border-top-right-radius: 10px;
+}
+
+.rounded-t-\[10px\] {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* CUSTOMIZED CLASSES */
+.main-content .title {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 30px;
+}
+
+.main-content .content {
+    background-color: var(--white);
+}
+
+.active-nav {
+    pointer-events: none;
+    background-color: var(--white);
 }

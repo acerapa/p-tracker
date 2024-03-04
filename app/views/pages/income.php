@@ -1,5 +1,5 @@
 <?php
-$title = 'Dashboard';
+$title = 'Income';
 $BASE_PATH = base_path();
 $user = isset($_SESSION['auth']) ? $_SESSION['auth'] : null;
 ?>
@@ -12,7 +12,7 @@ $user = isset($_SESSION['auth']) ? $_SESSION['auth'] : null;
         <div class="main-content">
             <p class="title"><?php echo $title; ?></p>
 
-            <div class="content p-6 mt-[25px] rounded-r-t-[10px] h-full">
+            <div class="content p-6 mt-[25px] rounded-t-[10px] h-full">
                 <h1><?php echo $route['name'];  ?></h1>
             </div>
         </div>
