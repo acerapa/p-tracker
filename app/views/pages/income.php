@@ -6,6 +6,7 @@ $user = isset($_SESSION['auth']) ? $_SESSION['auth'] : null;
 
 <!-- body content -->
 <?php ob_start() ?>
+<div class="modal-overlay"></div>
 <div class="main-container">
     <div class="w-full grid grid-[auto_1fr] h-full">
         <?php include($BASE_PATH."/views/components/side-nav.php"); ?>
@@ -13,7 +14,14 @@ $user = isset($_SESSION['auth']) ? $_SESSION['auth'] : null;
             <p class="title"><?php echo $title; ?></p>
 
             <div class="content p-6 mt-[25px] rounded-t-[10px] h-full">
-                <h1><?php echo $route['name'];  ?></h1>
+                <div class="flex justify-between items-center">
+                    <p class="text-base font-meduim">All data</p>
+                    <div class="flex gap-3 items-center">
+                        <input type="number" placeholder="Amount" class="input min-w-[140px]">
+                        <input type="text" placeholder="From" class="input min-w-[140px] date">
+                        <input type="text" placeholder="To" class="input min-w-[140px] date">
+                    </div>
+                </div>
             </div>
         </div>
     </div>

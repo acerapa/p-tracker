@@ -37,6 +37,8 @@
         echo $footer;
     }
     ?>
+
+    <script src="<?php echo asset("js/", "global.js"); ?>"></script>
 </body>
 
 </html>
