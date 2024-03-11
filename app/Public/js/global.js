@@ -2,7 +2,7 @@ window.onload = function () {
     // to apply placeholder on date fields
     dateFieldCustomStyling();
 
-    console.log(formatDate(new Date()));
+    console.log(formatDate(new Date(), "M/D/Y"));
 }
 
 
@@ -33,19 +33,30 @@ function dateFieldCustomStyling() {
  * 
  * @return {string}
  */
-function formatDate(date, format="m/d/y h:i:s") {
+function formatDate(date, format="m/d/y") {
     let d = new Date(date);
-    let day = d.getDate();
-    let month = d.getMonth() + 1;
-    let year = d.getFullYear();
-
+    
     let exp_frmt = format.split(/[^A-Za-z]+/);
-
-    exp_frmt.forEach((v, i) => {
-        console.log(isLowerCase(v), isUpperCase(v));
+    let final_frmt = format;
+    exp_frmt.forEach(v => {
+        if (isLowerCase(v)) {
+            switch (v) {
+                case 'm':
+                    final_frmt = final_frmt.replaceAll(v, d.getMonth() + 1);
+                    break;
+                case 'd':
+                    final_frmt = final_frmt.replaceAll(v, d.getDate());
+                    break;
+                case 'y':
+                    final_frmt = final_frmt.replaceAll(v, d.getUTCFullYear().toString().slice(-2));
+                    break;
+            }
+        } else if (isUpperCase(v)) {
+            
+        }
     });
 
-    return exp_frmt;
+    return final_frmt;
 }
 
 

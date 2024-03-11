@@ -38,6 +38,7 @@
     }
     ?>
 
+    <script src="<?php echo asset("js/", "common.js"); ?>"></script>
     <script src="<?php echo asset("js/", "global.js"); ?>"></script>
 </body>
 
