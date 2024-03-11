@@ -20,7 +20,13 @@ $user = isset($_SESSION['auth']) ? $_SESSION['auth'] : null;
                         <input type="number" placeholder="Amount" class="input min-w-[140px]">
                         <input type="text" placeholder="From" class="input min-w-[140px] date">
                         <input type="text" placeholder="To" class="input min-w-[140px] date">
+                        <button class="btn btn-blue">Search</button>
+                        <button class="btn btn-blue btn-plus w-[30px] h-[30px]" />
                     </div>
+                </div>
+
+                <div class="w-full mt-5">
+                    Income table
                 </div>
             </div>
         </div>
