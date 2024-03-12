@@ -6,7 +6,7 @@
     --blue-lightly-dark: #657DA1;
     --light-blue: #47709f94;
     --blue-shine: #2F8EFD;
-    --gray-overlay: #050505
+    --gray-overlay: #050505;
     --black: #000;
 }
 
@@ -130,6 +130,10 @@ a {
     width: 100vw;
 }
 
+.w-fit {
+    width: fit-content;
+}
+
 .w-5 {
     width: 20px;
 }
@@ -229,6 +233,10 @@ a {
 
 .bottom-3 {
     bottom: 12px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }
 
 /* CUSTOM VALUES */
@@ -378,14 +386,14 @@ a {
 
 .modal {
     top: 90px;
-    left: auto;
+    left: 50%;
     z-index: 3;
-    right: auto;
     padding: 20px;
     position: fixed;
     min-width: 350px;
     max-width: 450px;
     border-radius: 6px;
+    transform: translateX(-50%);
     background-color: var(--white);
 }
 

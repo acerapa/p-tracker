@@ -11,13 +11,13 @@ function hideAndShowModal(modalId, state) {
     if (state == 'show') {
         modalOverlay[0].classList.remove('hidden');
         modal.classList.remove('hidden');
-        modalOverlay[0].classList.remove('block');
-        modal.classList.remove('block');
+        modalOverlay[0].classList.add('block');
+        modal.classList.add('block');
     } else if (state == 'hide') {
         modalOverlay[0].classList.remove('block');
         modal.classList.remove('block');
-        modalOverlay[0].classList.remove('hidden');
-        modal.classList.remove('hidden');
+        modalOverlay[0].classList.add('hidden');
+        modal.classList.add('hidden');
     } else {
         console.warn(`hideAndShowModal: ${state} is not a valid state, choices are only (show, hide)`);
     }

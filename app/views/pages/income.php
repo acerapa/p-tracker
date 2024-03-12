@@ -8,7 +8,13 @@ $data = [];
 <!-- body content -->
 <?php ob_start() ?>
 <div class="modal-overlay hidden"></div>
-<div class="modal hidden"></div>
+<div class="modal hidden" id="income-modal">
+    <div class="flex justify-between items-center">
+        <p class="text-base font-bold">Add Income</p>
+        <img class="w-5 h-5 close-income-modal cursor-pointer" src="<?php echo asset('img/', 'cancel.png'); ?>" alt="cancel">
+    </div>
+</div>
+
 <div class="main-container">
     <div class="w-full grid grid-[auto_1fr] h-full">
         <?php include($BASE_PATH."/views/components/side-nav.php"); ?>
@@ -23,7 +29,7 @@ $data = [];
                         <input type="text" placeholder="From" class="input min-w-[140px] h-[14-5px] date">
                         <input type="text" placeholder="To" class="input min-w-[140px] h-[14-5px] date">
                         <button class="btn bg-lightly-dark-blue">Search</button>
-                        <button class="btn bg-lightly-dark-blue btn-plus w-[30px] h-[30px]" />
+                        <button class="btn bg-lightly-dark-blue btn-plus w-[30px] h-[30px] create-income-modal" />
                     </div>
                 </div>
 
@@ -43,7 +49,7 @@ $data = [];
                                     <div class="flex flex-col gap-3 text-center absolute w-full bottom-3">
                                         <p class="text-normal font-bold">No data to be shown</p>
                                         <div>
-                                            <button class="btn bg-lightly-dark-blue">Add Income</button>
+                                            <button class="btn bg-lightly-dark-blue create-income-modal">Add Income</button>
                                         </div>
                                     </div>
                                 </div>

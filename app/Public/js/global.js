@@ -2,9 +2,22 @@ window.onload = function () {
     // to apply placeholder on date fields
     dateFieldCustomStyling();
 
-    console.log(formatDate(new Date(), "M/D/Y"));
-}
+    // show income modal
+    let income_modal_triggers = document.querySelectorAll('.create-income-modal');
+    Array.from(income_modal_triggers).forEach(triger => {
+        triger.addEventListener('click', function () {
+            hideAndShowModal('income-modal', 'show');
+        });
+    });
 
+    let income_modal_closer = document.querySelectorAll('.close-income-modal');
+    Array.from(income_modal_closer).forEach(closer => {
+        closer.addEventListener('click', function () {
+            hideAndShowModal('income-modal', 'hide');
+        });
+    })
+
+}
 
 function dateFieldCustomStyling() {
     let inputFields = document.querySelectorAll('input.date');
@@ -19,6 +32,7 @@ function dateFieldCustomStyling() {
 
             input.addEventListener('blur', function () {
                 this.type = "text";
+                this.value = formatDate(new Date(this.value));
             });
         });
     }
@@ -42,17 +56,42 @@ function formatDate(date, format="m/d/y") {
         if (isLowerCase(v)) {
             switch (v) {
                 case 'm':
-                    final_frmt = final_frmt.replaceAll(v, d.getMonth() + 1);
+                case 'mm':
+                    let to_replace_m = d.getMonth() + 1;
+                    if ('mm') {
+                        to_replace_m = (d.getMonth() + 1).toString().length < 2 ? "0"+(d.getMonth() + 1) : d.getMonth() + 1;
+                    }
+                    final_frmt = final_frmt.replaceAll(v, to_replace_m);
                     break;
                 case 'd':
-                    final_frmt = final_frmt.replaceAll(v, d.getDate());
+                case 'dd':
+                    let to_replace = d.getDate();
+                    if ('dd') {
+                        to_replace = d.getDate().toString().length < 2 ? "0"+d.getDate() : d.getDate();
+                    }
+                    final_frmt = final_frmt.replaceAll(v, to_replace);
                     break;
                 case 'y':
+                case 'yy':
                     final_frmt = final_frmt.replaceAll(v, d.getUTCFullYear().toString().slice(-2));
                     break;
             }
         } else if (isUpperCase(v)) {
-            
+            // code here
+            // TODO: Need to update this code for now it's only returning the same as above code.
+            switch (v) {
+                case 'M':
+                case 'mm':
+                    final_frmt = final_frmt.replaceAll(v, d.getMonth() + 1);
+                    break;
+                case 'D':
+                case 'DD':
+                    final_frmt = final_frmt.replaceAll(v, d.getDate());
+                    break;
+                case 'Y':
+                    final_frmt = final_frmt.replaceAll(v, d.getUTCFullYear());
+                    break;
+            }
         }
     });
 
