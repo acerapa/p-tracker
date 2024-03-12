@@ -32,7 +32,9 @@ function dateFieldCustomStyling() {
 
             input.addEventListener('blur', function () {
                 this.type = "text";
-                this.value = formatDate(new Date(this.value));
+                if (this.value) {
+                    this.value = formatDate(new Date(this.value));
+                }
             });
         });
     }
