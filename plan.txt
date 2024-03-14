@@ -30,3 +30,19 @@ Database Design:
         application_info_id: integer|nullable
         timestamps: date
     Query: CREATE TABLE `epiz_28612709_media`.`users` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `first_name` VARCHAR(255) NOT NULL , `last_name` VARCHAR(255) NOT NULL , `username` VARCHAR(255) NOT NULL , `password` VARCHAR(255) NOT NULL , `email` VARCHAR(255) NOT NULL , `user_role` ENUM('admin','app') NOT NULL , `application_info_id` INT(11) NOT NULL , `created_at` DATE NOT NULL , `updated_at` DATE NOT NULL , `deleted_at` DATE NULL DEFAULT NULL , PRIMARY KEY (`id`), UNIQUE `username` (`username`)) ENGINE = MyISAM;
+
+########
+    Income:
+        id: integer
+        user_id: integer | foreign key from User table
+        amount: double
+        description: string
+    Query:
+        CREATE TABLE incomes (
+            id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            user_id INT(11),
+            amount DOUBLE,
+            when date,
+            description VARCHAR(255),
+            FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+        );

@@ -2,17 +2,38 @@
 $title = 'Income';
 $BASE_PATH = base_path();
 $user = isset($_SESSION['auth']) ? $_SESSION['auth'] : null;
-$data = [];
+$data = $incomes;
 ?>
 
 <!-- body content -->
 <?php ob_start() ?>
-<div class="modal-overlay hidden"></div>
 <div class="modal hidden" id="income-modal">
-    <div class="flex justify-between items-center">
-        <p class="text-base font-bold">Add Income</p>
-        <img class="w-5 h-5 close-income-modal cursor-pointer" src="<?php echo asset('img/', 'cancel.png'); ?>" alt="cancel">
-    </div>
+    <form action="<?php echo route('income.create')?>" method="POST">
+        <div class="flex justify-between items-center">
+            <p class="text-base font-bold">Add Income</p>
+            <img class="w-5 h-5 cursor-pointer close-income-modal" src="<?php echo asset('img/', 'cancel.png'); ?>" alt="cancel">
+        </div>
+        <div class="flex flex-col gap-[34px]">
+            <div class="flex gap-[30px] mt-[18px] w-full">
+                <div class="flex flex-col gap-1 flex-1">
+                    <label for="amount" class="text-blue text-sm font-normal">Amount</label>
+                    <input type="number" placeholder="Amount" name="amount" id="amount" class="!max-w-full input">
+                </div>
+                <div class="flex flex-col gap-1 flex-1">
+                    <label for="when" class="text-blue text-sm font-normal">When</label>
+                    <input type="text" placeholder="Date" name="when" id="when" class="!max-w-full input date">
+                </div>
+            </div>
+            <div class="flex flex-col gap-1 w-full">
+                <label for="description" class="text-blue text-sm font-normal">Description</label>
+                <textarea name="description" id="" col="100" rows="10" class="input !max-w-full" placeholder="Description"></textarea>
+            </div>
+            <div class="flex gap-[14px] justify-center">
+                <button type="button" class="btn btn-outline close-income-modal">Cancel</button>
+                <button class="btn bg-lightly-dark-blue">Save</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 <div class="main-container">
@@ -41,6 +62,26 @@ $data = [];
                         <p class="col-span-1 font-semibold text-sm">AMOUNT</p>
                         <p class="col-span-1 font-semibold text-sm">ACTION</p>
                     </div>
+
+                    <div class="table-strip">
+                        <?php foreach ($data as $income): ?>
+                            <div class="grid grid-cols-7 px-7 py-2 items-center">
+                                <p class="col-span-1 font-normal text-sm"><?php echo $income->id ?></p>
+                                <p class="col-span-1 font-normal text-sm"><?php echo $income->when ?></p>
+                                <p class="col-span-3 font-normal text-sm"><?php echo $income->description ?></p>
+                                <p class="col-span-1 font-normal text-sm">Php <?php echo $income->amount ?></p>
+                                <div class="col-span-1 font-normal text-sm">
+                                    <button class="btn bg-lightly-dark-blue w-[30px] h-[30px] relative">
+                                        <img class="w-5 absolute top-1/2 left-1/2 -translate-1/2" src="<?php echo asset('img/', 'info.png') ?>" alt="info.png">
+                                    </button>
+                                    <button class="btn bg-lightly-dark-blue w-[30px] h-[30px] relative">
+                                        <img class="w-5 absolute top-1/2 left-1/2 -translate-1/2 delete-modal-trigger" src="<?php echo asset('img/', 'remove.png') ?>" alt="remove.png">
+                                    </button>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
                     <div class="m-w-[584px]">
                         <?php if (count($data) <= 0): ?>
                             <div class="table-no-data flex justify-center">
@@ -63,6 +104,13 @@ $data = [];
 </div>
 <?php
 $body = ob_get_contents();
+ob_end_clean();
+?>
+
+<?php ob_start() ?>
+<script src="<?php echo asset('js/specifics/', 'income.js') ?>"></script>
+<?php
+$scripts = ob_get_contents();
 ob_end_clean();
 ?>
 

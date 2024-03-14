@@ -2,21 +2,20 @@ window.onload = function () {
     // to apply placeholder on date fields
     dateFieldCustomStyling();
 
-    // show income modal
-    let income_modal_triggers = document.querySelectorAll('.create-income-modal');
-    Array.from(income_modal_triggers).forEach(triger => {
-        triger.addEventListener('click', function () {
-            hideAndShowModal('income-modal', 'show');
+    // show confirm delete modal
+    let confirm_delete_modal = document.querySelectorAll('.delete-modal-trigger');
+    Array.from(confirm_delete_modal).forEach(trigger => {
+        trigger.addEventListener('click', function () {
+            hideAndShowModal('deletion-confirmation', 'show');
         });
     });
 
-    let income_modal_closer = document.querySelectorAll('.close-income-modal');
-    Array.from(income_modal_closer).forEach(closer => {
+    let confirm_delete_modal_closer = document.querySelectorAll('.close-confirmation-modal');
+    Array.from(confirm_delete_modal_closer).forEach(closer => {
         closer.addEventListener('click', function () {
-            hideAndShowModal('income-modal', 'hide');
+            hideAndShowModal('deletion-confirmation', 'hide');
         });
-    })
-
+    });
 }
 
 function dateFieldCustomStyling() {

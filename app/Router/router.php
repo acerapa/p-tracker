@@ -27,6 +27,8 @@ Router::middleware('auth', function () {
 
     // income
     Router::get('/income', [IncomeController::class, 'index']);
+    Router::post('/income/create', [IncomeController::class, 'create']);
+    Router::post('/income/destroy', [IncomeController::class, 'destroy']);
 
     // expense
     Router::get('/expense', [ExpenseController::class, 'index']);
