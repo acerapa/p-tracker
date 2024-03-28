@@ -2,7 +2,8 @@
 $title = 'Income';
 $BASE_PATH = base_path();
 $user = isset($_SESSION['auth']) ? $_SESSION['auth'] : null;
-$data = $incomes;
+$data = $incomes->items;
+$paginated = $incomes;
 ?>
 
 <!-- body content -->
@@ -97,6 +98,15 @@ $data = $incomes;
                             </div>
                         <?php endif; ?>
                     </div>
+
+                    <?php if (count($data) > 0) : ?>
+                        <!-- <div class="w-full flex justify-right py-3">
+                            <button>
+                                Test Pagination
+                            </button>
+                        </div> -->
+                        <?php use_component("paginate", '', compact('paginated'));  ?>
+                    <?php endif; ?>
                 </div>
             </div>  
         </div>

@@ -138,3 +138,28 @@ function decrypt($string) {
 function use_layout($name, $defined_vars, $layout_path = 'layouts') {
     return View::use_layout($name, $defined_vars, $layout_path);
 }
+
+
+function use_component($name,$custom_component_dir = '' ,$args=null) {
+    $default_component_path = "views/components";
+    $path = base_path() . "/$default_component_path";
+
+    if ($custom_component_dir) {
+        $path = base_path() . "/$custom_component_dir";
+    }
+
+    if (!is_dir($path)) {
+        throw new Exception("$custom_component_dir directory does'nt exist!");
+        return;
+    }
+
+    $file = "$path/$name.php";
+    if (!file_exists($file)) {
+        throw new Exception("Component Does'nt exist: $name !");
+        return;
+    }
+
+    extract($args);
+
+    include $file;
+}

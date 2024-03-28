@@ -25,6 +25,6 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        return new View($this->BASE_PATH . "/views/pages/income.php");;
+        return new View($this->BASE_PATH . "/views/pages/expense.php");;
     }
 }

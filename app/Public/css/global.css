@@ -8,6 +8,7 @@
     --blue-shine: #2F8EFD;
     --gray-overlay: #050505;
     --black: #000;
+    --mid-light-blue: rgba(198,224,255,.58);
     --super-light-blue: rgba(192, 208, 233, 0.25);
     --red: #E74646;
 }
@@ -102,6 +103,14 @@ a {
 
 .justify-between {
     justify-content: space-between;
+}
+
+.justify-left {
+    justify-content: left;
+}
+
+.justify-right {
+    justify-content: right;
 }
 
 .items-center {

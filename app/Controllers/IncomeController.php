@@ -25,7 +25,8 @@ class IncomeController extends Controller
      */
     public function index()
     {
-        return new View($this->BASE_PATH."/views/pages/income.php");
+        $incomes = Income::paginate(10);
+        return new View($this->BASE_PATH."/views/pages/income.php", compact('incomes'));
     }
 
     /**
@@ -42,6 +43,7 @@ class IncomeController extends Controller
         $data['when']    = date_create($data['when'])->format("Y-m-d");
 
         Income::create($data);
+        return Router::redirect('income.index');
     }
 
     /**
@@ -50,7 +52,6 @@ class IncomeController extends Controller
     public function destroy(Income $income)
     {
         $income->destroy();
+        Router::redirect('income.index');
     }
-
-
 }

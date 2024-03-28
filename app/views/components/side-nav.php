@@ -3,7 +3,8 @@
         <div class="w-[30px] h-[30px] flex items-center justify-center">
             <img src="<?php echo asset('img/', 'baby.jpg')?>" class="w-[30px] h-[30px] object-fit-cover rounded-full" alt="profile">
         </div>
-        <p class="font-bold text-sm">Rynn Harvey</p>
+        <!-- <p class="font-bold text-sm">Rynn Harvey</p> -->
+        <p class="font-bold text-sm"><?php echo $user->username; ?></p>
         <img src="<?php echo asset('icons/', 'setting.png') ?>" class="w-5 h-5 mt-1">
         <img src="<?php echo asset('icons/', 'bell.png') ?>" class="w-5 h-5 mt-1">
     </div>

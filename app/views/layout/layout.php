@@ -38,7 +38,7 @@
             <img class="w-5 h-5 cursor-pointer close-confirmation-modal" src="<?php echo asset('img/', 'cancel.png'); ?>" alt="cancel">
         </div>
         <div class="py-7">
-            <p class="text-[19px] font-bold text-center">This action is irreversible are you sure you want to proceed this?</p>
+            <p class="text-[19px] font-bold text-center">This action is irreversible are you sure you want to proceed?</p>
         </div>
         <div class="flex gap-[14px] justify-center py-8">
             <button type="button" class="btn btn-outline close-confirmation-modal">Cancel</button>

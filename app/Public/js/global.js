@@ -16,6 +16,9 @@ window.onload = function () {
             hideAndShowModal('deletion-confirmation', 'hide');
         });
     });
+
+    // income modal
+    initializeIncomeModals();
 }
 
 function dateFieldCustomStyling() {

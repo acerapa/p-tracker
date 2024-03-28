@@ -3,6 +3,7 @@ namespace App\Traits;
 
 use PDO;
 use App\Helpers\Sanitizer;
+use App\Helpers\Paginate;
 
 trait HasCrud {
     /**===========================================
@@ -65,6 +66,66 @@ trait HasCrud {
         $stmt    = self::getConnection()->query($query);
         $results = $stmt->fetchAll();
         
+        $data = [];
+        foreach ($results as $dt) {
+            // revert charactes
+            $dt = Sanitizer::revertChars($dt);
+            // create model called instance
+            $class = get_called_class();
+            $model = new $class();
+            $model->setAttributes($dt);
+            array_push($data, $model);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get paginated data
+     * 
+     * @param Int $paginate_by
+     * @param Int $offset
+     * 
+     * @return Paginate
+     */
+    public static function paginate($paginate_by)
+    {
+        $query  = self::createQueryString('COUNT');
+        $stmt   = self::getConnection()->query($query);
+        $count = $stmt->fetch()[0];
+
+        $paginated = new Paginate([], $paginate_by, $count);
+        
+        $offset = ($paginated->current_page - 1) * $paginate_by;
+        $taked  = self::take($paginate_by, $offset);
+
+        $paginated->items = $taked;
+
+        return $paginated;
+    }
+
+    /**
+     * Get limited data based on the parameter take
+     * 
+     * @param Int $take
+     * @param Int $offset
+     * 
+     * @param Int $take
+     */
+    public static function take($take, $offset = 0)
+    {
+        $query   = self::createQueryString('SELECT');
+
+         // modify the query
+        if ($offset) {
+            $query = str_replace(';', ' ', $query)."limit $offset, $take;";
+        } else {
+            $query   = str_replace(';', ' ', $query)."limit $take;";
+        }
+
+        $stmt    = self::getConnection()->query($query);
+        $results = $stmt->fetchAll();
+
         $data = [];
         foreach ($results as $dt) {
             // revert charactes
@@ -168,6 +229,9 @@ trait HasCrud {
             case 'WHERE':
                 $queryString = self::formatWhereQueryString($data);
                 break;
+            case 'COUNT':
+                $queryString = self::formatCountQueryString($data);
+                break;
         }
         return $queryString;
     }
@@ -247,6 +311,22 @@ trait HasCrud {
         }
 
         return substr($queryString, 0, -1);
+    }
+
+
+    /**
+     * Format count query string
+     * 
+     * @param Array $data
+     * 
+     * @return String
+     */
+    public static function formatCountQueryString($data)
+    {
+        $table = self::$table ? self::$table : self::getTableNameFromClassName();
+        $queryString = "SELECT COUNT(*) FROM $table;";
+
+        return $queryString;
     }
 
     /**

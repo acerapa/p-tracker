@@ -20,6 +20,20 @@ interface ICrud {
     public static function all();
 
     /**
+     * Paginate
+     * 
+     * @param Int $paginate_by
+     */
+    public static function paginate($paginate_by);
+
+    /**
+     * Take
+     * 
+     * @param Int $take
+     */
+    public static function take($take);
+
+    /**
      * Find By id
      * 
      * @param $id

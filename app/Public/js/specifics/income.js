@@ -1,4 +1,4 @@
-window.onload = function () {
+function initializeIncomeModals() {
     // show income modal
     let income_modal_triggers = document.querySelectorAll('.create-income-modal');
     Array.from(income_modal_triggers).forEach(trigger => {
