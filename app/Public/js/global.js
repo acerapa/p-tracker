@@ -29,6 +29,7 @@ function dateFieldCustomStyling() {
 
         inputs.forEach(input => {
             input.addEventListener('focus', function () {
+                this.value = (new Date(this.value)).toISOString().split('T')[0];
                 this.type = "date";
             });
 

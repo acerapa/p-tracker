@@ -10,6 +10,8 @@ class SqlOperatorConst {
     public static $OPT_NOT_EQUAL = '<>';
     public static $OPT_GREATER_THAN = '>';
     public static $OPT_LESS_THAN = '<';
+    public static $OPT_GREATER_THAN_OR_EQUAL = '>=';
+    public static $OPT_LESS_THAN_OR_EQUAL = '<=';
 
     /**
      * Validate operator exists
@@ -21,6 +23,8 @@ class SqlOperatorConst {
             self::$OPT_LESS_THAN,
             self::$OPT_LIKE,
             self::$OPT_NOT_EQUAL,
+            self::$OPT_GREATER_THAN_OR_EQUAL,
+            self::$OPT_LESS_THAN_OR_EQUAL
         ];
         
         return in_array($operator, $opt_list);

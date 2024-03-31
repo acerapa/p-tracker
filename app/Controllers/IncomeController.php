@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Constant\SqlOperatorConst;
 use App\Controllers\Controller;
 use App\Helpers\Request;
 use App\Helpers\Router;
@@ -25,8 +26,30 @@ class IncomeController extends Controller
      */
     public function index()
     {
-        $incomes = Income::paginate(10);
-        return new View($this->BASE_PATH."/views/pages/income.php", compact('incomes'));
+        $search_params = Request::getData();
+        $builder = new Income();
+        if (isset($search_params['amount'])) {
+            if ($search_params['amount'] !== '') {
+                $builder = $builder->where('amount', SqlOperatorConst::$OPT_EQUALS, $search_params['amount']);
+            }
+        } 
+
+        if (isset($search_params['from'])) {
+            if ($search_params['from']) {
+                $builder = $builder->where('when', SqlOperatorConst::$OPT_GREATER_THAN_OR_EQUAL, date_create($search_params['from']));
+            }
+        }
+
+        if (isset($search_params['to'])) {
+            if ($search_params['to']) {
+                $builder = $builder->where('when', SqlOperatorConst::$OPT_LESS_THAN_OR_EQUAL, date_create($search_params['to']));
+            }
+        }
+
+        $incomes = $builder->paginate(10);
+
+
+        return new View($this->BASE_PATH."/views/pages/income.php", compact('incomes', 'search_params'));
     }
 
     /**

@@ -4,6 +4,11 @@ $BASE_PATH = base_path();
 $user = isset($_SESSION['auth']) ? $_SESSION['auth'] : null;
 $data = $incomes->items;
 $paginated = $incomes;
+
+// search params
+$amount = isset($search_params['amount']) ? $search_params['amount'] : "";
+$from   = isset($search_params['from']) ? $search_params['from'] : "";
+$to     = isset($search_params['to']) ? $search_params['to'] : "";
 ?>
 
 <!-- body content -->
@@ -46,13 +51,13 @@ $paginated = $incomes;
             <div class="content p-6 mt-[25px] rounded-t-[10px] h-full">
                 <div class="flex justify-between items-center">
                     <p class="text-base font-meduim">All data</p>
-                    <div class="flex gap-3 items-center">
-                        <input type="number" placeholder="Amount" class="input min-w-[140px]">
-                        <input type="text" placeholder="From" class="input min-w-[140px] h-[14-5px] date">
-                        <input type="text" placeholder="To" class="input min-w-[140px] h-[14-5px] date">
-                        <button class="btn bg-lightly-dark-blue">Search</button>
-                        <button class="btn bg-lightly-dark-blue btn-plus w-[30px] h-[30px] create-income-modal" />
-                    </div>
+                    <form class="flex gap-3 items-center">
+                        <input type="number" name="amount" placeholder="Amount" class="input min-w-[140px]" value="<?php echo $amount; ?>">
+                        <input type="text" name="from" placeholder="From" class="input min-w-[140px] h-[14-5px] date" value="<?php echo $from; ?>">
+                        <input type="text" name="to" placeholder="To" class="input min-w-[140px] h-[14-5px] date" value="<?php echo $to; ?>">
+                        <button type="submit" class="btn bg-lightly-dark-blue">Search</button>
+                        <button type="button" class="btn bg-lightly-dark-blue btn-plus w-[30px] h-[30px] create-income-modal" />
+                    </form>
                 </div>
 
                 <div class="w-full mt-5 income-table">
