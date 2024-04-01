@@ -2,10 +2,15 @@ window.onload = function () {
     // to apply placeholder on date fields
     dateFieldCustomStyling();
 
+    // delete from
+    let deletion_form = document.getElementById('form-to-delete');
+    let id_input = document.getElementById('item-to-delete');
     // show confirm delete modal
     let confirm_delete_modal = document.querySelectorAll('.delete-modal-trigger');
     Array.from(confirm_delete_modal).forEach(trigger => {
         trigger.addEventListener('click', function () {
+            deletion_form.action = this.dataset.href;
+            id_input.value = this.dataset.id;
             hideAndShowModal('deletion-confirmation', 'show');
         });
     });
@@ -13,12 +18,34 @@ window.onload = function () {
     let confirm_delete_modal_closer = document.querySelectorAll('.close-confirmation-modal');
     Array.from(confirm_delete_modal_closer).forEach(closer => {
         closer.addEventListener('click', function () {
+            deletion_form.action = '';
+            id_input.value = '';
             hideAndShowModal('deletion-confirmation', 'hide');
         });
     });
 
+    // confirm delete
+    let confirm_deletions = document.querySelectorAll('.confirm-delete');
+    Array.from(confirm_deletions).forEach(btn => {
+        btn.addEventListener('click', function () {
+            deletion_form.submit();
+        });
+    });
+
     // income modal
-    initializeIncomeModals();
+    try {
+        initializeIncomeModals();
+    } catch (e) {
+        console.warn('initializeIncomeModals(): Function not found!');
+    }
+    
+    // expense modal
+    try {
+        initializeExpenseModals();
+    } catch (e) {
+        console.warn('initializeExpenseModals(): Function not found!');
+    }
+
 }
 
 function dateFieldCustomStyling() {
@@ -29,7 +56,9 @@ function dateFieldCustomStyling() {
 
         inputs.forEach(input => {
             input.addEventListener('focus', function () {
-                this.value = (new Date(this.value)).toISOString().split('T')[0];
+                if (this.value) {
+                    this.value = (new Date(this.value)).toISOString().split('T')[0];
+                }
                 this.type = "date";
             });
 

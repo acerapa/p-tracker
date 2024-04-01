@@ -3,13 +3,14 @@ namespace App\Models;
 
 use App\Models\Model;
 
-class Income extends Model {
+class CashFlow extends Model {
     public static $fields = [
         'when',
         'amount',
         'user_id',
+        'is_income',
         'description',
     ];
 
-    public static $table = "incomes";
+    public static $table = "cashflows";
 }

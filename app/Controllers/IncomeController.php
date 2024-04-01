@@ -5,7 +5,7 @@ use App\Constant\SqlOperatorConst;
 use App\Controllers\Controller;
 use App\Helpers\Request;
 use App\Helpers\Router;
-use App\Models\Income;
+use App\Models\CashFlow;
 use App\Helpers\View;
 
 class IncomeController extends Controller
@@ -27,7 +27,7 @@ class IncomeController extends Controller
     public function index()
     {
         $search_params = Request::getData();
-        $builder = new Income();
+        $builder = CashFlow::where('is_income', SqlOperatorConst::$OPT_EQUALS, true);
         if (isset($search_params['amount'])) {
             if ($search_params['amount'] !== '') {
                 $builder = $builder->where('amount', SqlOperatorConst::$OPT_EQUALS, $search_params['amount']);
@@ -62,19 +62,28 @@ class IncomeController extends Controller
         $data = Request::getData();
         $user = $_SESSION['auth'];
 
-        $data['user_id'] = $user->id;
-        $data['when']    = date_create($data['when'])->format("Y-m-d");
+        $data['is_income'] = true;
+        $data['user_id']   = $user->id;
+        $data['when']      = date_create($data['when'])->format("Y-m-d");
 
-        Income::create($data);
+        CashFlow::create($data);
         return Router::redirect('income.index');
     }
 
     /**
      * Delete Income
      */
-    public function destroy(Income $income)
+    public function destroy()
     {
-        $income->destroy();
+        $data = Request::getData();
+        $income = CashFlow::find($data['id']);
+        
+        try {
+            $income->destroy();
+        } catch (\Exception $e) {
+            $_SESSION['error'] = "Something went wrong!";
+        }
+
         Router::redirect('income.index');
     }
 }

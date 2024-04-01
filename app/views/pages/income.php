@@ -80,8 +80,8 @@ $to     = isset($search_params['to']) ? $search_params['to'] : "";
                                     <button class="btn bg-lightly-dark-blue w-[30px] h-[30px] relative">
                                         <img class="w-5 absolute top-1/2 left-1/2 -translate-1/2" src="<?php echo asset('img/', 'info.png') ?>" alt="info.png">
                                     </button>
-                                    <button class="btn bg-lightly-dark-blue w-[30px] h-[30px] relative">
-                                        <img class="w-5 absolute top-1/2 left-1/2 -translate-1/2 delete-modal-trigger" src="<?php echo asset('img/', 'remove.png') ?>" alt="remove.png">
+                                    <button class="btn bg-lightly-dark-blue w-[30px] h-[30px] relative delete-modal-trigger" data-id="<?php echo $income->id ?>" data-href="<?php echo route('income.destroy')?>">
+                                        <img class="w-5 absolute top-1/2 left-1/2 -translate-1/2" src="<?php echo asset('img/', 'remove.png') ?>" alt="remove.png">
                                     </button>
                                 </div>
                             </div>
@@ -104,12 +104,7 @@ $to     = isset($search_params['to']) ? $search_params['to'] : "";
                         <?php endif; ?>
                     </div>
 
-                    <?php if (count($data) > 0) : ?>
-                        <!-- <div class="w-full flex justify-right py-3">
-                            <button>
-                                Test Pagination
-                            </button>
-                        </div> -->
+                    <?php if ($paginated->total_items > $paginated->paginate_by): ?>
                         <?php use_component("paginate", '', compact('paginated'));  ?>
                     <?php endif; ?>
                 </div>

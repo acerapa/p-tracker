@@ -42,8 +42,11 @@
         </div>
         <div class="flex gap-[14px] justify-center py-8">
             <button type="button" class="btn btn-outline close-confirmation-modal">Cancel</button>
-            <button class="btn bg-red">Yes</button>
+            <button class="btn bg-red confirm-delete">Yes</button>
         </div>
+        <form action="" method="POST" id="form-to-delete">
+            <input type="hidden" name="id" value="" id="item-to-delete">
+        </form>
     </div>
 
     <?php
