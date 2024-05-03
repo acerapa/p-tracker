@@ -24,6 +24,7 @@ Router::middleware('auth', function () {
     Router::get('/my-calendar', [AppController::class, 'myCalendar']);
     Router::get('/todolist', [AppController::class, 'todoList']);
     Router::get('/notes', [AppController::class, 'notes']);
+    Router::get('/settings', [AppController::class, 'settings']);
 
     // income
     Router::get('/income', [IncomeController::class, 'index']);

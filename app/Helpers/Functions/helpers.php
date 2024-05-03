@@ -140,9 +140,8 @@ function use_layout($name, $defined_vars, $layout_path = 'layouts') {
 }
 
 
-function use_component($name,$custom_component_dir = '' ,$args=null) {
-    $default_component_path = "views/components";
-    $path = base_path() . "/$default_component_path";
+function use_component($name, $custom_component_dir = '', $args=[]) {
+    $path = base_path() . View::$component_path;
 
     if ($custom_component_dir) {
         $path = base_path() . "/$custom_component_dir";

@@ -134,6 +134,10 @@
     border-top-right-radius: 10px;
 }
 
+.rounded-\[10px\] {
+    border-radius: 10px;
+}
+
 /* CUSTOMIZED CLASSES */
 .main-content .title {
     font-size: 26px;
@@ -292,4 +296,11 @@
 .paginate-btn-disabled {
     opacity: 0.5;
     pointer-events: none;
+}
+
+.settings-title {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    font-weight: 500;
 }

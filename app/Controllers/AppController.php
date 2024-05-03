@@ -76,4 +76,14 @@ class AppController extends Controller
     {
         return new View($this->BASE_PATH."/views/pages/notes.php");
     }
+
+    /**
+     * Return settings page
+     * 
+     * @return ViewFile
+     */
+    public function settings()
+    {
+        return new View($this->BASE_PATH."/views/pages/settings.php");
+    }
 }

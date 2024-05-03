@@ -73,6 +73,10 @@ a {
     display: grid;
 }
 
+.grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
 .grid-cols-7 {
     grid-template-columns: repeat(7, 1fr);
 }
@@ -247,6 +251,10 @@ a {
     padding-right: 8px;
 }
 
+.p-3 {
+    padding: 12px;
+}
+
 .p-6 {
     padding: 24px;
 }
@@ -281,6 +289,10 @@ a {
 
 .top-1\/2 {
     top: 50%;
+}
+
+.underline {
+    text-decoration: underline;
 }
 
 /* NEGATES */

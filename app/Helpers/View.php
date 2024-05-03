@@ -10,6 +10,9 @@ class View
 
     public static $layout_path = 'layouts';
 
+    // view root components
+    public static $component_path = '/views/components';
+
     /**
      * Constructor
      */
