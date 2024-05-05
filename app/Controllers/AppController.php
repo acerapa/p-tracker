@@ -1,9 +1,13 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Controllers\Controller;
 use App\Helpers\Request;
+use App\Helpers\Router;
 use App\Helpers\View;
+
+use App\Models\ExpenseType;
 
 class AppController extends Controller
 {
@@ -12,7 +16,8 @@ class AppController extends Controller
      * 
      * @return void
      */
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
     }
 
@@ -24,7 +29,7 @@ class AppController extends Controller
     public function index()
     {
         $route = Request::$route;
-        return new View($this->BASE_PATH."/views/index.php", compact('route'));
+        return new View($this->BASE_PATH . "/views/index.php", compact('route'));
     }
 
     /**
@@ -34,7 +39,7 @@ class AppController extends Controller
      */
     public function activity()
     {
-        return new View($this->BASE_PATH."/views/pages/activity.php");
+        return new View($this->BASE_PATH . "/views/pages/activity.php");
     }
 
     /**
@@ -44,7 +49,7 @@ class AppController extends Controller
      */
     public function dashboard()
     {
-        return new View($this->BASE_PATH."/views/pages/dashboard.php");
+        return new View($this->BASE_PATH . "/views/pages/dashboard.php");
     }
 
     /**
@@ -54,7 +59,7 @@ class AppController extends Controller
      */
     public function myCalendar()
     {
-        return new View($this->BASE_PATH."/views/pages/my-calendar.php");
+        return new View($this->BASE_PATH . "/views/pages/my-calendar.php");
     }
 
     /**
@@ -64,7 +69,7 @@ class AppController extends Controller
      */
     public function todoList()
     {
-        return new View($this->BASE_PATH."/views/pages/todolist.php");
+        return new View($this->BASE_PATH . "/views/pages/todolist.php");
     }
 
     /**
@@ -74,16 +79,6 @@ class AppController extends Controller
      */
     public function notes()
     {
-        return new View($this->BASE_PATH."/views/pages/notes.php");
-    }
-
-    /**
-     * Return settings page
-     * 
-     * @return ViewFile
-     */
-    public function settings()
-    {
-        return new View($this->BASE_PATH."/views/pages/settings.php");
+        return new View($this->BASE_PATH . "/views/pages/notes.php");
     }
 }

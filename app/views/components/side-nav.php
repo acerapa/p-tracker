@@ -59,8 +59,8 @@
             <p class="text-sm font-semibold">Notes</p>
         </a>
         <a
-            href="<?php echo route('app.settings'); ?>"
-            class="rounded-l-4 py-3 pl-5 flex items-center gap-2 <?php echo isset($route) && $route['name'] == 'app.settings' ? 'active-nav' : '' ?>"
+            href="<?php echo route('settings.index'); ?>"
+            class="rounded-l-4 py-3 pl-5 flex items-center gap-2 <?php echo isset($route) && $route['name'] == 'settings.index' ? 'active-nav' : '' ?>"
         >
             <img src="<?php echo asset('icons/', 'setting.png'); ?>" class="w-[23px] h-[22px]" alt="notes">
             <p class="text-sm font-semibold">Settings</p>

@@ -32,11 +32,14 @@ class Model extends ModelAbstract implements ICrud {
      */
     public static function getTableNameFromClassName()
     {
-        $inflector = InflectorFactory::create()->build();
-        $namespace = $inflector->pluralize(strtolower(get_called_class())); 
-        $className = explode('\\', $namespace);
-
-        return end($className);
+        $table = get_called_class()::$table;
+        if (!$table) {
+            $inflector = InflectorFactory::create()->build();
+            $namespace = $inflector->pluralize(strtolower(get_called_class())); 
+            $className = explode('\\', $namespace);
+            $table = end($className);
+        }
+        return $table;
     }
 
     /**

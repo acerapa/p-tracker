@@ -30,22 +30,7 @@ window.onload = function () {
         btn.addEventListener('click', function () {
             deletion_form.submit();
         });
-    });
-
-    // income modal
-    try {
-        initializeIncomeModals();
-    } catch (e) {
-        console.warn('initializeIncomeModals(): Function not found!');
-    }
-    
-    // expense modal
-    try {
-        initializeExpenseModals();
-    } catch (e) {
-        console.warn('initializeExpenseModals(): Function not found!');
-    }
-
+    }); 
 }
 
 function dateFieldCustomStyling() {

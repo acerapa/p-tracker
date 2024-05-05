@@ -11,6 +11,7 @@ use App\Controllers\TodoController;
 use App\Controllers\IncomeController;
 use App\Controllers\ExpenseController;
 use App\Controllers\BudgetingController;
+use App\Controllers\SettingsController;
 
 // web routes
 
@@ -24,7 +25,11 @@ Router::middleware('auth', function () {
     Router::get('/my-calendar', [AppController::class, 'myCalendar']);
     Router::get('/todolist', [AppController::class, 'todoList']);
     Router::get('/notes', [AppController::class, 'notes']);
-    Router::get('/settings', [AppController::class, 'settings']);
+
+    // settings
+    Router::get('/settings', [SettingsController::class, 'index']);
+    Router::post('/setting/expense-type', [SettingsController::class, 'addExpenseType']);
+    Router::post('/setting/destroy', [SettingsController::class, 'destroy']);
 
     // income
     Router::get('/income', [IncomeController::class, 'index']);

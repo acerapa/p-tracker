@@ -25,6 +25,6 @@ class Todo extends Model {
     public static $table = 'todos';
 
     /**==============================
-     * METHOD
+     * METHODS
      ================================*/
 }

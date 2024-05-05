@@ -64,3 +64,15 @@ Database Design:
             is_income TINYINT,
             FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
         );
+
+####################
+    ExpenseType
+        id: integer
+        name: string
+        created_at: datetime
+    Query:
+        CREATE TABLE expense_types (
+            id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR(255),
+            created_at datetime
+        );

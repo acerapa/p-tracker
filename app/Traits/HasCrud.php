@@ -109,14 +109,14 @@ trait HasCrud {
     public function destroy()
     {
         try {
-            $table = self::$table ? self::$table : self::getTableNameFromClassName();
+            $table = self::getTableNameFromClassName();
             $id    = $this->id;
             $query = "DELETE from $table WHERE id = $id;";
             $stmt  = self::getConnection()->prepare($query);
             $stmt->execute();
 
             return true; 
-        } catch ( Exception $e ) {
+        } catch ( \Exception $e ) {
             return false;
         }
     }
@@ -182,7 +182,7 @@ trait HasCrud {
     public static function formatWhereQueryString($fields)
     {
         // temporary for now
-        $table = self::$table ? self::$table : self::getTableNameFromClassName();
+        $table = self::getTableNameFromClassName();
         $queryString = "SELECT * FROM `$table` WHERE ";
         foreach ($fields as $field) {
             $queryString.="$field = ?,";
@@ -201,7 +201,7 @@ trait HasCrud {
      */
     private static function formatInsertQueryString($data)
     {
-        $table = self::$table ? self::$table : self::getTableNameFromClassName();   
+        $table = self::getTableNameFromClassName();   
         $queryString = "INSERT INTO `$table` ";
         $fields = array_intersect(self::getFields(), array_keys($data));
 
@@ -220,7 +220,7 @@ trait HasCrud {
      */
     public static function formatSelectQuerystring($fields = [])
     {
-        $table = self::$table ? self::$table : self::getTableNameFromClassName(); 
+        $table = self::getTableNameFromClassName(); 
         $queryString = "SELECT ";
         if (!count($fields)) {
             $queryString .= "* FROM $table;";
@@ -238,7 +238,7 @@ trait HasCrud {
      */
     public static function formatUpdateQueryString($data)
     {
-        $table = self::$table ? self::$table : self::getTableNameFromClassName();
+        $table = self::getTableNameFromClassName();
         $queryString = "UPDATE `$table` SET ";
 
         // build query string

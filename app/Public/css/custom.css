@@ -304,3 +304,7 @@
     font-size: 18px;
     font-weight: 500;
 }
+
+.expense-type-table {
+    max-width: 600px;
+}

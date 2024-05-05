@@ -14,3 +14,5 @@ function initializeIncomeModals() {
         });
     });
 }
+
+initializeIncomeModals();
