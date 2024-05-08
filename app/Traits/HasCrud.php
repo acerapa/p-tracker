@@ -239,14 +239,18 @@ trait HasCrud {
     public static function formatUpdateQueryString($data)
     {
         $table = self::getTableNameFromClassName();
+        $fields = (get_called_class()::$fields);
+
         $queryString = "UPDATE `$table` SET ";
 
         // build query string
         foreach ($data as $key => $value) {
-            $queryString .= "$key = :$key,";
+            if (in_array($key, $fields)) {
+                $queryString .= "`$key` = :$key, ";
+            }
         }
 
-        return substr($queryString, 0, -1);
+        return substr($queryString, 0, -2) . " ";
     }
 
     /**

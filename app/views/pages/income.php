@@ -15,8 +15,9 @@ $to     = isset($search_params['to']) ? $search_params['to'] : "";
 <?php ob_start() ?>
 <div class="modal hidden" id="income-modal">
     <form action="<?php echo route('income.create')?>" method="POST">
+        <input type="hidden" name="id" id="income_id">
         <div class="flex justify-between items-center">
-            <p class="text-base font-bold">Add Income</p>
+            <p class="text-base font-bold modal-title">Add Income</p>
             <img class="w-5 h-5 cursor-pointer close-income-modal" src="<?php echo asset('img/', 'cancel.png'); ?>" alt="cancel">
         </div>
         <div class="flex flex-col gap-[34px]">
@@ -48,7 +49,7 @@ $to     = isset($search_params['to']) ? $search_params['to'] : "";
         <div class="main-content">
             <p class="title"><?php echo $title; ?></p>
 
-            <div class="content p-6 mt-[25px] rounded-t-[10px] h-full">
+            <div class="content p-6 mt-[25px] rounded-[10px] h-full">
                 <div class="flex justify-between items-center">
                     <p class="text-base font-meduim">All data</p>
                     <form class="flex gap-3 items-center">
@@ -77,7 +78,7 @@ $to     = isset($search_params['to']) ? $search_params['to'] : "";
                                 <p class="col-span-3 font-normal text-sm"><?php echo $income->description ?></p>
                                 <p class="col-span-1 font-normal text-sm">Php <?php echo $income->amount ?></p>
                                 <div class="col-span-1 font-normal text-sm">
-                                    <button class="btn bg-lightly-dark-blue w-[30px] h-[30px] relative">
+                                    <button class="btn bg-lightly-dark-blue w-[30px] h-[30px] relative update-income-modal" data-income='<?php print json_encode($income->getAttributes()); ?>' data-href="<?php echo route('income.update');?>">
                                         <img class="w-5 absolute top-1/2 left-1/2 -translate-1/2" src="<?php echo asset('img/', 'info.png') ?>" alt="info.png">
                                     </button>
                                     <button class="btn bg-lightly-dark-blue w-[30px] h-[30px] relative delete-modal-trigger" data-id="<?php echo $income->id ?>" data-href="<?php echo route('income.destroy')?>">

@@ -71,6 +71,26 @@ class IncomeController extends Controller
     }
 
     /**
+     * Update Income
+     * 
+     * @return redirect
+     */
+    public function update() {
+        $data = Request::getData();
+        $income = CashFlow::find($data['id']);
+
+        if ($data['when']) {
+            $data['when'] = date_create($data['when'])->format("Y-m-d");
+        }
+
+        unset($data['id']);
+
+        $income->update($data);
+
+        return Router::redirect('income.index');
+    }
+
+    /**
      * Delete Income
      */
     public function destroy()
