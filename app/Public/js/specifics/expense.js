@@ -59,7 +59,6 @@ function populateFormData(data) {
     const expense_form = document.getElementById('expense-modal').querySelector('form')
     const elements = expense_form.elements;
 
-    console.log(data, elements);
     elements.amount.value = data['amount'];
     elements.when.value = formatDate(new Date(data['when']));
     elements.description.value = data['description'];
