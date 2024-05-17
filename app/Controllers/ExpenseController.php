@@ -7,6 +7,7 @@ use App\Controllers\Controller;
 use App\Helpers\Request;
 use App\Helpers\Router;
 use App\Models\CashFlow;
+use App\Models\ExpenseType;
 use App\Helpers\View;
 
 class ExpenseController extends Controller
@@ -48,8 +49,11 @@ class ExpenseController extends Controller
             }
         }
 
+        // get all expense types
+        $expense_types = ExpenseType::all();
+
         $expenses = $builder->paginate(10);
-        return new View($this->BASE_PATH . "/views/pages/expense.php", compact('search_params', 'expenses'));
+        return new View($this->BASE_PATH . "/views/pages/expense.php", compact('search_params', 'expenses', 'expense_types'));
     }
 
     /**
@@ -62,9 +66,9 @@ class ExpenseController extends Controller
         $data = Request::getData();
         $user = $_SESSION['auth'];
 
-        $data['is_income'] = false;
-        $data['user_id']   = $user->id;
-        $data['when']      = date_create($data['when'])->format("Y-m-d");
+        $data['is_income']  = false;
+        $data['user_id']    = $user->id;
+        $data['when']       = date_create($data['when'])->format("Y-m-d");
 
         CashFlow::create($data);
         return Router::redirect('expense.index');

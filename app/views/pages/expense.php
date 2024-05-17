@@ -31,6 +31,17 @@ $to     = isset($search_params['to']) ? $search_params['to'] : "";
                 </div>
             </div>
             <div class="flex flex-col gap-1 w-full">
+                <label for="expense_type" class="text-blue text-sm font-normal">Expense Type</label>
+                <select name="expense_type" id="expense_type" class="input !w-full !max-w-full">
+                    <option value="" hidden>Select Type</option>
+                    <?php foreach($expense_types as $type):?>
+                        <option value="<? echo $type->id?>">
+                            <?php echo $type->name; ?>
+                        </option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+            <div class="flex flex-col gap-1 w-full">
                 <label for="description" class="text-blue text-sm font-normal">Description</label>
                 <textarea name="description" id="" col="100" rows="10" class="input !max-w-full" placeholder="Description"></textarea>
             </div>

@@ -77,6 +77,10 @@ a {
     grid-template-columns: repeat(3, 1fr);
 }
 
+.grid-cols-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+
 .grid-cols-7 {
     grid-template-columns: repeat(7, 1fr);
 }
@@ -293,6 +297,12 @@ a {
 
 .underline {
     text-decoration: underline;
+}
+
+.truncate {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 /* NEGATES */
