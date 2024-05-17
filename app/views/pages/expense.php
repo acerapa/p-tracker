@@ -14,9 +14,10 @@ $to     = isset($search_params['to']) ? $search_params['to'] : "";
 <!-- body content -->
 <?php ob_start() ?>
 <div class="modal hidden" id="expense-modal">
-    <form action="<?php echo route('expense.create'); ?>" method="POST">
+    <form action="<?php echo route('expense.create'); ?>" method="POST" data-default-action="<?php echo route('expense.create'); ?>">
+        <input type="hidden" name="id" id="expense_id">
         <div class="flex justify-between items-center">
-            <p class="text-base font-bold">Add Expense</p>
+            <p class="text-base font-bold modal-title">Add Expense</p>
             <img class="w-5 h-5 cursor-pointer close-expense-modal" src="<?php echo asset('img/', 'cancel.png'); ?>" alt="cancel">
         </div>
         <div class="flex flex-col gap-[34px]">
@@ -88,7 +89,7 @@ $to     = isset($search_params['to']) ? $search_params['to'] : "";
                                 <p class="col-span-3 font-normal text-sm"><?php echo $expense->description ?></p>
                                 <p class="col-span-1 font-normal text-sm">Php <?php echo $expense->amount ?></p>
                                 <div class="col-span-1 font-normal text-sm">
-                                    <button class="btn bg-lightly-dark-blue w-[30px] h-[30px] relative">
+                                    <button class="btn bg-lightly-dark-blue w-[30px] h-[30px] relative update-expense-modal" data-expense='<?php print json_encode($expense->getAttributes()); ?>' data-href="<?php echo route('expense.update'); ?>">
                                         <img class="w-5 absolute top-1/2 left-1/2 -translate-1/2" src="<?php echo asset('img/', 'info.png') ?>" alt="info.png">
                                     </button>
                                     <button class="btn bg-lightly-dark-blue w-[30px] h-[30px] relative delete-modal-trigger" data-id="<?php echo $expense->id ?>" data-href="<?php echo route('expense.destroy')?>">

@@ -75,6 +75,26 @@ class ExpenseController extends Controller
     }
 
     /**
+     * Update new Expense
+     * 
+     * @return string $message
+     */
+    public function update()
+    {
+        $data = Request::getData();
+        $expense = CashFlow::find($data['id']);
+
+        if ($data['when']) {
+            $ata['when'] = date_create($data['when'])->format("Y-m-d");
+        }
+
+        unset($data['id']);
+
+        $expense->update($data);
+        return Router::redirect('expense.index');
+    }
+
+    /**
      * Delete Income
      */
     public function destroy()

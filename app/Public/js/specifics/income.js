@@ -15,6 +15,8 @@ function initializeIncomeModals() {
                 .querySelector('form')
                 .reset();
             document.querySelector('.modal-title').innerHTML = 'Add Income';
+            const income_form = document.getElementById('income-modal').querySelector('form');
+            income_form.setAttribute('action', income_form.getAttribute('data-default-action'));
         });
     });
 }
