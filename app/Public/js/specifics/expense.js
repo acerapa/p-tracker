@@ -14,6 +14,7 @@ function initializeExpenseModals() {
             document.querySelector('.modal-title').innerHTML = 'Add Expense';
             const form = document.getElementById('expense-modal').querySelector('form');
             form.setAttribute('action', form.getAttribute('data-default-action'));
+            form.elements.id.value = ''; // reseting the id
             form.reset();
         });
     });
@@ -63,6 +64,7 @@ function populateFormData(data) {
     elements.when.value = formatDate(new Date(data['when']));
     elements.description.value = data['description'];
     elements.expense_id.value = data['id'];
+    elements.expense_type.value = data['expense_type'];
 
     expense_form.setAttribute('action', data['href']);
 }

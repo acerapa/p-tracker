@@ -33,6 +33,10 @@ a {
     padding: 24px 70px;
 }
 
+.bg-transparent {
+    background: transparent;
+}
+
 .bg-white {
     background-color: var(--white);
 }
@@ -83,6 +87,10 @@ a {
 
 .grid-cols-7 {
     grid-template-columns: repeat(7, 1fr);
+}
+
+.grid-cols-8 {
+    grid-template-columns: repeat(8, 1fr);
 }
 
 .flex {
