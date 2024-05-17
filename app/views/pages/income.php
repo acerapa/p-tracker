@@ -14,7 +14,7 @@ $to     = isset($search_params['to']) ? $search_params['to'] : "";
 <!-- body content -->
 <?php ob_start() ?>
 <div class="modal hidden" id="income-modal">
-    <form action="<?php echo route('income.create')?>" method="POST">
+    <form action="<?php echo route('income.create')?>" method="POST" data-default-action="<?php echo route('income.create')?>">
         <input type="hidden" name="id" id="income_id">
         <div class="flex justify-between items-center">
             <p class="text-base font-bold modal-title">Add Income</p>

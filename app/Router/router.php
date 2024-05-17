@@ -41,6 +41,7 @@ Router::middleware('auth', function () {
     Router::get('/expense', [ExpenseController::class, 'index']);
     Router::post('/expense/create', [ExpenseController::class, 'create']);
     Router::post('/expense/destroy', [ExpenseController::class, 'destroy']);
+    Router::post('/expense/update', [ExpenseController::class, 'update']);
 
     // budgeting
     Router::get('/budgeting', [BudgetingController::class, 'index']);
