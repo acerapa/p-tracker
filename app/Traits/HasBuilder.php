@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Traits;
 
 use App\Helpers\Paginate;
@@ -8,7 +9,8 @@ use DateTime;
 use Exception;
 use PDO;
 
-trait HasBuilder {
+trait HasBuilder
+{
     /**
      * static function calls
      */
@@ -19,7 +21,7 @@ trait HasBuilder {
 
         $m = strtolower($method);
         $table = self::getTableNameFromClassName();
-        
+
         $namespaced_model = get_called_class();
         $class = new $namespaced_model();
 
@@ -44,6 +46,9 @@ trait HasBuilder {
             case 'paginate':
                 $builder = (new self())->paginate($args);
                 break;
+            case 'orderby':
+                $builder = (new self())->orderBy($args);
+                break;
         }
 
         return $builder;
@@ -61,7 +66,7 @@ trait HasBuilder {
 
         $m = strtolower($method);
         $table = self::getTableNameFromClassName();
-        
+
         $builder = null;
 
         switch ($m) {
@@ -82,6 +87,9 @@ trait HasBuilder {
                 break;
             case 'paginate':
                 $builder = $this->paginate($args);
+                break;
+            case 'orderby':
+                $builder = $this->orderBy($args);
                 break;
         }
 
@@ -116,7 +124,7 @@ trait HasBuilder {
         if (!strstr($this->query, $table)) {
             $query = $query . $table;
         }
-        
+
         if (!strstr(strtoupper($query), 'WHERE')) {
             // $query = $query . " WHERE $field $opt '$value'";
             $query = $this->appendParams($query . " WHERE `$field` $opt ", $value);
@@ -153,11 +161,12 @@ trait HasBuilder {
             $class->setAttributes($dt);
             array_push($data, $class);
         }
-        
+
         return $data;
     }
 
-    private function first() {
+    private function first()
+    {
         global $table;
         global $class;
 
@@ -171,7 +180,7 @@ trait HasBuilder {
         if ($result) {
             $class->setAttributes($result);
         }
-        
+
         return $result ? $class : false;
     }
 
@@ -205,7 +214,7 @@ trait HasBuilder {
         $taked  = $this->take([$paginate_by, $offset]);
 
         $paginated->items = $taked;
-        
+
         return $paginated;
     }
 
@@ -223,13 +232,13 @@ trait HasBuilder {
     {
         global $class;
         global $table;
-        
+
         if (!count($args) || count($args) < 1) {
             throw new Exception('Invalid arguments! Please state this arguments ($limit, $offset) Take Note: $limit is required!');
         } else {
             $limit = $args[0];
             $offset = isset($args[1]) ? ($args[1] ? $args[1] : 0) : 0;
-        }   
+        }
 
         $query = $class->query;
         if (!strstr($class->query, $table)) {
@@ -257,7 +266,7 @@ trait HasBuilder {
             $model->setAttributes($dt);
             array_push($data, $model);
         }
-        
+
         return $data;
     }
 
@@ -283,11 +292,64 @@ trait HasBuilder {
         }
 
         $start = strpos($query, 'SELECT') + strlen('SELECT') + 1;
-        
+
         $query = substr_replace($query, "COUNT(*)", $start, 1);
 
         $stmt = self::getConnection()->query($query);
         return $stmt->fetch()[0];
+    }
+
+    private function orderBy($args)
+    {
+        global $class;
+        global $table;
+
+        // expecting only two parameters (this is temprary though)
+        if (!count($args) || (count($args) < 1)) {
+            throw new Exception('Invalid arguments! Please state this arguments ($field, $offset) Take Note: $limit is required!');
+        } else {
+            $field = $args[0];
+            $order = isset($args[1]) ? ($args[1] ? $args[1] : 'ASC') :  'ASC';
+        }
+
+        $query = $class->query;
+        if (!strstr($class->query, $table)) {
+            $query = $query . $table;
+        }
+
+        if (strpos($query, 'SELECT') === false) {
+            throw new Exception('orderBy() is only available for SELECT statements');
+            return;
+        }
+
+        // `ORDER BY` should come before this statements `LIMIT`, `OFFSET`, `FETCH`
+        $beforeStatements = [
+            'LIMIT',
+            'OFFSET',
+            'FETCH'
+        ];
+
+        $nearestSpot = -1; // position of the nearest beforeStatements
+        foreach ($beforeStatements as $statement) {
+            $pos = strpos(strtolower($query), strtolower($statement));
+            if ($pos !== false) {
+                if ($nearestSpot < 0) {
+                    $nearestSpot = $pos;
+                } else {
+                    $nearestSpot = $nearestSpot > $pos ? $pos : $nearestSpot;
+                }
+            }
+        }
+
+        if ($nearestSpot > -1) {
+            $begin = substr($query, 0, $nearestSpot + 1);
+            $end = substr($query, $nearestSpot + 1);
+            $class->query = "$begin ORDER BY $field $order $end";
+        } else {
+            $class->query = "$query ORDER BY $field $order";
+        }
+
+        return $class;
     }
 
 
@@ -298,7 +360,7 @@ trait HasBuilder {
      ***********************************/
 
     //TODO: For inhancement: Don't use implicit typing in query.
-    
+
     /**
      * Append additional query conditions
      * 

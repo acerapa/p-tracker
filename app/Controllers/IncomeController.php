@@ -46,7 +46,7 @@ class IncomeController extends Controller
             }
         }
 
-        $incomes = $builder->paginate(10);
+        $incomes = $builder->orderBy('id', 'DESC')->paginate(10);
 
 
         return new View($this->BASE_PATH."/views/pages/income.php", compact('incomes', 'search_params'));
