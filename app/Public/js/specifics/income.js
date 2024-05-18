@@ -11,12 +11,11 @@ function initializeIncomeModals() {
     Array.from(income_modal_closer).forEach(closer => {
         closer.addEventListener('click', function () {
             hideAndShowModal('income-modal', 'hide');
-            document.getElementById('income-modal')
-                .querySelector('form')
-                .reset();
             document.querySelector('.modal-title').innerHTML = 'Add Income';
-            const income_form = document.getElementById('income-modal').querySelector('form');
-            income_form.setAttribute('action', income_form.getAttribute('data-default-action'));
+            const form = document.getElementById('income-modal').querySelector('form');
+            form.setAttribute('action', form.getAttribute('data-default-action'));
+            form.elements.id.value = ''; // set selected id to empty
+            form.reset();
         });
     });
 }

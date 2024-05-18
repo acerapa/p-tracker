@@ -42,6 +42,8 @@ class SettingsController extends Controller
     {
         $data = Request::getData();
 
+        $data['created_at'] = date('Y-m-d');
+
         ExpenseType::create($data);
 
         return Router::redirect('settings.index');

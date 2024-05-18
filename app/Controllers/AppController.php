@@ -4,10 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\Controller;
 use App\Helpers\Request;
-use App\Helpers\Router;
 use App\Helpers\View;
-
-use App\Models\ExpenseType;
 
 class AppController extends Controller
 {

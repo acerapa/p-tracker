@@ -32,6 +32,17 @@ $to     = isset($search_params['to']) ? $search_params['to'] : "";
                 </div>
             </div>
             <div class="flex flex-col gap-1 w-full">
+                <label for="expense_type" class="text-blue text-sm font-normal">Expense Type</label>
+                <select name="expense_type" id="expense_type" class="input !w-full !max-w-full">
+                    <option value="" hidden>Select Type</option>
+                    <?php foreach($expense_types as $type):?>
+                        <option value="<?php echo $type->id?>">
+                            <?php echo $type->name; ?>
+                        </option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+            <div class="flex flex-col gap-1 w-full">
                 <label for="description" class="text-blue text-sm font-normal">Description</label>
                 <textarea name="description" id="" col="100" rows="10" class="input !max-w-full" placeholder="Description"></textarea>
             </div>
@@ -62,9 +73,10 @@ $to     = isset($search_params['to']) ? $search_params['to'] : "";
                 </div>
 
                 <div class="w-full mt-5 income-table">
-                    <div class="grid grid-cols-7 bg-lightly-dark-blue text-white rounded-t-[10px] px-7 py-2">
+                    <div class="grid grid-cols-8 bg-lightly-dark-blue text-white rounded-t-[10px] px-7 py-2">
                         <p class="col-span-1 font-semibold text-sm">#ID</p>
                         <p class="col-span-1 font-semibold text-sm">WHEN</p>
+                        <p class="col-span-1 font-semibold text-sm">TYPE</p>
                         <p class="col-span-3 font-semibold text-sm">DESCRIPTION</p>
                         <p class="col-span-1 font-semibold text-sm">AMOUNT</p>
                         <p class="col-span-1 font-semibold text-sm">ACTION</p>
@@ -72,12 +84,13 @@ $to     = isset($search_params['to']) ? $search_params['to'] : "";
 
                     <div class="table-strip">
                         <?php foreach ($data as $expense): ?>
-                            <div class="grid grid-cols-7 px-7 py-2 items-center">
+                            <div class="grid grid-cols-8 px-7 py-2 items-center">
                                 <p class="col-span-1 font-normal text-sm"><?php echo $expense->id ?></p>
                                 <p class="col-span-1 font-normal text-sm"><?php echo $expense->when ?></p>
-                                <p class="col-span-3 font-normal text-sm"><?php echo $expense->description ?></p>
+                                <p class="col-span-1 font-normal text-sm"><?php echo $expense->getExpenseName() ?></p>
+                                <p class="col-span-3 font-normal text-sm truncate"><?php echo $expense->description ?></p>
                                 <p class="col-span-1 font-normal text-sm">Php <?php echo $expense->amount ?></p>
-                                <div class="col-span-1 font-normal text-sm">
+                                <div class="col-span-1 font-normal text-sm !bg-transparent">
                                     <button class="btn bg-lightly-dark-blue w-[30px] h-[30px] relative update-expense-modal" data-expense='<?php print json_encode($expense->getAttributes()); ?>' data-href="<?php echo route('expense.update'); ?>">
                                         <img class="w-5 absolute top-1/2 left-1/2 -translate-1/2" src="<?php echo asset('img/', 'info.png') ?>" alt="info.png">
                                     </button>
@@ -124,7 +137,6 @@ ob_end_clean();
 $scripts = ob_get_contents();
 ob_end_clean();
 ?>
-
 
 <!-- inclulde layout -->
 <?php

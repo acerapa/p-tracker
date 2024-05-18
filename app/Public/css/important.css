@@ -5,3 +5,7 @@
 .\!w-full {
     width: 100% !important;
 }
+
+.\!bg-transparent {
+    background: transparent !important;
+}
