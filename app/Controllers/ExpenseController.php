@@ -52,7 +52,7 @@ class ExpenseController extends Controller
         // get all expense types
         $expense_types = ExpenseType::all();
 
-        $expenses = $builder->paginate(10);
+        $expenses = $builder->orderBy('id', 'DESC')->paginate(10);
         return new View($this->BASE_PATH . "/views/pages/expense.php", compact('search_params', 'expenses', 'expense_types'));
     }
 
