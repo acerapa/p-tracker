@@ -7,5 +7,8 @@
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
     $dotenv->load();
 
+    // setting timezone
+    date_default_timezone_set('Asia/Manila');
+
     // Import the router file
     include('./app/Router/router.php');

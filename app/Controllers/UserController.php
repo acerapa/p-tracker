@@ -24,6 +24,10 @@ class UserController extends Controller
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         }
 
+        // For now will just add the timestamps here
+        $data['created_at'] = date('Y-m-d H:i:s', time());
+        $data['updated_at'] = date('Y-m-d H:i:s', time());
+
         $user = User::create($data);
         Router::redirect('user.list');
     }
